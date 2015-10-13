@@ -4,19 +4,21 @@ namespace Ude.Core
 
     internal enum InputState
     {
-        PureASCII = 0, EscASCII = 1, Highbyte = 2
+        PureASCII = 0,
+        EscASCII = 1,
+        Highbyte = 2,
     }
 
     public abstract class UniversalDetector
     {
-        protected const int FilterChineseSimplified  = 1;
+        protected const int FilterChineseSimplified = 1;
         protected const int FilterChineseTraditional = 2;
-        protected const int FilterJapanese           = 4;
-        protected const int FilterKorean             = 8;
-        protected const int FilterNonCJK             = 16;
-        protected const int FilterAll                = 31;
-        protected const int FilterChinese            = FilterChineseSimplified | FilterChineseTraditional;
-        protected const int FilterCJK                = FilterJapanese | FilterKorean | FilterChineseSimplified | FilterChineseTraditional;
+        protected const int FilterJapanese = 4;
+        protected const int FilterKorean = 8;
+        protected const int FilterNonCJK = 16;
+        protected const int FilterAll = 31;
+        protected const int FilterChinese = FilterChineseSimplified | FilterChineseTraditional;
+        protected const int FilterCJK = FilterJapanese | FilterKorean | FilterChineseSimplified | FilterChineseTraditional;
 
         protected const float SHORTCUTTHRESHOLD = 0.95f;
         protected const float MINIMUMTHRESHOLD = 0.20f;
