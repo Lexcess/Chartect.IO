@@ -1,9 +1,3 @@
-// CharsetDetectorTest.cs created with MonoDevelop
-//
-// Author:
-//   Rudi Pettazzi <rudi.pettazzi@gmail.com>
-//
-
 using System;
 using System.Text;
 using System.IO;
@@ -38,7 +32,8 @@ namespace Ude.Tests
                 "and your contributions would be greatly appreciated " +
                 "the documentation you want to contribute to and " + 
                 "click on the [Edit] link to start writing";
-            using (MemoryStream ms = new MemoryStream(Encoding.ASCII.GetBytes(s))) {
+            using (MemoryStream ms = new MemoryStream(Encoding.ASCII.GetBytes(s)))
+            {
                 detector.Feed(ms);
                 detector.DataEnd();
                 Assert.AreEqual(Charsets.ASCII, detector.Charset);
@@ -111,8 +106,8 @@ namespace Ude.Tests
             Assert.AreEqual(Charsets.UTF32_LE, detector.Charset);
             Assert.AreEqual(1.0f, detector.Confidence);      
         }
-		
-		[Test()]
+        
+        [Test()]
         public void TestIssue3()
         {
             byte[] buf = Encoding.UTF8.GetBytes("3");

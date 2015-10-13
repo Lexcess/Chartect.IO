@@ -1,9 +1,3 @@
-// CharsetProberTest.cs created with MonoDevelop
-//
-// Author:
-//   Rudi Pettazzi <rudi.pettazzi@gmail.com>
-//
-
 using System;
 using NUnit.Framework;
 

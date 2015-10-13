@@ -1,8 +1,3 @@
-// AssemblyInfo.cs created with MonoDevelop
-//
-// Author:
-//    Rudi Pettazzi <rudi.pettazzi@gmail.com>
-//
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -12,8 +7,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Ude.Example")]
-[assembly: AssemblyCopyright("Copyright © 2009 Rudi Pettazzi <rudi.pettazzi@gmail.com>")]
+[assembly: AssemblyCopyright("Copyright © 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("0.1.0.0")]
+[assembly: AssemblyVersion("0.2.0.0")]

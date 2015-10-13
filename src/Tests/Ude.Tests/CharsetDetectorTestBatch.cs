@@ -1,9 +1,3 @@
-// CharsetDetectorTestBatch.cs created with MonoDevelop
-//
-// Author:
-//    Rudi Pettazzi <rudi.pettazzi@gmail.com>
-//
-
 using System;
 using System.IO;
 using NUnit.Framework;
@@ -47,7 +41,7 @@ namespace Ude.Tests
             Process(Charsets.SHIFT_JIS, "shiftjis");
             Process(Charsets.EUCJP, "eucjp");
             Process(Charsets.EUCKR, "euckr");
-			Process(Charsets.EUCTW, "euctw");
+            Process(Charsets.EUCTW, "euctw");
             Process(Charsets.ISO2022_JP, "iso2022jp");
             Process(Charsets.ISO2022_KR, "iso2022kr");
         }
