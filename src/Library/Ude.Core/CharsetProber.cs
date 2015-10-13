@@ -1,31 +1,32 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-
 namespace Ude.Core
 {
-    public enum ProbingState {                            
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
+
+    public enum ProbingState
+    {
         Detecting = 0, // no sure answer yet, but caller can ask for confidence
-        FoundIt   = 1, // positive answer
-        NotMe     = 2  // negative answer 
-    };
+        FoundIt = 1, // positive answer
+        NotMe = 2 // negative answer
+    }
 
     public abstract class CharsetProber
     {
-        protected const float SHORTCUT_THRESHOLD = 0.95F;
+        protected const float ShortcutThreshold = 0.95F;
 
         protected ProbingState state;
-        
+
         // ASCII codes
-        private const byte SPACE        = 0x20;
-        private const byte CAPITAL_A    = 0x41;
-        private const byte CAPITAL_Z    = 0x5A;
-        private const byte SMALL_A      = 0x61;
-        private const byte SMALL_Z      = 0x7A;
-        private const byte LESS_THAN    = 0x3C;        
-        private const byte GREATER_THAN = 0x3E;
-        
+        private const byte Space = 0x20;
+        private const byte UpperA = 0x41;
+        private const byte UpperZ = 0x5A;
+        private const byte LowerA = 0x61;
+        private const byte LowerZ = 0x7A;
+        private const byte LessThan = 0x3C;
+        private const byte GreaterThan = 0x3E;
+
         /// <summary>
         /// Feed data to the prober
         /// </summary>
@@ -36,48 +37,40 @@ namespace Ude.Core
         /// A <see cref="ProbingState"/>
         /// </returns>
         public abstract ProbingState HandleData(byte[] buf, int offset, int len);
-        
+
         /// <summary>
         /// Reset prober state
         /// </summary>
         public abstract void Reset();
 
         public abstract string GetCharsetName();
-        
+
         public abstract float GetConfidence();
-        
+
         public virtual ProbingState GetState()
         {
-            return state;
+            return this.state;
         }
 
         public virtual void SetOption()
-        { 
-        
+        {
         }
 
         public virtual void DumpStatus()
-        { 
-        
+        {
         }
 
-        //
         // Helper functions used in the Latin1 and Group probers
-        //
-        /// <summary>
-        ///  
-        /// </summary>
-        /// <returns>filtered buffer</returns>
-        protected static byte[] FilterWithoutEnglishLetters(byte[] buf, int offset, int len) 
+        protected static byte[] FilterWithoutEnglishLetters(byte[] buf, int offset, int len)
         {
             byte[] result = null;
 
-            using (MemoryStream ms = new MemoryStream(buf.Length)) {
-                
+            using (MemoryStream ms = new MemoryStream(buf.Length))
+            {
                 bool meetMSB = false;
-                int max      = offset + len;
-                int prev     = offset;
-                int cur      = offset;
+                int max = offset + len;
+                int prev = offset;
+                int cur = offset;
 
                 while (cur < max)
                 {
@@ -87,16 +80,18 @@ namespace Ude.Core
                     {
                         meetMSB = true;
                     }
-                    else if (b < CAPITAL_A || (b > CAPITAL_Z && b < SMALL_A) || b > SMALL_Z)
+                    else if (b < UpperA || (b > UpperZ && b < LowerA) || b > LowerZ)
                     {
                         if (meetMSB && cur > prev)
                         {
                             ms.Write(buf, prev, cur - prev);
-                            ms.WriteByte(SPACE);
+                            ms.WriteByte(Space);
                             meetMSB = false;
                         }
+
                         prev = cur + 1;
                     }
+
                     cur++;
                 }
 
@@ -104,60 +99,74 @@ namespace Ude.Core
                 {
                     ms.Write(buf, prev, cur - prev);
                 }
+
                 ms.SetLength(ms.Position);
                 result = ms.ToArray();
             }
+
             return result;
         }
 
         /// <summary>
-        /// Do filtering to reduce load to probers (Remove ASCII symbols, 
-        /// collapse spaces). This filter applies to all scripts which contain 
+        /// Do filtering to reduce load to probers (Remove ASCII symbols,
+        /// collapse spaces). This filter applies to all scripts which contain
         /// both English characters and upper ASCII characters.
         /// </summary>
-        /// <returns>a filtered copy of the input buffer</returns>
+        /// <param name="buf"> A byte array buffer</param>
+        /// <param name="offset"> The offset to use.</param>
+        /// <param name="len"> The length of bytes to filter.</param>
+        /// <returns> A filtered copy of the input buffer.</returns>
         protected static byte[] FilterWithEnglishLetters(byte[] buf, int offset, int len)
         {
             byte[] result = null;
 
-            using (MemoryStream ms = new MemoryStream(buf.Length)) {
-                
+            using (MemoryStream ms = new MemoryStream(buf.Length))
+            {
                 bool inTag = false;
-                int max    = offset + len;
-                int prev   = offset;
-                int cur    = offset;
+                int max = offset + len;
+                int prev = offset;
+                int cur = offset;
 
-                while (cur < max) {
-                    
+                while (cur < max)
+                {
                     byte b = buf[cur];
-                    
-                    if (b == GREATER_THAN)
+
+                    if (b == GreaterThan)
+                    {
                         inTag = false;
-                    else if (b == LESS_THAN)
+                    }
+                    else if (b == LessThan)
+                    {
                         inTag = true;
+                    }
 
                     // it's ascii, but it's not a letter
-                    if ((b & 0x80) == 0 && (b < CAPITAL_A || b > SMALL_Z || (b > CAPITAL_Z && b < SMALL_A)))
+                    if ((b & 0x80) == 0 && (b < UpperA || b > LowerZ || (b > UpperZ && b < LowerA)))
                     {
                         if (cur > prev && !inTag)
                         {
                             ms.Write(buf, prev, cur - prev);
-                            ms.WriteByte(SPACE);
+                            ms.WriteByte(Space);
                         }
+
                         prev = cur + 1;
                     }
+
                     cur++;
                 }
 
-                // If the current segment contains more than just a symbol 
+                // If the current segment contains more than just a symbol
                 // and it is not inside a tag then keep it.
                 if (!inTag && cur > prev)
+                {
                     ms.Write(buf, prev, cur - prev);
+                }
+
                 ms.SetLength(ms.Position);
                 result = ms.ToArray();
             }
+
             return result;
         }
     }
 }
-

@@ -1,53 +1,53 @@
-using System;
-
 namespace Ude.Core
 {
+    using System;
+
     /// <summary>
     /// Parallel state machine for the Coding Scheme Method
     /// </summary>
     public class CodingStateMachine
     {
         private int currentState;
-        private SMModel model;
+        private StateMachineModel model;
         private int currentCharLen;
         private int currentBytePos;
-        
-        public CodingStateMachine(SMModel model) 
+
+        public CodingStateMachine(StateMachineModel model)
         {
-            this.currentState = SMModel.START;
+            this.currentState = StateMachineModel.Start;
             this.model = model;
+        }
+
+        public int CurrentCharLen
+        {
+            get { return this.currentCharLen; }
+        }
+
+        public string ModelName
+        {
+            get { return this.model.Name; }
         }
 
         public int NextState(byte b)
         {
-            // for each byte we get its class, if it is first byte, 
+            // for each byte we get its class, if it is first byte,
             // we also get byte length
-            int byteCls = model.GetClass(b);
-            if (currentState == SMModel.START)
-            { 
-                currentBytePos = 0;
-                currentCharLen = model.charLenTable[byteCls];
+            int byteCls = this.model.GetClass(b);
+            if (this.currentState == StateMachineModel.Start)
+            {
+                this.currentBytePos = 0;
+                this.currentCharLen = this.model.CharLenTable[byteCls];
             }
-            
-            // from byte's class and stateTable, we get its next state            
-            currentState = model.stateTable.Unpack(currentState * model.ClassFactor + byteCls);
-            currentBytePos++;
-            return currentState;
-        }
-  
-        public void Reset() 
-        { 
-            currentState = SMModel.START; 
+
+            // from byte's class and stateTable, we get its next state
+            this.currentState = this.model.StateTable.Unpack((this.currentState * this.model.ClassFactor) + byteCls);
+            this.currentBytePos++;
+            return this.currentState;
         }
 
-        public int CurrentCharLen 
-        { 
-            get { return currentCharLen; } 
-        }
-
-        public string ModelName 
-        { 
-            get { return model.Name; } 
+        public void Reset()
+        {
+            this.currentState = StateMachineModel.Start;
         }
     }
 }

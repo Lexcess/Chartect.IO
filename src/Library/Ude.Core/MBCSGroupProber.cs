@@ -1,56 +1,66 @@
-using System;
-
 namespace Ude.Core
 {
+    using System;
+
     /// <summary>
     /// Multi-byte charsets probers
     /// </summary>
     public class MBCSGroupProber : CharsetProber
     {
-        private const int PROBERS_NUM = 7;
-        private readonly static string[] ProberName = 
+        private const int PROBERSNUM = 7;
+        private static readonly string[] ProberName =
             { "UTF8", "SJIS", "EUCJP", "GB18030", "EUCKR", "Big5", "EUCTW" };
-        private CharsetProber[] probers = new CharsetProber[PROBERS_NUM];
-        private bool[] isActive = new bool[PROBERS_NUM];
+
+        private CharsetProber[] probers = new CharsetProber[PROBERSNUM];
+        private bool[] isActive = new bool[PROBERSNUM];
         private int bestGuess;
         private int activeNum;
-            
+
         public MBCSGroupProber()
         {
-            probers[0] = new UTF8Prober();
-            probers[1] = new SJISProber();
-            probers[2] = new EUCJPProber();
-            probers[3] = new GB18030Prober();
-            probers[4] = new EUCKRProber();
-            probers[5] = new Big5Prober();
-            probers[6] = new EUCTWProber();
-            Reset();        
+            this.probers[0] = new UTF8Prober();
+            this.probers[1] = new SJISProber();
+            this.probers[2] = new EUCJPProber();
+            this.probers[3] = new GB18030Prober();
+            this.probers[4] = new EUCKRProber();
+            this.probers[5] = new Big5Prober();
+            this.probers[6] = new EUCTWProber();
+            this.Reset();
         }
 
         public override string GetCharsetName()
         {
-            if (bestGuess == -1) {
-                GetConfidence();
-                if (bestGuess == -1)
-                    bestGuess = 0;
+            if (this.bestGuess == -1)
+            {
+                this.GetConfidence();
+                if (this.bestGuess == -1)
+                {
+                    this.bestGuess = 0;
+                }
             }
-            return probers[bestGuess].GetCharsetName();
+
+            return this.probers[this.bestGuess].GetCharsetName();
         }
 
         public override void Reset()
         {
-            activeNum = 0;
-            for (int i = 0; i < probers.Length; i++) {
-                if (probers[i] != null) {
-                   probers[i].Reset();
-                   isActive[i] = true;
-                   ++activeNum;
-                } else {
-                   isActive[i] = false;
+            this.activeNum = 0;
+            for (int i = 0; i < this.probers.Length; i++)
+            {
+                if (this.probers[i] != null)
+                {
+                   this.probers[i].Reset();
+                   this.isActive[i] = true;
+                   ++this.activeNum;
+                }
+                else
+                {
+                   this.isActive[i] = false;
                 }
             }
-            bestGuess = -1;
-            state = ProbingState.Detecting;
+
+            this.bestGuess = -1;
+            this.state = ProbingState.Detecting;
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)
@@ -58,78 +68,109 @@ namespace Ude.Core
             // do filtering to reduce load to probers
             byte[] highbyteBuf = new byte[len];
             int hptr = 0;
-            //assume previous is not ascii, it will do no harm except add some noise
+
+            // assume previous is not ascii, it will do no harm except add some noise
             bool keepNext = true;
             int max = offset + len;
-            
-            for (int i = offset; i < max; i++) {
-                if ((buf[i] & 0x80) != 0) {
+
+            for (int i = offset; i < max; i++)
+            {
+                if ((buf[i] & 0x80) != 0)
+                {
                     highbyteBuf[hptr++] = buf[i];
                     keepNext = true;
-                } else {
-                    //if previous is highbyte, keep this even it is a ASCII
-                    if (keepNext) {
+                }
+                else
+                {
+                    // if previous is highbyte, keep this even it is a ASCII
+                    if (keepNext)
+                    {
                         highbyteBuf[hptr++] = buf[i];
                         keepNext = false;
                     }
                 }
             }
-            
+
             ProbingState st = ProbingState.NotMe;
-            
-            for (int i = 0; i < probers.Length; i++) {
-                if (!isActive[i])
+
+            for (int i = 0; i < this.probers.Length; i++)
+            {
+                if (!this.isActive[i])
+                {
                     continue;
-                st = probers[i].HandleData(highbyteBuf, 0, hptr);
-                if (st == ProbingState.FoundIt) {
-                    bestGuess = i;
-                    state = ProbingState.FoundIt;
+                }
+
+                st = this.probers[i].HandleData(highbyteBuf, 0, hptr);
+                if (st == ProbingState.FoundIt)
+                {
+                    this.bestGuess = i;
+                    this.state = ProbingState.FoundIt;
                     break;
-                } else if (st == ProbingState.NotMe) {
-                    isActive[i] = false;
-                    activeNum--;
-                    if (activeNum <= 0) {
-                        state = ProbingState.NotMe;
+                }
+                else if (st == ProbingState.NotMe)
+                {
+                    this.isActive[i] = false;
+                    this.activeNum--;
+                    if (this.activeNum <= 0)
+                    {
+                        this.state = ProbingState.NotMe;
                         break;
                     }
                 }
             }
-            return state;
+
+            return this.state;
         }
 
         public override float GetConfidence()
         {
             float bestConf = 0.0f;
             float cf = 0.0f;
-            
-            if (state == ProbingState.FoundIt) {
+
+            if (this.state == ProbingState.FoundIt)
+            {
                 return 0.99f;
-            } else if (state == ProbingState.NotMe) {
+            }
+            else if (this.state == ProbingState.NotMe)
+            {
                 return 0.01f;
-            } else {
-                for (int i = 0; i < PROBERS_NUM; i++) {
-                    if (!isActive[i])
+            }
+            else
+            {
+                for (int i = 0; i < PROBERSNUM; i++)
+                {
+                    if (!this.isActive[i])
+                    {
                         continue;
-                    cf = probers[i].GetConfidence();
-                    if (bestConf < cf) {
+                    }
+
+                    cf = this.probers[i].GetConfidence();
+                    if (bestConf < cf)
+                    {
                         bestConf = cf;
-                        bestGuess = i;
+                        this.bestGuess = i;
                     }
                 }
             }
+
             return bestConf;
         }
 
         public override void DumpStatus()
         {
             float cf;
-            GetConfidence();
-            for (int i = 0; i < PROBERS_NUM; i++) {
-                if (!isActive[i]) {
-                    Console.WriteLine("  MBCS inactive: {0} (confidence is too low).", 
+            this.GetConfidence();
+            for (int i = 0; i < PROBERSNUM; i++)
+            {
+                if (!this.isActive[i])
+                {
+                    Console.WriteLine(
+                        "  MBCS inactive: {0} (confidence is too low).",
                          ProberName[i]);
-                } else {
-                    cf = probers[i].GetConfidence();
+                }
+                else
+                {
+                    cf = this.probers[i].GetConfidence();
                     Console.WriteLine("  MBCS {0}: [{1}]", cf, ProberName[i]);
                 }
             }

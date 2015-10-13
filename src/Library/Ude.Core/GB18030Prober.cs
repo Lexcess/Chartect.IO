@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Ude.Core
 {
-    // We use gb18030 to replace gb2312, because 18030 is a superset. 
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
+    // We use gb18030 to replace gb2312, because 18030 is a superset.
     public class GB18030Prober : CharsetProber
     {
         private CodingStateMachine codingSM;
@@ -13,65 +13,75 @@ namespace Ude.Core
 
         public GB18030Prober()
         {
-            lastChar = new byte[2];
-            codingSM = new CodingStateMachine(new GB18030SMModel());
-            analyser = new GB18030DistributionAnalyser();
-            Reset();
+            this.lastChar = new byte[2];
+            this.codingSM = new CodingStateMachine(new GB18030SMModel());
+            this.analyser = new GB18030DistributionAnalyser();
+            this.Reset();
         }
-        
+
         public override string GetCharsetName()
         {
-            return "gb18030";        
+            return "gb18030";
         }
-        
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
-            int codingState = SMModel.START;
+            int codingState = StateMachineModel.Start;
             int max = offset + len;
-            
-            for (int i = offset; i < max; i++) {
-                codingState = codingSM.NextState(buf[i]);
-                if (codingState == SMModel.ERROR) {
-                    state = ProbingState.NotMe;
+
+            for (int i = offset; i < max; i++)
+            {
+                codingState = this.codingSM.NextState(buf[i]);
+                if (codingState == StateMachineModel.Error)
+                {
+                    this.state = ProbingState.NotMe;
                     break;
                 }
-                if (codingState == SMModel.ITSME) {
-                    state = ProbingState.FoundIt;
+
+                if (codingState == StateMachineModel.ItsMe)
+                {
+                    this.state = ProbingState.FoundIt;
                     break;
                 }
-                if (codingState == SMModel.START) {
-                    int charLen = codingSM.CurrentCharLen;
-                    if (i == offset) {
-                        lastChar[1] = buf[offset];
-                        analyser.HandleOneChar(lastChar, 0, charLen);
-                    } else {
-                        analyser.HandleOneChar(buf, i-1, charLen);
+
+                if (codingState == StateMachineModel.Start)
+                {
+                    int charLen = this.codingSM.CurrentCharLen;
+                    if (i == offset)
+                    {
+                        this.lastChar[1] = buf[offset];
+                        this.analyser.HandleOneChar(this.lastChar, 0, charLen);
+                    }
+                    else
+                    {
+                        this.analyser.HandleOneChar(buf, i - 1, charLen);
                     }
                 }
             }
 
-            lastChar[0] = buf[max-1];
+            this.lastChar[0] = buf[max - 1];
 
-            if (state == ProbingState.Detecting) {
-                if (analyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
-                    state = ProbingState.FoundIt;
+            if (this.state == ProbingState.Detecting)
+            {
+                if (this.analyser.GotEnoughData() && this.GetConfidence() > ShortcutThreshold)
+                {
+                    this.state = ProbingState.FoundIt;
+                }
             }
-            
-            return state;
+
+            return this.state;
         }
-        
+
         public override float GetConfidence()
         {
-            return analyser.GetConfidence();
-        }
-        
-        public override void Reset()
-        {
-            codingSM.Reset(); 
-            state = ProbingState.Detecting;
-            analyser.Reset();
+            return this.analyser.GetConfidence();
         }
 
+        public override void Reset()
+        {
+            this.codingSM.Reset();
+            this.state = ProbingState.Detecting;
+            this.analyser.Reset();
+        }
     }
 }

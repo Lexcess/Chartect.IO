@@ -12,12 +12,28 @@
     <AssemblyName>Ude</AssemblyName>
     <StartupObject>
     </StartupObject>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +48,10 @@
     <RootNamespace>Ude</RootNamespace>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>
+    </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -46,6 +66,7 @@
     <RootNamespace>Ude</RootNamespace>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -53,21 +74,49 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Ude.Core\BIG5DistributionAnalyser.cs" />
+    <Compile Include="Ude.Core\BIG5SMModel.cs" />
     <Compile Include="Ude.Core\CharDistributionAnalyser.cs" />
     <Compile Include="Ude.Core\CharsetProber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ude.Core\CodingStateMachine.cs" />
     <Compile Include="Ude.Core\EscCharsetProber.cs" />
-    <Compile Include="Ude.Core\EscSM.cs" />
+    <Compile Include="Ude.Core\HzsmEscapedModel.cs" />
+    <Compile Include="Ude.Core\EUCJPContextAnalyser.cs" />
+    <Compile Include="Ude.Core\EUCJPDistributionAnalyser.cs" />
+    <Compile Include="Ude.Core\EUCJPSMModel.cs" />
+    <Compile Include="Ude.Core\EUCKRDistributionAnalyser.cs" />
+    <Compile Include="Ude.Core\EUCKRSMModel.cs" />
+    <Compile Include="Ude.Core\EUCTWDistributionAnalyser.cs" />
+    <Compile Include="Ude.Core\EUCTWSMModel.cs" />
+    <Compile Include="Ude.Core\GB18030DistributionAnalyser.cs" />
+    <Compile Include="Ude.Core\GB18030SMModel.cs" />
     <Compile Include="Ude.Core\HebrewProber.cs" />
+    <Compile Include="Ude.Core\Ibm855CyrillicModel.cs" />
+    <Compile Include="Ude.Core\Ibm866CyrillicModel.cs" />
+    <Compile Include="Ude.Core\Iso2022CnsmEscapedModel.cs" />
+    <Compile Include="Ude.Core\Iso2022JpsmEscapedModel.cs" />
+    <Compile Include="Ude.Core\Iso2022KrsmEscapedModel.cs" />
+    <Compile Include="Ude.Core\Koi8rCyrillicModel.cs" />
     <Compile Include="Ude.Core\Latin1Prober.cs" />
+    <Compile Include="Ude.Core\Latin2HungarianModel.cs" />
+    <Compile Include="Ude.Core\Latin5BulgarianModel.cs" />
+    <Compile Include="Ude.Core\Latin5CyrillicModel.cs" />
+    <Compile Include="Ude.Core\Latin7GreekModel.cs" />
+    <Compile Include="Ude.Core\MacCyrillicModel.cs" />
     <Compile Include="Ude.Core\MBCSGroupProber.cs" />
     <Compile Include="Ude.Core\BitPackage.cs" />
     <Compile Include="Ude.Core\SBCharsetProber.cs" />
     <Compile Include="Ude.Core\SBCSGroupProber.cs" />
+    <Compile Include="Ude.Core\SJISContextAnalyser.cs" />
+    <Compile Include="Ude.Core\SJISDistributionAnalyser.cs" />
+    <Compile Include="Ude.Core\SJISSMModel.cs" />
+    <Compile Include="Ude.Core\UCS2BESMModel.cs" />
+    <Compile Include="Ude.Core\UCS2LESMModel.cs" />
+    <Compile Include="Ude.Core\UdeExtensions.cs" />
     <Compile Include="Ude.Core\UniversalDetector.cs" />
     <Compile Include="Ude.Core\UTF8Prober.cs" />
-    <Compile Include="Ude.Core\MBCSSM.cs" />
     <Compile Include="Ude.Core\SequenceModel.cs" />
     <Compile Include="Ude.Core\GB18030Prober.cs" />
     <Compile Include="Ude.Core\SMModel.cs" />
@@ -83,10 +132,31 @@
     <Compile Include="Ude.Core\EUCTWProber.cs" />
     <Compile Include="Ude.Core\JapaneseContextAnalyser.cs" />
     <Compile Include="Ude.Core\SJISProber.cs" />
-    <Compile Include="Ude\ICharsetDetector.cs" />
+    <Compile Include="Ude.Core\UTF8SMModel.cs" />
+    <Compile Include="Ude.Core\Win1250HungarianModel.cs" />
+    <Compile Include="Ude.Core\Win1251BulgarianModel.cs" />
+    <Compile Include="Ude.Core\Win1251CyrillicModel.cs" />
+    <Compile Include="Ude.Core\Win1253GreekModel.cs" />
+    <Compile Include="Ude.Core\Win1255HebrewModel.cs" />
     <Compile Include="Ude\CharsetDetector.cs" />
+    <Compile Include="Ude\ICharsetDetector.cs" />
     <Compile Include="Ude\DetectionConfidence.cs" />
     <Compile Include="Ude.Core\Charsets.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0-beta013\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0-beta013\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

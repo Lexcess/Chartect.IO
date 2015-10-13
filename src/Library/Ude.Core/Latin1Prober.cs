@@ -1,12 +1,12 @@
-using System;
-
 namespace Ude.Core
 {
-    // TODO: Using trigrams the detector should be able to discriminate between 
+    using System;
+
+    // TODO: Using trigrams the detector should be able to discriminate between
     // latin-1 and iso8859-2
     public class Latin1Prober : CharsetProber
     {
-        private const int FREQ_CAT_NUM = 4;
+        private const int FREQCATNUM = 4;
 
         private const int UDF = 0;       // undefined
         private const int OTH = 1;       // other
@@ -16,10 +16,11 @@ namespace Ude.Core
         private const int ACO = 5;       // accent capital other
         private const int ASV = 6;       // accent small vowel
         private const int ASO = 7;       // accent small other
-        
-        private const int CLASS_NUM = 8; // total classes
-        
-        private readonly static byte[] Latin1_CharToClass = {
+
+        private const int CLASSNUM = 8; // total classes
+
+        private static readonly byte[] Latin1CharToClass =
+        {
           OTH, OTH, OTH, OTH, OTH, OTH, OTH, OTH,   // 00 - 07
           OTH, OTH, OTH, OTH, OTH, OTH, OTH, OTH,   // 08 - 0F
           OTH, OTH, OTH, OTH, OTH, OTH, OTH, OTH,   // 10 - 17
@@ -54,90 +55,104 @@ namespace Ude.Core
           ASV, ASV, ASV, ASV, ASV, ASO, ASO, ASO,   // F8 - FF
         };
 
-        /* 0 : illegal 
-           1 : very unlikely 
-           2 : normal 
+        /* 0 : illegal
+           1 : very unlikely
+           2 : normal
            3 : very likely
         */
-        private readonly static byte[] Latin1ClassModel = {
+        private static readonly byte[] Latin1ClassModel =
+        {
             /*      UDF OTH ASC ASS ACV ACO ASV ASO  */
-            /*UDF*/  0,  0,  0,  0,  0,  0,  0,  0,
+            /*UDF*/ 0,  0,  0,  0,  0,  0,  0,  0,
             /*OTH*/  0,  3,  3,  3,  3,  3,  3,  3,
-            /*ASC*/  0,  3,  3,  3,  3,  3,  3,  3, 
+            /*ASC*/  0,  3,  3,  3,  3,  3,  3,  3,
             /*ASS*/  0,  3,  3,  3,  1,  1,  3,  3,
             /*ACV*/  0,  3,  3,  3,  1,  2,  1,  2,
-            /*ACO*/  0,  3,  3,  3,  3,  3,  3,  3, 
-            /*ASV*/  0,  3,  1,  3,  1,  1,  1,  3, 
+            /*ACO*/  0,  3,  3,  3,  3,  3,  3,  3,
+            /*ASV*/  0,  3,  1,  3,  1,  1,  1,  3,
             /*ASO*/  0,  3,  1,  3,  1,  1,  3,  3,
         };
 
         private byte lastCharClass;
-        private int[] freqCounter = new int[FREQ_CAT_NUM];
-        
+        private int[] freqCounter = new int[FREQCATNUM];
+
         public Latin1Prober()
         {
-            Reset();
+            this.Reset();
         }
 
-        public override string GetCharsetName() 
+        public override string GetCharsetName()
         {
             return "windows-1252";
         }
-        
+
         public override void Reset()
         {
-            state = ProbingState.Detecting;
-            lastCharClass = OTH;
-            for (int i = 0; i < FREQ_CAT_NUM; i++)
-                freqCounter[i] = 0;
+            this.state = ProbingState.Detecting;
+            this.lastCharClass = OTH;
+            for (int i = 0; i < FREQCATNUM; i++)
+            {
+                this.freqCounter[i] = 0;
+            }
         }
-        
+
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
             byte[] newbuf = FilterWithEnglishLetters(buf, offset, len);
             byte charClass, freq;
-            
-            for (int i = 0; i < newbuf.Length; i++) {
-                charClass = Latin1_CharToClass[newbuf[i]];
-                freq = Latin1ClassModel[lastCharClass * CLASS_NUM + charClass];
-                if (freq == 0) {
-                  state = ProbingState.NotMe;
+
+            for (int i = 0; i < newbuf.Length; i++)
+            {
+                charClass = Latin1CharToClass[newbuf[i]];
+                freq = Latin1ClassModel[(this.lastCharClass * CLASSNUM) + charClass];
+                if (freq == 0)
+                {
+                  this.state = ProbingState.NotMe;
                   break;
                 }
-                freqCounter[freq]++;
-                lastCharClass = charClass;
+
+                this.freqCounter[freq]++;
+                this.lastCharClass = charClass;
             }
-            return state;
+
+            return this.state;
         }
 
         public override float GetConfidence()
         {
-            if (state == ProbingState.NotMe)
+            if (this.state == ProbingState.NotMe)
+            {
                 return 0.01f;
-            
+            }
+
             float confidence = 0.0f;
             int total = 0;
-            for (int i = 0; i < FREQ_CAT_NUM; i++) {
-                total += freqCounter[i];
+            for (int i = 0; i < FREQCATNUM; i++)
+            {
+                total += this.freqCounter[i];
             }
-            
-            if (total <= 0) {
+
+            if (total <= 0)
+            {
                 confidence = 0.0f;
-            } else {
-                confidence = freqCounter[3] * 1.0f / total;
-                confidence -= freqCounter[1] * 20.0f / total;
             }
-            
-            // lower the confidence of latin1 so that other more accurate detector 
+            else
+            {
+                confidence = this.freqCounter[3] * 1.0f / total;
+                confidence -= this.freqCounter[1] * 20.0f / total;
+            }
+
+            // lower the confidence of latin1 so that other more accurate detector
             // can take priority.
             return confidence < 0.0f ? 0.0f : confidence * 0.5f;
         }
 
         public override void DumpStatus()
         {
-            Console.WriteLine(" Latin1Prober: {0} [{1}]", 
-                GetConfidence(), GetCharsetName());
+            Console.WriteLine(
+                " Latin1Prober: {0} [{1}]",
+                this.GetConfidence(),
+                this.GetCharsetName());
         }
     }
 }
-

@@ -1,86 +1,89 @@
-using System;
-
 namespace Ude.Core
 {
+    using System;
+
     public class EUCJPProber : CharsetProber
     {
         private CodingStateMachine codingSM;
         private EUCJPContextAnalyser contextAnalyser;
         private EUCJPDistributionAnalyser distributionAnalyser;
         private byte[] lastChar = new byte[2];
-        
+
         public EUCJPProber()
         {
-            codingSM = new CodingStateMachine(new EUCJPSMModel());
-            distributionAnalyser = new EUCJPDistributionAnalyser();
-            contextAnalyser = new EUCJPContextAnalyser(); 
-            Reset();
+            this.codingSM = new CodingStateMachine(new EUCJPSMModel());
+            this.distributionAnalyser = new EUCJPDistributionAnalyser();
+            this.contextAnalyser = new EUCJPContextAnalyser();
+            this.Reset();
         }
 
-        public override string GetCharsetName() 
+        public override string GetCharsetName()
         {
             return "EUC-JP";
         }
-        
+
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
             int codingState;
             int max = offset + len;
-            
+
             for (int i = offset; i < max; i++)
             {
-                codingState = codingSM.NextState(buf[i]);
-                if (codingState == SMModel.ERROR)
+                codingState = this.codingSM.NextState(buf[i]);
+                if (codingState == StateMachineModel.Error)
                 {
-                    state = ProbingState.NotMe;
+                    this.state = ProbingState.NotMe;
                     break;
                 }
-                if (codingState == SMModel.ITSME)
+
+                if (codingState == StateMachineModel.ItsMe)
                 {
-                    state = ProbingState.FoundIt;
+                    this.state = ProbingState.FoundIt;
                     break;
                 }
-                if (codingState == SMModel.START)
+
+                if (codingState == StateMachineModel.Start)
                 {
-                    int charLen = codingSM.CurrentCharLen;
+                    int charLen = this.codingSM.CurrentCharLen;
                     if (i == offset)
                     {
-                        lastChar[1] = buf[offset];
-                        contextAnalyser.HandleOneChar(lastChar, 0, charLen);
-                        distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
-                    } else
+                        this.lastChar[1] = buf[offset];
+                        this.contextAnalyser.HandleOneChar(this.lastChar, 0, charLen);
+                        this.distributionAnalyser.HandleOneChar(this.lastChar, 0, charLen);
+                    }
+                    else
                     {
-                        contextAnalyser.HandleOneChar(buf, i-1, charLen);
-                        distributionAnalyser.HandleOneChar(buf, i-1, charLen);
+                        this.contextAnalyser.HandleOneChar(buf, i - 1, charLen);
+                        this.distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
                     }
                 }
             }
-             
-            lastChar[0] = buf[max-1];
-            if (state == ProbingState.Detecting)
+
+            this.lastChar[0] = buf[max - 1];
+            if (this.state == ProbingState.Detecting)
             {
-                if (contextAnalyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
-                { 
-                    state = ProbingState.FoundIt;
+                if (this.contextAnalyser.GotEnoughData() && this.GetConfidence() > ShortcutThreshold)
+                {
+                    this.state = ProbingState.FoundIt;
                 }
             }
-            return state;
+
+            return this.state;
         }
 
         public override void Reset()
         {
-            codingSM.Reset(); 
-            state = ProbingState.Detecting;
-            contextAnalyser.Reset();
-            distributionAnalyser.Reset();
+            this.codingSM.Reset();
+            this.state = ProbingState.Detecting;
+            this.contextAnalyser.Reset();
+            this.distributionAnalyser.Reset();
         }
-        
+
         public override float GetConfidence()
         {
-            float contxtCf  = contextAnalyser.GetConfidence();
-            float distribCf = distributionAnalyser.GetConfidence();
-            return (contxtCf > distribCf ? contxtCf : distribCf);
+            float contxtCf = this.contextAnalyser.GetConfidence();
+            float distribCf = this.distributionAnalyser.GetConfidence();
+            return contxtCf > distribCf ? contxtCf : distribCf;
         }
-        
     }
 }

@@ -25,10 +25,10 @@ namespace Ude.Tests
             };
         
             BitPackage pkg = new BitPackage(
-                    BitPackage.INDEX_SHIFT_4BITS,
-                    BitPackage.SHIFT_MASK_4BITS,
-                    BitPackage.BIT_SHIFT_4BITS,
-                    BitPackage.UNIT_MASK_4BITS,
+                    BitPackage.IndexShift4Bits,
+                    BitPackage.ShiftMask4Bits,
+                    BitPackage.BitShift4Bits,
+                    BitPackage.UnitMask4Bits,
                     data);
 
             for (int i = 0; i < 16; i++) {

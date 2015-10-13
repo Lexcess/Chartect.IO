@@ -38,12 +38,12 @@ namespace Ude.Tests
         {
             Process(Charsets.GB18030, "gb18030");
             Process(Charsets.BIG5, "big5");
-            Process(Charsets.SHIFT_JIS, "shiftjis");
+            Process(Charsets.SHIFTJIS, "shiftjis");
             Process(Charsets.EUCJP, "eucjp");
             Process(Charsets.EUCKR, "euckr");
             Process(Charsets.EUCTW, "euctw");
-            Process(Charsets.ISO2022_JP, "iso2022jp");
-            Process(Charsets.ISO2022_KR, "iso2022kr");
+            Process(Charsets.ISO2022JP, "iso2022jp");
+            Process(Charsets.ISO2022KR, "iso2022kr");
         }
 
         [Test()]
@@ -55,7 +55,7 @@ namespace Ude.Tests
         [Test()]
         public void TestGreek()
         {
-            Process(Charsets.ISO_8859_7, "iso88597");
+            Process(Charsets.ISO88597, "iso88597");
             //Process(Charsets.WIN1253, "windows1253");
         }
 
@@ -66,7 +66,7 @@ namespace Ude.Tests
             Process(Charsets.KOI8R, "koi8r");
             Process(Charsets.IBM855, "ibm855");
             Process(Charsets.IBM866, "ibm866");
-            Process(Charsets.MAC_CYRILLIC, "maccyrillic");
+            Process(Charsets.MACCYRILLIC, "maccyrillic");
         }
 
         [Test()]

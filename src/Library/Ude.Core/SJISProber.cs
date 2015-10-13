@@ -1,7 +1,7 @@
-using System;
-
 namespace Ude.Core
 {
+    using System;
+
     /// <summary>
     /// for S-JIS encoding, observe characteristic:
     /// 1, kana character (or hankaku?) often have hight frequency of appereance
@@ -14,67 +14,82 @@ namespace Ude.Core
         private SJISContextAnalyser contextAnalyser;
         private SJISDistributionAnalyser distributionAnalyser;
         private byte[] lastChar = new byte[2];
-    
+
         public SJISProber()
         {
-            codingSM = new CodingStateMachine(new SJISSMModel());
-            distributionAnalyser = new SJISDistributionAnalyser();
-            contextAnalyser = new SJISContextAnalyser(); 
-            Reset();
+            this.codingSM = new CodingStateMachine(new SJISSMModel());
+            this.distributionAnalyser = new SJISDistributionAnalyser();
+            this.contextAnalyser = new SJISContextAnalyser();
+            this.Reset();
         }
-        
+
         public override string GetCharsetName()
         {
-            return "Shift-JIS";        
+            return "Shift-JIS";
         }
-        
+
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
             int codingState;
             int max = offset + len;
-            
-            for (int i = offset; i < max; i++) {
-                codingState = codingSM.NextState(buf[i]);
-                if (codingState == SMModel.ERROR) {
-                    state = ProbingState.NotMe;
+
+            for (int i = offset; i < max; i++)
+            {
+                codingState = this.codingSM.NextState(buf[i]);
+                if (codingState == StateMachineModel.Error)
+                {
+                    this.state = ProbingState.NotMe;
                     break;
                 }
-                if (codingState == SMModel.ITSME) {
-                    state = ProbingState.FoundIt;
+
+                if (codingState == StateMachineModel.ItsMe)
+                {
+                    this.state = ProbingState.FoundIt;
                     break;
                 }
-                if (codingState == SMModel.START) {
-                    int charLen = codingSM.CurrentCharLen;
-                    if (i == offset) {
-                        lastChar[1] = buf[offset];
-                        contextAnalyser.HandleOneChar(lastChar, 2-charLen, charLen);
-                        distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
-                    } else {
-                        contextAnalyser.HandleOneChar(buf, i+1-charLen, charLen);
-                        distributionAnalyser.HandleOneChar(buf, i-1, charLen);
+
+                if (codingState == StateMachineModel.Start)
+                {
+                    int charLen = this.codingSM.CurrentCharLen;
+                    if (i == offset)
+                    {
+                        this.lastChar[1] = buf[offset];
+                        this.contextAnalyser.HandleOneChar(this.lastChar, 2 - charLen, charLen);
+                        this.distributionAnalyser.HandleOneChar(this.lastChar, 0, charLen);
+                    }
+                    else
+                    {
+                        this.contextAnalyser.HandleOneChar(buf, i + 1 - charLen, charLen);
+                        this.distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
                     }
                 }
-            } 
-            lastChar[0] = buf[max-1];
-            if (state == ProbingState.Detecting)
-                if (contextAnalyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
-                    state = ProbingState.FoundIt;
-            return state;
+            }
+
+            this.lastChar[0] = buf[max - 1];
+            if (this.state == ProbingState.Detecting)
+            {
+                if (this.contextAnalyser.GotEnoughData() && this.GetConfidence() > ShortcutThreshold)
+                {
+                    this.state = ProbingState.FoundIt;
+                }
+            }
+
+            return this.state;
         }
 
         public override void Reset()
         {
-            codingSM.Reset(); 
-            state = ProbingState.Detecting;
-            contextAnalyser.Reset();
-            distributionAnalyser.Reset();
+            this.codingSM.Reset();
+            this.state = ProbingState.Detecting;
+            this.contextAnalyser.Reset();
+            this.distributionAnalyser.Reset();
         }
-        
+
         public override float GetConfidence()
         {
-            float contxtCf = contextAnalyser.GetConfidence();
-            float distribCf = distributionAnalyser.GetConfidence();
-            return (contxtCf > distribCf ? contxtCf : distribCf);
+            float contxtCf = this.contextAnalyser.GetConfidence();
+            float distribCf = this.distributionAnalyser.GetConfidence();
+            return contxtCf > distribCf ? contxtCf : distribCf;
         }
     }
 }
