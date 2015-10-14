@@ -139,7 +139,7 @@ namespace Chartect.IO.Core
 
         public override void Reset()
         {
-            int activeNum = 0;
+            this.activeNum = 0;
             for (int i = 0; i < PROBERSNUM; i++)
             {
                 if (this.probers[i] != null)
