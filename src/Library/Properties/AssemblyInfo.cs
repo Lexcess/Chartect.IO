@@ -1,9 +1,9 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Ude")]
-[assembly: AssemblyProduct("Ude")]
-[assembly: AssemblyDescription("Fork of C# port of Mozilla Universal Charset Detector")]
+[assembly: AssemblyTitle("Chartect.IO")]
+[assembly: AssemblyProduct("Chartect.IO")]
+[assembly: AssemblyDescription("Chartect.IO is a character detection library. Forked from UDE, a port of Mozilla Universal Charset Detector")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyCopyright("Copyright ©")]
@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
-[assembly: AssemblyVersion("0.2.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
 
 [assembly: ComVisible(false)]
 [assembly: System.CLSCompliant(true)]

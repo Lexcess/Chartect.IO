@@ -1,8 +1,8 @@
-﻿namespace Ude.Tests
+﻿namespace Chartect.IO.Tests
 {
     using System;
+    using Chartect.IO.Core;
     using NUnit.Framework;
-    using Ude.Core;
 
     public class DummyCharsetProber : CharsetProber
     {
