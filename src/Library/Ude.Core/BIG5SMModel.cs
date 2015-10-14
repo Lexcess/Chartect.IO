@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class BIG5SMModel : StateMachineModel
+    public class Big5SMModel : StateMachineModel
     {
         private static readonly int[] Big5Cls =
         {
@@ -49,7 +49,7 @@
 
         private static readonly int[] Big5CharLenTable = { 0, 1, 1, 2, 0 };
 
-        public BIG5SMModel()
+        public Big5SMModel()
             : base(
               Big5Cls.To4BitPackage(),
               5,

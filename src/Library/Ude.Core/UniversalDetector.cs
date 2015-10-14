@@ -44,6 +44,19 @@ namespace Ude.Core
             this.LanguageFilter = languageFilter;
         }
 
+        internal InputState InputState
+        {
+            get
+            {
+                return this.inputState;
+            }
+
+            set
+            {
+                this.inputState = value;
+            }
+        }
+
         protected bool Start
         {
             get
@@ -158,19 +171,6 @@ namespace Ude.Core
             set
             {
                 this.bestGuess = value;
-            }
-        }
-
-        internal InputState InputState
-        {
-            get
-            {
-                return this.inputState;
-            }
-
-            set
-            {
-                this.inputState = value;
             }
         }
 

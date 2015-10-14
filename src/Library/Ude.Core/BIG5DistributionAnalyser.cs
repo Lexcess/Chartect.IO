@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
 
-    public class BIG5DistributionAnalyser : CharDistributionAnalyser
+    public class Big5DistributionAnalyser : CharDistributionAnalyser
     {
         // Big5 frequency table
         // by Taiwan's Mandarin Promotion Council
@@ -908,10 +908,10 @@
         ****************************************************************************************/
         };
 
-        public BIG5DistributionAnalyser()
+        public Big5DistributionAnalyser()
         {
-            this.charToFreqOrder = big5Char2FreqOrder;
-            this.typicalDistributionRatio = big5typicalDistributionRatio;
+            this.CharToFreqOrder = big5Char2FreqOrder;
+            this.TypicalDistributionRatio = big5typicalDistributionRatio;
         }
 
         // first  byte range: 0xa4 -- 0xfe

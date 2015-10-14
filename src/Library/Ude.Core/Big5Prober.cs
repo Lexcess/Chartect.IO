@@ -6,13 +6,13 @@ namespace Ude.Core
     {
         // void GetDistribution(PRUint32 aCharLen, const char* aStr);
         private CodingStateMachine codingSM;
-        private BIG5DistributionAnalyser distributionAnalyser;
+        private Big5DistributionAnalyser distributionAnalyser;
         private byte[] lastChar = new byte[2];
 
         public Big5Prober()
         {
-            this.codingSM = new CodingStateMachine(new BIG5SMModel());
-            this.distributionAnalyser = new BIG5DistributionAnalyser();
+            this.codingSM = new CodingStateMachine(new Big5SMModel());
+            this.distributionAnalyser = new Big5DistributionAnalyser();
             this.Reset();
         }
 
@@ -26,13 +26,13 @@ namespace Ude.Core
                 codingState = this.codingSM.NextState(buf[i]);
                 if (codingState == StateMachineModel.Error)
                 {
-                    this.state = ProbingState.NotMe;
+                    this.State = ProbingState.NotMe;
                     break;
                 }
 
                 if (codingState == StateMachineModel.ItsMe)
                 {
-                    this.state = ProbingState.FoundIt;
+                    this.State = ProbingState.FoundIt;
                     break;
                 }
 
@@ -53,21 +53,21 @@ namespace Ude.Core
 
             this.lastChar[0] = buf[max - 1];
 
-            if (this.state == ProbingState.Detecting)
+            if (this.State == ProbingState.Detecting)
             {
                 if (this.distributionAnalyser.GotEnoughData() && this.GetConfidence() > ShortcutThreshold)
                 {
-                    this.state = ProbingState.FoundIt;
+                    this.State = ProbingState.FoundIt;
                 }
             }
 
-            return this.state;
+            return this.State;
         }
 
         public override void Reset()
         {
             this.codingSM.Reset();
-            this.state = ProbingState.Detecting;
+            this.State = ProbingState.Detecting;
             this.distributionAnalyser.Reset();
         }
 

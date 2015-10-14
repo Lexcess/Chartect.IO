@@ -1,107 +1,110 @@
-using System;
-using System.IO;
-using NUnit.Framework;
-
-using Ude;
-
 namespace Ude.Tests
 {
-    
-    [TestFixture()]
+    using System;
+    using System.IO;
+    using NUnit.Framework;
+    using Ude;
+
+    [TestFixture]
     public class CharsetDetectorTestBatch
     {
         // Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location)
-        const string DATA_ROOT = "../../Data";
-        
-        ICharsetDetector detector;
-        
-        [SetUpAttribute] 
+        private const string DataRoot = "../../Data";
+
+        private ICharsetDetector detector;
+
+        [SetUpAttribute]
         public void SetUp()
         {
-            detector = new CharsetDetector();
+            this.detector = new CharsetDetector();
         }
-        
-        [TearDownAttribute] 
+
+        [TearDownAttribute]
         public void TearDown()
         {
-            detector = null;            
-        }        
-        
-        [Test()]
+            this.detector = null;
+        }
+
+        [Test]
         public void TestLatin1()
         {
-            Process(Charsets.WIN1252, "latin1");
+            this.Process(Charsets.WIN1252, "latin1");
         }
-        
-        [Test()]
+
+        [Test]
         public void TestCJK()
         {
-            Process(Charsets.GB18030, "gb18030");
-            Process(Charsets.BIG5, "big5");
-            Process(Charsets.SHIFTJIS, "shiftjis");
-            Process(Charsets.EUCJP, "eucjp");
-            Process(Charsets.EUCKR, "euckr");
-            Process(Charsets.EUCTW, "euctw");
-            Process(Charsets.ISO2022JP, "iso2022jp");
-            Process(Charsets.ISO2022KR, "iso2022kr");
+            this.Process(Charsets.GB18030, "gb18030");
+            this.Process(Charsets.BIG5, "big5");
+            this.Process(Charsets.SHIFTJIS, "shiftjis");
+            this.Process(Charsets.EUCJP, "eucjp");
+            this.Process(Charsets.EUCKR, "euckr");
+            this.Process(Charsets.EUCTW, "euctw");
+            this.Process(Charsets.ISO2022JP, "iso2022jp");
+            this.Process(Charsets.ISO2022KR, "iso2022kr");
         }
 
-        [Test()]
+        [Test]
         public void TestHebrew()
         {
-            Process(Charsets.WIN1255, "windows1255");
+            this.Process(Charsets.WIN1255, "windows1255");
         }
-        
-        [Test()]
+
+        [Test]
         public void TestGreek()
         {
-            Process(Charsets.ISO88597, "iso88597");
-            //Process(Charsets.WIN1253, "windows1253");
+            this.Process(Charsets.ISO88597, "iso88597");
+
+            // Process(Charsets.WIN1253, "windows1253");
         }
 
-        [Test()]
+        [Test]
         public void TestCyrillic()
         {
-            Process(Charsets.WIN1251, "windows1251");
-            Process(Charsets.KOI8R, "koi8r");
-            Process(Charsets.IBM855, "ibm855");
-            Process(Charsets.IBM866, "ibm866");
-            Process(Charsets.MACCYRILLIC, "maccyrillic");
+            this.Process(Charsets.WIN1251, "windows1251");
+            this.Process(Charsets.KOI8R, "koi8r");
+            this.Process(Charsets.IBM855, "ibm855");
+            this.Process(Charsets.IBM866, "ibm866");
+            this.Process(Charsets.MACCYRILLIC, "maccyrillic");
         }
 
-        [Test()]
+        [Test]
         public void TestBulgarian()
         {
-            
         }
-        
-        [Test()]
+
+        [Test]
         public void TestUTF8()
         {
-            Process(Charsets.UTF8, "utf8");            
+            this.Process(Charsets.UTF8, "utf8");
         }
-        
-        private void Process(string charset, string dirname) 
+
+        private void Process(string charset, string dirname)
         {
-            string path = Path.Combine(DATA_ROOT, dirname);
-            if (!Directory.Exists(path)) 
+            string path = Path.Combine(DataRoot, dirname);
+            if (!Directory.Exists(path))
+            {
                 return;
-                
+            }
+
             string[] files = Directory.GetFiles(path);
-                
-            foreach (string file in files) {
-                using (FileStream fs = new FileStream(file, FileMode.Open)) {
-                    Console.WriteLine("Analysing {0}", file);                    
-                    detector.Feed(fs);
-                    detector.DataEnd();
-                    Console.WriteLine("{0} : {1} {2}", 
-                            file, detector.Charset, detector.Confidence);
-                    Assert.AreEqual(charset, detector.Charset);
-                    detector.Reset();
+
+            foreach (string file in files)
+            {
+                using (FileStream fs = new FileStream(file, FileMode.Open))
+                {
+                    Console.WriteLine("Analysing {0}", file);
+                    this.detector.Feed(fs);
+                    this.detector.DataEnd();
+                    Console.WriteLine(
+                            "{0} : {1} {2}",
+                            file,
+                            this.detector.Charset,
+                            this.detector.Confidence);
+                    Assert.AreEqual(charset, this.detector.Charset);
+                    this.detector.Reset();
                 }
             }
         }
     }
 }
-
-            

@@ -75,8 +75,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Ude.Core\BIG5DistributionAnalyser.cs" />
-    <Compile Include="Ude.Core\BIG5SMModel.cs" />
+    <Compile Include="Ude.Core\Big5DistributionAnalyser.cs" />
+    <Compile Include="Ude.Core\Big5SMModel.cs" />
     <Compile Include="Ude.Core\CharDistributionAnalyser.cs" />
     <Compile Include="Ude.Core\CharsetProber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

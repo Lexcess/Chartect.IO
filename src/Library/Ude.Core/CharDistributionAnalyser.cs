@@ -16,23 +16,88 @@ namespace Ude.Core
         protected const int ENOUGHDATATHRESHOLD = 1024;
 
         // If this flag is set to true, detection is done and conclusion has been made
-        protected bool done;
+        private bool done;
 
         // The number of characters whose frequency order is less than 512
-        protected int freqChars;
+        private int freqChars;
 
         // Total character encounted.
-        protected int totalChars;
+        private int totalChars;
 
         // Mapping table to get frequency order from char order (get from GetOrder())
-        protected int[] charToFreqOrder;
+        private int[] charToFreqOrder;
 
         // This constant value varies from language to language. It is used in calculating confidence.
-        protected float typicalDistributionRatio;
+        private float typicalDistributionRatio;
 
         public CharDistributionAnalyser()
         {
             this.Reset();
+        }
+
+        protected bool Done
+        {
+            get
+            {
+                return this.done;
+            }
+
+            set
+            {
+                this.done = value;
+            }
+        }
+
+        protected int FreqChars
+        {
+            get
+            {
+                return this.freqChars;
+            }
+
+            set
+            {
+                this.freqChars = value;
+            }
+        }
+
+        protected int TotalChars
+        {
+            get
+            {
+                return this.totalChars;
+            }
+
+            set
+            {
+                this.totalChars = value;
+            }
+        }
+
+        protected int[] CharToFreqOrder
+        {
+            get
+            {
+                return this.charToFreqOrder;
+            }
+
+            set
+            {
+                this.charToFreqOrder = value;
+            }
+        }
+
+        protected float TypicalDistributionRatio
+        {
+            get
+            {
+                return this.typicalDistributionRatio;
+            }
+
+            set
+            {
+                this.typicalDistributionRatio = value;
+            }
         }
 
         // Feed a block of data and do distribution analysis
@@ -60,12 +125,12 @@ namespace Ude.Core
             int order = (charLen == 2) ? this.GetOrder(buf, offset) : -1;
             if (order >= 0)
             {
-                this.totalChars++;
-                if (order < this.charToFreqOrder.Length)
+                this.TotalChars++;
+                if (order < this.CharToFreqOrder.Length)
                 { // order is valid
-                    if (512 > this.charToFreqOrder[order])
+                    if (512 > this.CharToFreqOrder[order])
                     {
-                        this.freqChars++;
+                        this.FreqChars++;
                     }
                 }
             }
@@ -73,9 +138,9 @@ namespace Ude.Core
 
         public virtual void Reset()
         {
-            this.done = false;
-            this.totalChars = 0;
-            this.freqChars = 0;
+            this.Done = false;
+            this.TotalChars = 0;
+            this.FreqChars = 0;
         }
 
         // return confidence base on received data
@@ -84,14 +149,14 @@ namespace Ude.Core
             // if we didn't receive any character in our consideration range, or the
             // number of frequent characters is below the minimum threshold, return
             // negative answer
-            if (this.totalChars <= 0 || this.freqChars <= MINIMUMDATATHRESHOLD)
+            if (this.TotalChars <= 0 || this.FreqChars <= MINIMUMDATATHRESHOLD)
             {
                 return SURENO;
             }
 
-            if (this.totalChars != this.freqChars)
+            if (this.TotalChars != this.FreqChars)
             {
-                float r = this.freqChars / ((this.totalChars - this.freqChars) * this.typicalDistributionRatio);
+                float r = this.FreqChars / ((this.TotalChars - this.FreqChars) * this.TypicalDistributionRatio);
                 if (r < SUREYES)
                 {
                     return r;
@@ -106,7 +171,7 @@ namespace Ude.Core
         // certain amount of data is enough
         public bool GotEnoughData()
         {
-            return this.totalChars > ENOUGHDATATHRESHOLD;
+            return this.TotalChars > ENOUGHDATATHRESHOLD;
         }
     }
 }

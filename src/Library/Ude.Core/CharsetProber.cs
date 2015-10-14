@@ -16,8 +16,6 @@ namespace Ude.Core
     {
         protected const float ShortcutThreshold = 0.95F;
 
-        protected ProbingState state;
-
         // ASCII codes
         private const byte Space = 0x20;
         private const byte UpperA = 0x41;
@@ -26,6 +24,21 @@ namespace Ude.Core
         private const byte LowerZ = 0x7A;
         private const byte LessThan = 0x3C;
         private const byte GreaterThan = 0x3E;
+
+        private ProbingState state;
+
+        protected ProbingState State
+        {
+            get
+            {
+                return this.state;
+            }
+
+            set
+            {
+                this.state = value;
+            }
+        }
 
         /// <summary>
         /// Feed data to the prober
@@ -49,7 +62,7 @@ namespace Ude.Core
 
         public virtual ProbingState GetState()
         {
-            return this.state;
+            return this.State;
         }
 
         public virtual void SetOption()

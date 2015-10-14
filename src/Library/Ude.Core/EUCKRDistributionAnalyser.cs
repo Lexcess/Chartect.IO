@@ -22,7 +22,7 @@
         public const float EUCKRTYPICALDISTRIBUTIONRATIO = 6.0f;
 
         // Char to FreqOrder table
-        public static int[] EUCKRCHAR2FREQORDER =
+        private static int[] euckrChar2FreqOrder =
         {
           13, 130, 120, 1396, 481, 1719, 1720, 328, 609, 212, 1721, 707, 400, 299, 1722,  87,
         1397, 1723, 104, 536, 1117, 1203, 1724, 1267, 685, 1268, 508, 1725, 1726, 1727, 1728, 1398,
@@ -579,8 +579,8 @@
 
         public EUCKRDistributionAnalyser()
         {
-            this.charToFreqOrder = EUCKRCHAR2FREQORDER;
-            this.typicalDistributionRatio = EUCKRTYPICALDISTRIBUTIONRATIO;
+            this.CharToFreqOrder = euckrChar2FreqOrder;
+            this.TypicalDistributionRatio = EUCKRTYPICALDISTRIBUTIONRATIO;
         }
 
         // first  byte range: 0xb0 -- 0xfe

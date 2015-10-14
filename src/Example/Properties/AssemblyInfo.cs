@@ -10,5 +10,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright © 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: ComVisible(false)]
+[assembly: AssemblyDelaySign(false)]
+[assembly: AssemblyKeyFile("")]
 [assembly: AssemblyVersion("0.2.0.0")]
+
+[assembly: ComVisible(false)]
+[assembly: System.CLSCompliant(true)]

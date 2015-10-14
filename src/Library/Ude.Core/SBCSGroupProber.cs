@@ -52,7 +52,7 @@ namespace Ude.Core
             byte[] newBuf = FilterWithoutEnglishLetters(buf, offset, len);
             if (newBuf.Length == 0)
             {
-                return this.state; // Nothing to see here, move on.
+                return this.State; // Nothing to see here, move on.
             }
 
             for (int i = 0; i < PROBERSNUM; i++)
@@ -67,7 +67,7 @@ namespace Ude.Core
                 if (st == ProbingState.FoundIt)
                 {
                     this.bestGuess = i;
-                    this.state = ProbingState.FoundIt;
+                    this.State = ProbingState.FoundIt;
                     break;
                 }
                 else if (st == ProbingState.NotMe)
@@ -76,19 +76,19 @@ namespace Ude.Core
                     this.activeNum--;
                     if (this.activeNum <= 0)
                     {
-                        this.state = ProbingState.NotMe;
+                        this.State = ProbingState.NotMe;
                         break;
                     }
                 }
             }
 
-            return this.state;
+            return this.State;
         }
 
         public override float GetConfidence()
         {
             float bestConf = 0.0f, cf;
-            switch (this.state)
+            switch (this.State)
             {
             case ProbingState.FoundIt:
                 return 0.99f; // sure yes
@@ -155,7 +155,7 @@ namespace Ude.Core
             }
 
             this.bestGuess = -1;
-            this.state = ProbingState.Detecting;
+            this.State = ProbingState.Detecting;
         }
 
         public override string GetCharsetName()

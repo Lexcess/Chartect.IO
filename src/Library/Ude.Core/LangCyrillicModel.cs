@@ -10,7 +10,7 @@ namespace Ude.Core
         // first 1024 sequences: 2.3389%
         // rest  sequences:      0.1237%
         // negative sequences:   0.0009%
-        protected static readonly byte[] RUSSIANLANGMODEL =
+        private static readonly byte[] RUSSIANLANGMODEL =
         {
             0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 3, 3, 3, 3, 1, 3, 3, 3, 2, 3, 2, 3, 3,
             3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 2, 2, 2, 2, 2, 0, 0, 2,

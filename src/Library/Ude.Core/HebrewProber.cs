@@ -104,6 +104,9 @@ namespace Ude.Core
     /// </summary>
     public class HebrewProber : CharsetProber
     {
+        public const string VisualHebrewName = "ISO-8859-8";
+        public const string LogicalHebrewName = "windows-1255";
+
         // windows-1255 / ISO-8859-8 code points of interest
         private const byte FINALKAF = 0xEA;
         private const byte NORMALKAF = 0xEB;
@@ -124,32 +127,107 @@ namespace Ude.Core
         // If the difference is below this, don't rely at all on the model score distance.
         private const float MINMODELDISTANCE = 0.01f;
 
-        protected const string VISUALHEBREWNAME = "ISO-8859-8";
-        protected const string LOGICALHEBREWNAME = "windows-1255";
+        // The two last bytes seen in the previous buffer.
+        private byte prev;
 
         // owned by the group prober.
-        protected CharsetProber logicalProber;
+        private CharsetProber logicalProber;
 
         // owned by the group prober.
-        protected CharsetProber visualProber;
-        protected int finalCharLogicalScore;
-        protected int finalCharVisualScore;
+        private CharsetProber visualProber;
+        private int finalCharLogicalScore;
+        private int finalCharVisualScore;
 
         // The two last bytes seen in the previous buffer.
-        protected byte prev;
-
-        // The two last bytes seen in the previous buffer.
-        protected byte beforePrev;
+        private byte beforePrev;
 
         public HebrewProber()
         {
             this.Reset();
         }
 
+        protected CharsetProber VisualProber
+        {
+            get
+            {
+                return this.visualProber;
+            }
+
+            set
+            {
+                this.visualProber = value;
+            }
+        }
+
+        protected int FinalCharLogicalScore
+        {
+            get
+            {
+                return this.finalCharLogicalScore;
+            }
+
+            set
+            {
+                this.finalCharLogicalScore = value;
+            }
+        }
+
+        protected int FinalCharVisualScore
+        {
+            get
+            {
+                return this.finalCharVisualScore;
+            }
+
+            set
+            {
+                this.finalCharVisualScore = value;
+            }
+        }
+
+        protected CharsetProber LogicalProber
+        {
+            get
+            {
+                return this.logicalProber;
+            }
+
+            set
+            {
+                this.logicalProber = value;
+            }
+        }
+
+        protected byte Prev
+        {
+            get
+            {
+                return this.prev;
+            }
+
+            set
+            {
+                this.prev = value;
+            }
+        }
+
+        protected byte BeforePrev
+        {
+            get
+            {
+                return this.beforePrev;
+            }
+
+            set
+            {
+                this.beforePrev = value;
+            }
+        }
+
         public void SetModelProbers(CharsetProber logical, CharsetProber visual)
         {
-            this.logicalProber = logical;
-            this.visualProber = visual;
+            this.LogicalProber = logical;
+            this.VisualProber = visual;
         }
 
         // Final letter analysis for logical-visual decision.
@@ -193,32 +271,32 @@ namespace Ude.Core
                 if (b == 0x20)
                 {
                     // *(curPtr-2) was not a space so prev is not a 1 letter word
-                    if (this.beforePrev != 0x20)
+                    if (this.BeforePrev != 0x20)
                     {
                         // case (1) [-2:not space][-1:final letter][cur:space]
-                        if (IsFinal(this.prev))
+                        if (IsFinal(this.Prev))
                         {
-                            this.finalCharLogicalScore++;
+                            this.FinalCharLogicalScore++;
                         }
 
                         // case (2) [-2:not space][-1:Non-Final letter][cur:space]
-                        else if (IsNonFinal(this.prev))
+                        else if (IsNonFinal(this.Prev))
                         {
-                            this.finalCharVisualScore++;
+                            this.FinalCharVisualScore++;
                         }
                     }
                 }
                 else
                 {
                     // case (3) [-2:space][-1:final letter][cur:not space]
-                    if ((this.beforePrev == 0x20) && IsFinal(this.prev) && (b != ' '))
+                    if ((this.BeforePrev == 0x20) && IsFinal(this.Prev) && (b != ' '))
                     {
-                        ++this.finalCharVisualScore;
+                        ++this.FinalCharVisualScore;
                     }
                 }
 
-                this.beforePrev = this.prev;
-                this.prev = b;
+                this.BeforePrev = this.Prev;
+                this.Prev = b;
             }
 
             // Forever detecting, till the end or until both model probers
@@ -230,52 +308,52 @@ namespace Ude.Core
         public override string GetCharsetName()
         {
             // If the final letter score distance is dominant enough, rely on it.
-            int finalsub = this.finalCharLogicalScore - this.finalCharVisualScore;
+            int finalsub = this.FinalCharLogicalScore - this.FinalCharVisualScore;
             if (finalsub >= MINFINALCHARDISTANCE)
             {
-                return LOGICALHEBREWNAME;
+                return LogicalHebrewName;
             }
 
             if (finalsub <= -MINFINALCHARDISTANCE)
             {
-                return VISUALHEBREWNAME;
+                return VisualHebrewName;
             }
 
             // It's not dominant enough, try to rely on the model scores instead.
-            float modelsub = this.logicalProber.GetConfidence() - this.visualProber.GetConfidence();
+            float modelsub = this.LogicalProber.GetConfidence() - this.VisualProber.GetConfidence();
             if (modelsub > MINMODELDISTANCE)
             {
-                return LOGICALHEBREWNAME;
+                return LogicalHebrewName;
             }
 
             if (modelsub < -MINMODELDISTANCE)
             {
-                return VISUALHEBREWNAME;
+                return VisualHebrewName;
             }
 
             // Still no good, back to final letter distance, maybe it'll save the day.
             if (finalsub < 0)
             {
-                return VISUALHEBREWNAME;
+                return VisualHebrewName;
             }
 
             // (finalsub > 0 - Logical) or (don't know what to do) default to Logical.
-            return LOGICALHEBREWNAME;
+            return LogicalHebrewName;
         }
 
         public override void Reset()
         {
-            this.finalCharLogicalScore = 0;
-            this.finalCharVisualScore = 0;
-            this.prev = 0x20;
-            this.beforePrev = 0x20;
+            this.FinalCharLogicalScore = 0;
+            this.FinalCharVisualScore = 0;
+            this.Prev = 0x20;
+            this.BeforePrev = 0x20;
         }
 
         public override ProbingState GetState()
         {
             // Remain active as long as any of the model probers are active.
-            if (this.logicalProber.GetState() == ProbingState.NotMe &&
-                this.visualProber.GetState() == ProbingState.NotMe)
+            if (this.LogicalProber.GetState() == ProbingState.NotMe &&
+                this.VisualProber.GetState() == ProbingState.NotMe)
             {
                 return ProbingState.NotMe;
             }
@@ -287,8 +365,8 @@ namespace Ude.Core
         {
             Console.WriteLine(
                 "  HEB: {0} - {1} [Logical-Visual score]",
-               this.finalCharLogicalScore,
-               this.finalCharVisualScore);
+               this.FinalCharLogicalScore,
+               this.FinalCharVisualScore);
         }
 
         public override float GetConfidence()

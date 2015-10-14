@@ -81,23 +81,23 @@ namespace Ude.Core
                 this.lastOrder = order;
             }
 
-            if (this.state == ProbingState.Detecting)
+            if (this.State == ProbingState.Detecting)
             {
                 if (this.totalSeqs > SBENOUGHRELTHRESHOLD)
                 {
                     float cf = this.GetConfidence();
                     if (cf > POSITIVESHORTCUTTHRESHOLD)
                     {
-                        this.state = ProbingState.FoundIt;
+                        this.State = ProbingState.FoundIt;
                     }
                     else if (cf < NEGATIVESHORTCUTTHRESHOLD)
                     {
-                        this.state = ProbingState.NotMe;
+                        this.State = ProbingState.NotMe;
                     }
                 }
             }
 
-            return this.state;
+            return this.State;
         }
 
         public override void DumpStatus()
@@ -138,7 +138,7 @@ namespace Ude.Core
 
         public override void Reset()
         {
-            this.state = ProbingState.Detecting;
+            this.State = ProbingState.Detecting;
             this.lastOrder = 255;
             for (int i = 0; i < NUMBEROFSEQCAT; i++)
             {

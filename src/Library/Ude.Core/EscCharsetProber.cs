@@ -23,7 +23,7 @@ namespace Ude.Core
 
         public override void Reset()
         {
-            this.state = ProbingState.Detecting;
+            this.State = ProbingState.Detecting;
             for (int i = 0; i < CHARSETSNUM; i++)
             {
                 this.codingSM[i].Reset();
@@ -37,7 +37,7 @@ namespace Ude.Core
         {
             int max = offset + len;
 
-            for (int i = offset; i < max && this.state == ProbingState.Detecting; i++)
+            for (int i = offset; i < max && this.State == ProbingState.Detecting; i++)
             {
                 for (int j = this.activeSM - 1; j >= 0; j--)
                 {
@@ -49,8 +49,8 @@ namespace Ude.Core
                         this.activeSM--;
                         if (this.activeSM == 0)
                         {
-                            this.state = ProbingState.NotMe;
-                            return this.state;
+                            this.State = ProbingState.NotMe;
+                            return this.State;
                         }
                         else if (j != this.activeSM)
                         {
@@ -61,14 +61,14 @@ namespace Ude.Core
                     }
                     else if (codingState == StateMachineModel.ItsMe)
                     {
-                        this.state = ProbingState.FoundIt;
+                        this.State = ProbingState.FoundIt;
                         this.detectedCharset = this.codingSM[j].ModelName;
-                        return this.state;
+                        return this.State;
                     }
                 }
             }
 
-            return this.state;
+            return this.State;
         }
 
         public override string GetCharsetName()

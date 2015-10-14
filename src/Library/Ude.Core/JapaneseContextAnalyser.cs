@@ -14,7 +14,7 @@ namespace Ude.Core
 
         // hiragana frequency category table
         // This is hiragana 2-char sequence table, the number in each cell represents its frequency category
-        protected static byte[,] jp2CharContext =
+        private static byte[,] jp2CharContext =
         {
             { 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, },
             { 2, 4, 0, 4, 0, 3, 0, 4, 0, 3, 4, 4, 4, 2, 4, 3, 3, 4, 3, 2, 3, 3, 4, 2, 3, 3, 3, 2, 4, 1, 4, 3, 3, 1, 5, 4, 3, 4, 3, 4, 3, 5, 3, 0, 3, 5, 4, 2, 0, 3, 1, 0, 3, 3, 0, 3, 3, 0, 1, 1, 0, 4, 3, 0, 3, 3, 0, 4, 0, 2, 0, 3, 5, 5, 5, 5, 4, 0, 4, 1, 0, 3, 4, },
@@ -123,6 +123,19 @@ namespace Ude.Core
             this.Reset();
         }
 
+        protected static byte[,] Jp2CharContext
+        {
+            get
+            {
+                return jp2CharContext;
+            }
+
+            set
+            {
+                jp2CharContext = value;
+            }
+        }
+
         public float GetConfidence()
         {
             // This is just one way to calculate confidence. It works well for me.
@@ -173,7 +186,7 @@ namespace Ude.Core
                             break;
                         }
 
-                        this.relSample[jp2CharContext[this.lastCharOrder, order]]++;
+                        this.relSample[Jp2CharContext[this.lastCharOrder, order]]++;
                    }
 
                    this.lastCharOrder = order;
@@ -200,7 +213,7 @@ namespace Ude.Core
                 this.totalRel++;
 
                 // count this sequence to its category counter
-                this.relSample[jp2CharContext[this.lastCharOrder, order]]++;
+                this.relSample[Jp2CharContext[this.lastCharOrder, order]]++;
             }
 
             this.lastCharOrder = order;

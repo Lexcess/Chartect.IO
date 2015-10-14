@@ -60,7 +60,7 @@ namespace Ude.Core
             }
 
             this.bestGuess = -1;
-            this.state = ProbingState.Detecting;
+            this.State = ProbingState.Detecting;
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)
@@ -104,7 +104,7 @@ namespace Ude.Core
                 if (st == ProbingState.FoundIt)
                 {
                     this.bestGuess = i;
-                    this.state = ProbingState.FoundIt;
+                    this.State = ProbingState.FoundIt;
                     break;
                 }
                 else if (st == ProbingState.NotMe)
@@ -113,13 +113,13 @@ namespace Ude.Core
                     this.activeNum--;
                     if (this.activeNum <= 0)
                     {
-                        this.state = ProbingState.NotMe;
+                        this.State = ProbingState.NotMe;
                         break;
                     }
                 }
             }
 
-            return this.state;
+            return this.State;
         }
 
         public override float GetConfidence()
@@ -127,11 +127,11 @@ namespace Ude.Core
             float bestConf = 0.0f;
             float cf = 0.0f;
 
-            if (this.state == ProbingState.FoundIt)
+            if (this.State == ProbingState.FoundIt)
             {
                 return 0.99f;
             }
-            else if (this.state == ProbingState.NotMe)
+            else if (this.State == ProbingState.NotMe)
             {
                 return 0.01f;
             }

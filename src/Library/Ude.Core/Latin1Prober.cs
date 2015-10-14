@@ -88,7 +88,7 @@ namespace Ude.Core
 
         public override void Reset()
         {
-            this.state = ProbingState.Detecting;
+            this.State = ProbingState.Detecting;
             this.lastCharClass = OTH;
             for (int i = 0; i < FREQCATNUM; i++)
             {
@@ -107,7 +107,7 @@ namespace Ude.Core
                 freq = Latin1ClassModel[(this.lastCharClass * CLASSNUM) + charClass];
                 if (freq == 0)
                 {
-                  this.state = ProbingState.NotMe;
+                  this.State = ProbingState.NotMe;
                   break;
                 }
 
@@ -115,12 +115,12 @@ namespace Ude.Core
                 this.lastCharClass = charClass;
             }
 
-            return this.state;
+            return this.State;
         }
 
         public override float GetConfidence()
         {
-            if (this.state == ProbingState.NotMe)
+            if (this.State == ProbingState.NotMe)
             {
                 return 0.01f;
             }

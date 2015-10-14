@@ -26,7 +26,7 @@ namespace Ude.Core
         {
             this.codingSM.Reset();
             this.numOfMBChar = 0;
-            this.state = ProbingState.Detecting;
+            this.State = ProbingState.Detecting;
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)
@@ -40,13 +40,13 @@ namespace Ude.Core
 
                 if (codingState == StateMachineModel.Error)
                 {
-                    this.state = ProbingState.NotMe;
+                    this.State = ProbingState.NotMe;
                     break;
                 }
 
                 if (codingState == StateMachineModel.ItsMe)
                 {
-                    this.state = ProbingState.FoundIt;
+                    this.State = ProbingState.FoundIt;
                     break;
                 }
 
@@ -59,15 +59,15 @@ namespace Ude.Core
                 }
             }
 
-            if (this.state == ProbingState.Detecting)
+            if (this.State == ProbingState.Detecting)
             {
                 if (this.GetConfidence() > ShortcutThreshold)
                 {
-                    this.state = ProbingState.FoundIt;
+                    this.State = ProbingState.FoundIt;
                 }
             }
 
-            return this.state;
+            return this.State;
         }
 
         public override float GetConfidence()

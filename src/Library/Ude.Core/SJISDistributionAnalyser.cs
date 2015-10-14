@@ -23,9 +23,9 @@
          * Typical Distribution Ratio, 25% of IDR
          *****************************************************************************/
 
-        protected static float SjisTypicalDistributionRatio = 3.0f;
+        private static float sjisTypicalDistributionRatio = 3.0f;
 
-        protected static int[] SjisChar2FreqOrder =
+        private static int[] sjisChar2FreqOrder =
         {
           40,    1,    6,  182,  152,  180,  295, 2127,  285,  381, 3295, 4304, 3068, 4606, 3165, 3510, // 16
         3511, 1822, 2785, 4607, 1193, 2226, 5070, 4608,  171, 2996, 1247,   18,  179, 5071,  856, 1661, // 32
@@ -554,8 +554,34 @@
 
         public SJISDistributionAnalyser()
         {
-            this.charToFreqOrder = SjisChar2FreqOrder;
-            this.typicalDistributionRatio = SjisTypicalDistributionRatio;
+            this.CharToFreqOrder = SjisChar2FreqOrder;
+            this.TypicalDistributionRatio = SjisTypicalDistributionRatio;
+        }
+
+        protected static float SjisTypicalDistributionRatio
+        {
+            get
+            {
+                return sjisTypicalDistributionRatio;
+            }
+
+            set
+            {
+                sjisTypicalDistributionRatio = value;
+            }
+        }
+
+        protected static int[] SjisChar2FreqOrder
+        {
+            get
+            {
+                return sjisChar2FreqOrder;
+            }
+
+            set
+            {
+                sjisChar2FreqOrder = value;
+            }
         }
 
         // first  byte range: 0x81 -- 0x9f , 0xe0 -- 0xfe
