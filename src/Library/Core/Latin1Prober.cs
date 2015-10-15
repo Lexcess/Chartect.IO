@@ -149,10 +149,7 @@ namespace Chartect.IO.Core
 
         public override void DumpStatus()
         {
-            Console.WriteLine(
-                " Latin1Prober: {0} [{1}]",
-                this.GetConfidence(),
-                this.GetCharsetName());
+            System.Diagnostics.Debug.WriteLine($"Latin1Prober: {this.GetConfidence()} [{this.GetCharsetName()}]");
         }
     }
 }

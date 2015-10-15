@@ -105,12 +105,6 @@
   </Target>
   -->
   <ItemGroup>
-    <ProjectReference Include="..\Library\Chartect.IO.csproj">
-      <Project>{7BECB850-389A-44FC-8523-3EF0B2540F07}</Project>
-      <Name>Chartect.IO</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Data\big5\1.txt" />
     <None Include="Data\eucjp\1.txt" />
     <None Include="Data\euckr\euc1.txt" />
@@ -164,5 +158,11 @@
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0-beta013\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0-beta013\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Library\Chartect.IO.csproj">
+      <Project>{bababc81-a5b8-4ba8-b149-4f4520c53dc1}</Project>
+      <Name>Chartect.IO</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

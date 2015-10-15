@@ -102,7 +102,7 @@ namespace Chartect.IO.Core
 
         public override void DumpStatus()
         {
-            Console.WriteLine(
+            System.Diagnostics.Debug.WriteLine(
                 "  SBCS: {0} [{1}]",
                 this.GetConfidence(),
                 this.GetCharsetName());

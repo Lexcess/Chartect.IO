@@ -119,12 +119,12 @@ namespace Chartect.IO.Core
         public override void DumpStatus()
         {
             float cf = this.GetConfidence();
-            Console.WriteLine(" SBCS Group Prober --------begin status");
+            System.Diagnostics.Debug.WriteLine(" SBCS Group Prober --------begin status");
             for (int i = 0; i < PROBERSNUM; i++)
             {
                 if (!this.isActive[i])
                 {
-                    Console.WriteLine(
+                    System.Diagnostics.Debug.WriteLine(
                         " inactive: [{0}] (i.e. confidence is too low).", this.probers[i].GetCharsetName());
                 }
                 else
@@ -133,7 +133,7 @@ namespace Chartect.IO.Core
                 }
             }
 
-            Console.WriteLine(
+            System.Diagnostics.Debug.WriteLine(
                 " SBCS Group found best match [{0}] confidence {1}.", this.probers[this.bestGuess].GetCharsetName(), cf);
         }
 

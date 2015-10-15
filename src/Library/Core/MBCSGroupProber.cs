@@ -164,14 +164,12 @@ namespace Chartect.IO.Core
             {
                 if (!this.isActive[i])
                 {
-                    Console.WriteLine(
-                        "  MBCS inactive: {0} (confidence is too low).",
-                         ProberName[i]);
+                    System.Diagnostics.Debug.WriteLine($"  MBCS inactive: {ProberName[i]} (confidence is too low).");
                 }
                 else
                 {
                     cf = this.probers[i].GetConfidence();
-                    Console.WriteLine("  MBCS {0}: [{1}]", cf, ProberName[i]);
+                    System.Diagnostics.Debug.WriteLine($"  MBCS {cf}: [{ProberName[i]}]");
                 }
             }
         }

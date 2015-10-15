@@ -6,11 +6,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chartect", "src\Example\Chartect.csproj", "{F672E6C2-14CC-47B6-8451-4D8AEDE86130}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chartect.IO.Test", "src\Tests\Chartect.IO.Test.csproj", "{53C6763B-CA4B-4F14-9326-A43C29FF0B4E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{7BECB850-389A-44FC-8523-3EF0B2540F07} = {7BECB850-389A-44FC-8523-3EF0B2540F07}
-	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chartect.IO", "src\Library\Chartect.IO.csproj", "{7BECB850-389A-44FC-8523-3EF0B2540F07}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chartect.IO", "src\Library\Chartect.IO.csproj", "{BABABC81-A5B8-4BA8-B149-4F4520C53DC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +23,10 @@ Global
 		{53C6763B-CA4B-4F14-9326-A43C29FF0B4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53C6763B-CA4B-4F14-9326-A43C29FF0B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53C6763B-CA4B-4F14-9326-A43C29FF0B4E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7BECB850-389A-44FC-8523-3EF0B2540F07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7BECB850-389A-44FC-8523-3EF0B2540F07}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7BECB850-389A-44FC-8523-3EF0B2540F07}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7BECB850-389A-44FC-8523-3EF0B2540F07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BABABC81-A5B8-4BA8-B149-4F4520C53DC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BABABC81-A5B8-4BA8-B149-4F4520C53DC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BABABC81-A5B8-4BA8-B149-4F4520C53DC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BABABC81-A5B8-4BA8-B149-4F4520C53DC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

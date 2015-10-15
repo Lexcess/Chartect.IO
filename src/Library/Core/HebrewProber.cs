@@ -363,10 +363,8 @@ namespace Chartect.IO.Core
 
         public override void DumpStatus()
         {
-            Console.WriteLine(
-                "  HEB: {0} - {1} [Logical-Visual score]",
-               this.FinalCharLogicalScore,
-               this.FinalCharVisualScore);
+            System.Diagnostics.Debug.WriteLine(
+                $"  HEB: {this.FinalCharLogicalScore} - {this.FinalCharVisualScore} [Logical-Visual score]");
         }
 
         public override float GetConfidence()

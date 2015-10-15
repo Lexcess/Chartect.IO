@@ -1,8 +1,8 @@
-namespace Chartect.IO.Example
+namespace Chartect
 {
     using System;
     using System.IO;
-    using Chartect;
+    using Chartect.IO;
 
     public class Udetect
     {
