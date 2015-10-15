@@ -114,7 +114,7 @@
     <Compile Include="Core\SJISSMModel.cs" />
     <Compile Include="Core\UCS2BESMModel.cs" />
     <Compile Include="Core\UCS2LESMModel.cs" />
-    <Compile Include="Core\UdeExtensions.cs" />
+    <Compile Include="Core\CharsetExtensions.cs" />
     <Compile Include="Core\UniversalDetector.cs" />
     <Compile Include="Core\UTF8Prober.cs" />
     <Compile Include="Core\SequenceModel.cs" />

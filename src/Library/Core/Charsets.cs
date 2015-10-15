@@ -22,6 +22,9 @@ namespace Chartect
         /// <summary> Unusual BOM (2413 order) </summary>
         public const string UCS42413 = "X-ISO-10646-UCS-4-2413";
 
+        /// <summary> Hungarian </summary>
+        public const string Win1250 = "windows-1250";
+
         /// <summary> Cyrillic (based on bulgarian and russian data) </summary>
         public const string WIN1251 = "windows-1251";
 

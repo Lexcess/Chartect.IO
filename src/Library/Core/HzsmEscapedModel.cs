@@ -5,7 +5,7 @@ namespace Chartect.IO.Core
 
     public class HzsmEscapedModel : StateMachineModel
     {
-        private static readonly int[] HZCls =
+        private static readonly int[] ModelClassTable =
         {
             BitPackage.Pack4bits(1, 0, 0, 0, 0, 0, 0, 0), // 00 - 07
             BitPackage.Pack4bits(0, 0, 0, 0, 0, 0, 0, 0), // 08 - 0f
@@ -38,28 +38,28 @@ namespace Chartect.IO.Core
             BitPackage.Pack4bits(1, 1, 1, 1, 1, 1, 1, 1), // e0 - e7
             BitPackage.Pack4bits(1, 1, 1, 1, 1, 1, 1, 1), // e8 - ef
             BitPackage.Pack4bits(1, 1, 1, 1, 1, 1, 1, 1), // f0 - f7
-            BitPackage.Pack4bits(1, 1, 1, 1, 1, 1, 1, 1) // f8 - ff
+            BitPackage.Pack4bits(1, 1, 1, 1, 1, 1, 1, 1), // f8 - ff
         };
 
-        private static readonly int[] HZSt =
+        private static readonly int[] ModelStateTable =
         {
             BitPackage.Pack4bits(Start, Error,     3, Start, Start, Start, Error, Error), // 00-07
             BitPackage.Pack4bits(Error, Error, Error, Error, ItsMe, ItsMe, ItsMe, ItsMe), // 08-0f
             BitPackage.Pack4bits(ItsMe, ItsMe, Error, Error, Start, Start,     4, Error), // 10-17
-            BitPackage.Pack4bits(5, Error,     6, Error,     5,     5,     4, Error), // 18-1f
-            BitPackage.Pack4bits(4, Error,     4,     4,     4, Error,     4, Error), // 20-27
-            BitPackage.Pack4bits(4, ItsMe, Start, Start, Start, Start, Start, Start) // 28-2f
+            BitPackage.Pack4bits(5,     Error,     6, Error,     5,     5,     4, Error), // 18-1f
+            BitPackage.Pack4bits(4,     Error,     4,     4,     4, Error,     4, Error), // 20-27
+            BitPackage.Pack4bits(4,     ItsMe, Start, Start, Start, Start, Start, Start), // 28-2f
         };
 
-        private static readonly int[] HZCharLenTable = { 0, 0, 0, 0, 0, 0 };
+        private static readonly int[] CharacterLengthTable = { 0, 0, 0, 0, 0, 0 };
 
         public HzsmEscapedModel()
             : base(
-              HZCls.To4BitPackage(),
+              ModelClassTable.To4BitPackage(),
               6,
-              HZSt.To4BitPackage(),
-              HZCharLenTable,
-              "HZ-GB-2312")
+              ModelStateTable.To4BitPackage(),
+              CharacterLengthTable,
+              Charsets.HZGB2312)
         {
         }
     }

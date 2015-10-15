@@ -4,7 +4,7 @@
 
     public class SJISSMModel : StateMachineModel
     {
-        private static readonly int[] SJISCls =
+        private static readonly int[] ModelClassTable =
         {
             // BitPacket.Pack4bits(0,1,1,1,1,1,1,1),  // 00 - 07
             BitPackage.Pack4bits(1, 1, 1, 1, 1, 1, 1, 1),  // 00 - 07
@@ -28,7 +28,7 @@
             BitPackage.Pack4bits(3, 3, 3, 3, 3, 3, 3, 3),  // 90 - 97
             BitPackage.Pack4bits(3, 3, 3, 3, 3, 3, 3, 3),  // 98 - 9f
             // 0xa0 is illegal in sjis encoding, but some pages does
-            // contain such byte. We need to be more error forgiven.
+            // contain such byte. We need to be more error forgiving.
             BitPackage.Pack4bits(2, 2, 2, 2, 2, 2, 2, 2),  // a0 - a7
             BitPackage.Pack4bits(2, 2, 2, 2, 2, 2, 2, 2),  // a8 - af
             BitPackage.Pack4bits(2, 2, 2, 2, 2, 2, 2, 2),  // b0 - b7
@@ -40,25 +40,25 @@
             BitPackage.Pack4bits(3, 3, 3, 3, 3, 3, 3, 3),  // e0 - e7
             BitPackage.Pack4bits(3, 3, 3, 3, 3, 4, 4, 4),  // e8 - ef
             BitPackage.Pack4bits(4, 4, 4, 4, 4, 4, 4, 4),  // f0 - f7
-            BitPackage.Pack4bits(4, 4, 4, 4, 4, 0, 0, 0) // f8 - ff
+            BitPackage.Pack4bits(4, 4, 4, 4, 4, 0, 0, 0),  // f8 - ff
         };
 
-        private static readonly int[] SJISSt =
+        private static readonly int[] ModelStateTable =
         {
-            BitPackage.Pack4bits(Error, Start, Start,    3, Error, Error, Error, Error), // 00-07
+            BitPackage.Pack4bits(Error, Start, Start,     3, Error, Error, Error, Error), // 00-07
             BitPackage.Pack4bits(Error, Error, Error, Error, ItsMe, ItsMe, ItsMe, ItsMe), // 08-0f
-            BitPackage.Pack4bits(ItsMe, ItsMe, Error, Error, Start, Start, Start, Start) // 10-17
+            BitPackage.Pack4bits(ItsMe, ItsMe, Error, Error, Start, Start, Start, Start), // 10-17
         };
 
-        private static readonly int[] SJISCharLenTable = { 0, 1, 1, 2, 0, 0 };
+        private static readonly int[] CharacterLengthTable = { 0, 1, 1, 2, 0, 0 };
 
         public SJISSMModel()
             : base(
-              SJISCls.To4BitPackage(),
+              ModelClassTable.To4BitPackage(),
               6,
-              SJISSt.To4BitPackage(),
-              SJISCharLenTable,
-              "Shift_JIS")
+              ModelStateTable.To4BitPackage(),
+              CharacterLengthTable,
+              Charsets.SHIFTJIS)
         {
         }
     }

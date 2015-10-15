@@ -4,7 +4,7 @@
 
     public class UCS2LESMModel : StateMachineModel
     {
-        private static readonly int[] UCS2LECls =
+        private static readonly int[] ModelClassTable =
         {
             BitPackage.Pack4bits(0, 0, 0, 0, 0, 0, 0, 0),  // 00 - 07
             BitPackage.Pack4bits(0, 0, 1, 0, 0, 2, 0, 0),  // 08 - 0f
@@ -37,29 +37,29 @@
             BitPackage.Pack4bits(0, 0, 0, 0, 0, 0, 0, 0),  // e0 - e7
             BitPackage.Pack4bits(0, 0, 0, 0, 0, 0, 0, 0),  // e8 - ef
             BitPackage.Pack4bits(0, 0, 0, 0, 0, 0, 0, 0),  // f0 - f7
-            BitPackage.Pack4bits(0, 0, 0, 0, 0, 0, 4, 5) // f8 - ff
+            BitPackage.Pack4bits(0, 0, 0, 0, 0, 0, 4, 5),  // f8 - ff
         };
 
-        private static readonly int[] UCS2LESt =
+        private static readonly int[] ModelStateTable =
         {
-            BitPackage.Pack4bits(6,    6,    7,    6,    4,    3, Error, Error), // 00-07
-            BitPackage.Pack4bits(Error, Error, Error, Error, ItsMe, ItsMe, ItsMe, ItsMe), // 08-0f
-            BitPackage.Pack4bits(ItsMe, ItsMe,    5,    5,    5, Error, ItsMe, Error), // 10-17
-            BitPackage.Pack4bits(5,    5,    5, Error,    5, Error,    6,    6), // 18-1f
-            BitPackage.Pack4bits(7,    6,    8,    8,    5,    5,    5, Error), // 20-27
-            BitPackage.Pack4bits(5,    5,    5, Error, Error, Error,    5,    5), // 28-2f
-            BitPackage.Pack4bits(5,    5,    5, Error,    5, Error, Start, Start) // 30-37
+            BitPackage.Pack4bits(6,          6,     7,     6,     4,     3, Error, Error), // 00-07
+            BitPackage.Pack4bits(Error,  Error, Error, Error, ItsMe, ItsMe, ItsMe, ItsMe), // 08-0f
+            BitPackage.Pack4bits(ItsMe,  ItsMe,     5,     5,     5, Error, ItsMe, Error), // 10-17
+            BitPackage.Pack4bits(5,          5,     5, Error,     5, Error,     6,     6), // 18-1f
+            BitPackage.Pack4bits(7,          6,     8,     8,     5,     5,     5, Error), // 20-27
+            BitPackage.Pack4bits(5,          5,     5, Error, Error, Error,     5,     5), // 28-2f
+            BitPackage.Pack4bits(5,          5,     5, Error,     5, Error, Start, Start), // 30-37
         };
 
-        private static readonly int[] UCS2LECharLenTable = { 2, 2, 2, 2, 2, 2 };
+        private static readonly int[] CharacterLengthTable = { 2, 2, 2, 2, 2, 2 };
 
         public UCS2LESMModel()
             : base(
-              UCS2LECls.To4BitPackage(),
+              ModelClassTable.To4BitPackage(),
               6,
-              UCS2LESt.To4BitPackage(),
-              UCS2LECharLenTable,
-              "UTF-16LE")
+              ModelStateTable.To4BitPackage(),
+              CharacterLengthTable,
+              Charsets.UTF16LE)
         {
         }
     }

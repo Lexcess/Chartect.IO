@@ -4,7 +4,7 @@
 
     public class EUCJPSMModel : StateMachineModel
     {
-        private static readonly int[] EUCJPCls =
+        private static readonly int[] ModelClassTable =
         {
             // BitPacket.Pack4bits(5,4,4,4,4,4,4,4),  // 00 - 07
             BitPackage.Pack4bits(4, 4, 4, 4, 4, 4, 4, 4),  // 00 - 07
@@ -41,7 +41,7 @@
             BitPackage.Pack4bits(0, 0, 0, 0, 0, 0, 0, 5) // f8 - ff
         };
 
-        private static readonly int[] EUCJPSt =
+        private static readonly int[] ModelStateTable =
         {
             BitPackage.Pack4bits(3,    4,    3,    5, Start, Error, Error, Error), // 00-07
             BitPackage.Pack4bits(Error, Error, Error, Error, ItsMe, ItsMe, ItsMe, ItsMe), // 08-0f
@@ -50,15 +50,15 @@
             BitPackage.Pack4bits(3, Error, Error, Error, Start, Start, Start, Start) // 20-27
         };
 
-        private static readonly int[] EUCJPCharLenTable = { 2, 2, 2, 3, 1, 0 };
+        private static readonly int[] CharacterLengthTable = { 2, 2, 2, 3, 1, 0 };
 
         public EUCJPSMModel()
             : base(
-              EUCJPCls.To4BitPackage(),
+              ModelClassTable.To4BitPackage(),
               6,
-              EUCJPSt.To4BitPackage(),
-              EUCJPCharLenTable,
-              "EUC-JP")
+              ModelStateTable.To4BitPackage(),
+              CharacterLengthTable,
+              Charsets.EUCJP)
         {
         }
     }

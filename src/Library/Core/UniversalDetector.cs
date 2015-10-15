@@ -197,7 +197,7 @@ namespace Chartect.IO.Core
                     case 0xEF:
                         if (0xBB == buf[1] && 0xBF == buf[2])
                             {
-                                this.DetectedCharset = "UTF-8";
+                                this.DetectedCharset = Charsets.UTF8;
                             }
 
                             break;
@@ -205,34 +205,34 @@ namespace Chartect.IO.Core
                         if (0xFF == buf[1] && 0x00 == buf[2] && 0x00 == buf[3])
                             {
                                 // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
-                                this.DetectedCharset = "X-ISO-10646-UCS-4-3412";
+                                this.DetectedCharset = Charsets.UCS43412;
                             }
                             else if (0xFF == buf[1])
                             {
-                                this.DetectedCharset = "UTF-16BE";
+                                this.DetectedCharset = Charsets.UTF16BE;
                             }
 
                             break;
                     case 0x00:
                         if (0x00 == buf[1] && 0xFE == buf[2] && 0xFF == buf[3])
                             {
-                                this.DetectedCharset = "UTF-32BE";
+                                this.DetectedCharset = Charsets.UTF32BE;
                             }
                             else if (0x00 == buf[1] && 0xFF == buf[2] && 0xFE == buf[3])
                             {
                                 // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
-                                this.DetectedCharset = "X-ISO-10646-UCS-4-2143";
+                                this.DetectedCharset = Charsets.UCS42413;
                             }
 
                             break;
                     case 0xFF:
                         if (0xFE == buf[1] && 0x00 == buf[2] && 0x00 == buf[3])
                             {
-                                this.DetectedCharset = "UTF-32LE";
+                                this.DetectedCharset = Charsets.UTF32LE;
                             }
                             else if (0xFE == buf[1])
                             {
-                                this.DetectedCharset = "UTF-16LE";
+                                this.DetectedCharset = Charsets.UTF16LE;
                             }
 
                             break;
@@ -382,7 +382,7 @@ namespace Chartect.IO.Core
             }
             else if (this.InputState == InputState.PureASCII)
             {
-                this.Report("ASCII", 1.0f);
+                this.Report(Charsets.ASCII, 1.0f);
             }
         }
 

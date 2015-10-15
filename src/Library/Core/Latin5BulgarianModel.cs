@@ -11,7 +11,7 @@
         // Character Mapping Table:
         // this table is modified base on win1251BulgarianCharToOrderMap, so
         // only number <64 is sure valid
-        private static byte[] latin5ChartOrderMap =
+        private static readonly byte[] OrderMap =
         {
              255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 254, 255, 255, 254, 255, 255,  // 00
              255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // 10
@@ -32,7 +32,7 @@
         };
 
         public Latin5BulgarianModel()
-            : base(latin5ChartOrderMap, "ISO-8859-5")
+            : base(OrderMap, Charsets.ISO88595)
         {
         }
     }

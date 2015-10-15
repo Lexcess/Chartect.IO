@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
 
-    internal static class UdeExtensions
+    internal static class CharsetExtensions
     {
         public static BitPackage To4BitPackage(this int[] data)
         {

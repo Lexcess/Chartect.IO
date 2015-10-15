@@ -4,7 +4,7 @@
 
     public class EUCTWSMModel : StateMachineModel
     {
-        private static readonly int[] EUCTWCls =
+        private static readonly int[] ModelClassTable =
         {
             BitPackage.Pack4bits(2, 2, 2, 2, 2, 2, 2, 2),  // 00 - 07
             BitPackage.Pack4bits(2, 2, 2, 2, 2, 2, 0, 0),  // 08 - 0f
@@ -40,7 +40,7 @@
             BitPackage.Pack4bits(3, 3, 3, 3, 3, 3, 3, 0) // f8 - ff
         };
 
-        private static readonly int[] EUCTWSt =
+        private static readonly int[] ModelStateTable =
         {
             BitPackage.Pack4bits(Error, Error, Start,    3,    3,    3,    4, Error), // 00-07
             BitPackage.Pack4bits(Error, Error, Error, Error, Error, Error, ItsMe, ItsMe), // 08-0f
@@ -50,15 +50,15 @@
             BitPackage.Pack4bits(Start, Error, Start, Start, Start, Start, Start, Start) // 28-2f
         };
 
-        private static readonly int[] EUCTWCharLenTable = { 0, 0, 1, 2, 2, 2, 3 };
+        private static readonly int[] CharacterLengthTable = { 0, 0, 1, 2, 2, 2, 3 };
 
         public EUCTWSMModel()
             : base(
-              EUCTWCls.To4BitPackage(),
+              ModelClassTable.To4BitPackage(),
               7,
-              EUCTWSt.To4BitPackage(),
-              EUCTWCharLenTable,
-              "EUC-TW")
+              ModelStateTable.To4BitPackage(),
+              CharacterLengthTable,
+              Charsets.EUCTW)
         {
         }
     }

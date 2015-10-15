@@ -25,7 +25,7 @@ namespace Chartect.IO.Core
 
         public override string GetCharsetName()
         {
-            return "Shift-JIS";
+            return Charsets.SHIFTJIS;
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)

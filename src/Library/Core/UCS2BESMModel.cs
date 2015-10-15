@@ -4,7 +4,7 @@
 
     public class UCS2BESMModel : StateMachineModel
     {
-        private static readonly int[] UCS2BECls =
+        private static readonly int[] ModelClassTable =
         {
             BitPackage.Pack4bits(0, 0, 0, 0, 0, 0, 0, 0),  // 00 - 07
             BitPackage.Pack4bits(0, 0, 1, 0, 0, 2, 0, 0),  // 08 - 0f
@@ -40,7 +40,7 @@
             BitPackage.Pack4bits(0, 0, 0, 0, 0, 0, 4, 5),  // f8 - ff
         };
 
-        private static readonly int[] UCS2BESt =
+        private static readonly int[] ModelStateTable =
         {
             BitPackage.Pack4bits(5,         7,     7, Error,     4,     3, Error, Error), // 00-07
             BitPackage.Pack4bits(Error, Error, Error, Error, ItsMe, ItsMe, ItsMe, ItsMe), // 08-0f
@@ -51,15 +51,15 @@
             BitPackage.Pack4bits(6,         6,     6,     6, Error, Error, Start, Start), // 30-37
         };
 
-        private static readonly int[] UCS2BECharLenTable = { 2, 2, 2, 0, 2, 2 };
+        private static readonly int[] CharacterLengthTable = { 2, 2, 2, 0, 2, 2 };
 
         public UCS2BESMModel()
             : base(
-               UCS2BECls.To4BitPackage(),
-               6,
-               UCS2BESt.To4BitPackage(),
-               UCS2BECharLenTable,
-              "UTF-16BE")
+              ModelClassTable.To4BitPackage(),
+              6,
+              ModelStateTable.To4BitPackage(),
+              CharacterLengthTable,
+              Charsets.UTF16BE)
         {
         }
     }

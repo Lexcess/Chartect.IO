@@ -7,7 +7,7 @@ namespace Chartect.IO.Tests
     public class BitPackageTest
     {
         [Test]
-        public void TestPack()
+        public void PackTest()
         {
             Assert.AreEqual(BitPackage.Pack4bits(0, 0, 0, 0, 0, 0, 0, 0), 0);
             Assert.AreEqual(BitPackage.Pack4bits(1, 1, 1, 1, 1, 1, 1, 1), 286331153);
@@ -16,7 +16,7 @@ namespace Chartect.IO.Tests
         }
 
         [Test]
-        public void TestUnpack()
+        public void UnpackTest()
         {
             int[] data = new int[]
             {

@@ -10,7 +10,7 @@ namespace Chartect.IO.Core
         // first 1024 sequences:3.0618%
         // rest  sequences:     0.2992%
         // negative sequences:  0.0020%
-        private static byte[] bulgarianLangModel =
+        private static readonly byte[] BulgarianLanguageModel =
         {
             0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3,
             3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 3, 3, 2, 2, 3, 2, 2, 1, 2, 2,
@@ -143,7 +143,7 @@ namespace Chartect.IO.Core
         };
 
         public BulgarianModel(byte[] charToOrderMap, string name)
-            : base(charToOrderMap, bulgarianLangModel, 0.969392f, false, name)
+            : base(charToOrderMap, BulgarianLanguageModel, 0.969392f, false, name)
         {
         }
     }

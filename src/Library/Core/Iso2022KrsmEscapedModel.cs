@@ -5,7 +5,7 @@ namespace Chartect.IO.Core
 
     public class Iso2022KrsmEscapedModel : StateMachineModel
     {
-        private static readonly int[] ISO2022KRCls =
+        private static readonly int[] ModelClassTable =
         {
             BitPackage.Pack4bits(2, 0, 0, 0, 0, 0, 0, 0),  // 00 - 07
             BitPackage.Pack4bits(0, 0, 0, 0, 0, 0, 0, 0),  // 08 - 0f
@@ -41,7 +41,7 @@ namespace Chartect.IO.Core
             BitPackage.Pack4bits(2, 2, 2, 2, 2, 2, 2, 2) // f8 - ff
         };
 
-        private static readonly int[] ISO2022KRSt =
+        private static readonly int[] ModelStateTable =
         {
             BitPackage.Pack4bits(Start,     3, Error, Start, Start, Start, Error, Error), // 00-07
             BitPackage.Pack4bits(Error, Error, Error, Error, ItsMe, ItsMe, ItsMe, ItsMe), // 08-0f
@@ -50,15 +50,15 @@ namespace Chartect.IO.Core
             BitPackage.Pack4bits(Error, Error, Error, ItsMe, Start, Start, Start, Start) // 20-27
         };
 
-        private static readonly int[] ISO2022KRCharLenTable = { 0, 0, 0, 0, 0, 0 };
+        private static readonly int[] CharacterLengthTable = { 0, 0, 0, 0, 0, 0 };
 
         public Iso2022KrsmEscapedModel()
             : base(
-              ISO2022KRCls.To4BitPackage(),
+              ModelClassTable.To4BitPackage(),
               6,
-              ISO2022KRSt.To4BitPackage(),
-              ISO2022KRCharLenTable,
-              "ISO-2022-KR")
+              ModelStateTable.To4BitPackage(),
+              CharacterLengthTable,
+              Charsets.ISO2022KR)
         {
         }
     }

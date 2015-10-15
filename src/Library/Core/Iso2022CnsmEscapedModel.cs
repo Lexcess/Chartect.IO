@@ -5,7 +5,7 @@ namespace Chartect.IO.Core
 
     public class Iso2022CnsmEscapedModel : StateMachineModel
     {
-        private static readonly int[] ISO2022CNCls =
+        private static readonly int[] ModelClassTable =
         {
             BitPackage.Pack4bits(2, 0, 0, 0, 0, 0, 0, 0),  // 00 - 07
             BitPackage.Pack4bits(0, 0, 0, 0, 0, 0, 0, 0),  // 08 - 0f
@@ -41,7 +41,7 @@ namespace Chartect.IO.Core
             BitPackage.Pack4bits(2, 2, 2, 2, 2, 2, 2, 2) // f8 - ff
         };
 
-        private static readonly int[] ISO2022CNSt =
+        private static readonly int[] ModelStateTable =
         {
                 BitPackage.Pack4bits(Start,    3, Error, Start, Start, Start, Start, Start), // 00-07
                 BitPackage.Pack4bits(Start, Error, Error, Error, Error, Error, Error, Error), // 08-0f
@@ -53,15 +53,15 @@ namespace Chartect.IO.Core
                 BitPackage.Pack4bits(Error, Error, Error, Error, Error, ItsMe, Error, Start) // 38-3f
         };
 
-        private static readonly int[] ISO2022CNCharLenTable = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        private static readonly int[] CharacterLengthTable = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
         public Iso2022CnsmEscapedModel()
             : base(
-                    ISO2022CNCls.To4BitPackage(),
+                    ModelClassTable.To4BitPackage(),
                     9,
-                    ISO2022CNSt.To4BitPackage(),
-                    ISO2022CNCharLenTable,
-                    "ISO-2022-CN")
+                    ModelStateTable.To4BitPackage(),
+                    CharacterLengthTable,
+                    Charsets.ISO2022CN)
         {
         }
     }

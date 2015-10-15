@@ -83,7 +83,7 @@ namespace Chartect.IO.Core
 
         public override string GetCharsetName()
         {
-            return "windows-1252";
+            return Charsets.WIN1252;
         }
 
         public override void Reset()

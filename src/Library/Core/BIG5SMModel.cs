@@ -4,7 +4,7 @@
 
     public class Big5SMModel : StateMachineModel
     {
-        private static readonly int[] Big5Cls =
+        private static readonly int[] ModelClassTable =
         {
             BitPackage.Pack4bits(1, 1, 1, 1, 1, 1, 1, 1),  // 00 - 07
             BitPackage.Pack4bits(1, 1, 1, 1, 1, 1, 0, 0),  // 08 - 0f
@@ -40,22 +40,22 @@
             BitPackage.Pack4bits(3, 3, 3, 3, 3, 3, 3, 0) // f8 - ff
         };
 
-        private static readonly int[] BIG5St =
+        private static readonly int[] ModelStateTable =
         {
             BitPackage.Pack4bits(Error, Start, Start,    3, Error, Error, Error, Error), // 00-07
             BitPackage.Pack4bits(Error, Error, ItsMe, ItsMe, ItsMe, ItsMe, ItsMe, Error), // 08-0f
             BitPackage.Pack4bits(Error, Start, Start, Start, Start, Start, Start, Start) // 10-17
         };
 
-        private static readonly int[] Big5CharLenTable = { 0, 1, 1, 2, 0 };
+        private static readonly int[] CharacterLengthTable = { 0, 1, 1, 2, 0 };
 
         public Big5SMModel()
             : base(
-              Big5Cls.To4BitPackage(),
+              ModelClassTable.To4BitPackage(),
               5,
-              BIG5St.To4BitPackage(),
-              Big5CharLenTable,
-              "Big5")
+              ModelStateTable.To4BitPackage(),
+              CharacterLengthTable,
+              Charsets.BIG5)
         {
         }
     }

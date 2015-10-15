@@ -4,7 +4,7 @@
 
     public class Ibm855CyrillicModel : CyrillicModel
     {
-        private static readonly byte[] IBM855BYTETOORDERMAP =
+        private static readonly byte[] OrderMap =
         {
         255,  255, 255, 255, 255, 255, 255, 255, 255, 255, 254, 255, 255, 254, 255, 255,  // 00
         255,  255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // 10
@@ -25,7 +25,7 @@
         };
 
         public Ibm855CyrillicModel()
-            : base(IBM855BYTETOORDERMAP, "IBM855")
+            : base(OrderMap, Charsets.IBM855)
         {
         }
     }

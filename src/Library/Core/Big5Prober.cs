@@ -73,7 +73,7 @@ namespace Chartect.IO.Core
 
         public override string GetCharsetName()
         {
-            return "Big-5";
+            return Charsets.BIG5;
         }
 
         public override float GetConfidence()

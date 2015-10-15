@@ -19,7 +19,7 @@ namespace Chartect.IO.Core
 
         public override string GetCharsetName()
         {
-            return "EUC-JP";
+            return Charsets.EUCJP;
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)

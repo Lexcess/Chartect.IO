@@ -128,6 +128,7 @@
     <None Include="Data\latin1\3.txt" />
     <None Include="Data\latin1\4.txt" />
     <None Include="Data\maccyrillic\1.txt" />
+    <None Include="Data\README" />
     <None Include="Data\shiftjis\1.txt" />
     <None Include="Data\shiftjis\2.txt" />
     <None Include="Data\shiftjis\3.txt" />

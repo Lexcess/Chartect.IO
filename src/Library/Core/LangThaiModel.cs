@@ -11,7 +11,7 @@ namespace Chartect.IO.Core
         252: 0 - 9
         *****************************************************************/
         // The following result for thai was collected from a limited sample (1M)
-        private static readonly byte[] TIS620CHARTOORDERMAP =
+        private static readonly byte[] OrderMap =
         {
         255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 254, 255, 255, 254, 255, 255,  // 00
         255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // 10
@@ -37,7 +37,7 @@ namespace Chartect.IO.Core
         // first 1024 sequences:7.3177%
         // rest  sequences:     1.0230%
         // negative sequences:  0.0436%
-        private static readonly byte[] THAILANGMODEL =
+        private static readonly byte[] ThaiLanguageModel =
         {
         0, 1, 3, 3, 3, 3, 0, 0, 3, 3, 0, 3, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 3, 3, 3, 0, 3, 3, 3, 3,
         0, 3, 3, 0, 0, 0, 1, 3, 0, 3, 3, 2, 3, 3, 0, 1, 2, 3, 3, 3, 3, 0, 2, 0, 2, 0, 0, 3, 2, 1, 2, 2,
@@ -170,7 +170,7 @@ namespace Chartect.IO.Core
         };
 
         public ThaiModel(byte[] charToOrderMap, string name)
-            : base(TIS620CHARTOORDERMAP, THAILANGMODEL, 0.926386f, false, "TIS-620")
+            : base(OrderMap, ThaiLanguageModel, 0.926386f, false, Charsets.TIS620)
         {
         }
     }
