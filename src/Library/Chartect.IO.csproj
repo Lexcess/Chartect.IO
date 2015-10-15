@@ -8,8 +8,8 @@
     <ProjectGuid>{7BECB850-389A-44FC-8523-3EF0B2540F07}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ude</RootNamespace>
-    <AssemblyName>Ude</AssemblyName>
+    <RootNamespace>Chartect.IO</RootNamespace>
+    <AssemblyName>Chartect.IO</AssemblyName>
     <StartupObject>
     </StartupObject>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>

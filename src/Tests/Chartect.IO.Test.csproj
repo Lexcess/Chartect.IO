@@ -41,8 +41,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <OutputType>Library</OutputType>
-    <AssemblyName>Ude.Tests</AssemblyName>
-    <RootNamespace>Ude.Tests</RootNamespace>
+    <AssemblyName>Chartect.IO.Test</AssemblyName>
+    <RootNamespace>Chartect.IO.Test</RootNamespace>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <Prefer32Bit>false</Prefer32Bit>
