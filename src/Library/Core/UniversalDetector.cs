@@ -174,14 +174,20 @@ namespace Chartect.IO.Core
             }
         }
 
-        public virtual void Feed(byte[] buf, int offset, int len)
+        /// <summary>
+        /// Read a block of bytes into the detector.
+        /// </summary>
+        /// <param name="input">input buffer</param>
+        /// <param name="offset">offset into buffer</param>
+        /// <param name="length">number of available bytes</param>
+        public virtual void Read(byte[] input, int offset, int length)
         {
             if (this.Done)
             {
                 return;
             }
 
-            if (len > 0)
+            if (length > 0)
             {
                 this.GotData = true;
             }
@@ -190,35 +196,35 @@ namespace Chartect.IO.Core
             if (this.Start)
             {
                 this.Start = false;
-                if (len > 3)
+                if (length > 3)
                 {
-                    switch (buf[0])
+                    switch (input[0])
                     {
                     case 0xEF:
-                        if (0xBB == buf[1] && 0xBF == buf[2])
+                        if (0xBB == input[1] && 0xBF == input[2])
                             {
-                                this.DetectedCharset = Charsets.UTF8;
+                                this.DetectedCharset = Charsets.Utf8;
                             }
 
                             break;
                     case 0xFE:
-                        if (0xFF == buf[1] && 0x00 == buf[2] && 0x00 == buf[3])
+                        if (0xFF == input[1] && 0x00 == input[2] && 0x00 == input[3])
                             {
                                 // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
                                 this.DetectedCharset = Charsets.UCS43412;
                             }
-                            else if (0xFF == buf[1])
+                            else if (0xFF == input[1])
                             {
                                 this.DetectedCharset = Charsets.UTF16BE;
                             }
 
                             break;
                     case 0x00:
-                        if (0x00 == buf[1] && 0xFE == buf[2] && 0xFF == buf[3])
+                        if (0x00 == input[1] && 0xFE == input[2] && 0xFF == input[3])
                             {
                                 this.DetectedCharset = Charsets.UTF32BE;
                             }
-                            else if (0x00 == buf[1] && 0xFF == buf[2] && 0xFE == buf[3])
+                            else if (0x00 == input[1] && 0xFF == input[2] && 0xFE == input[3])
                             {
                                 // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
                                 this.DetectedCharset = Charsets.UCS42413;
@@ -226,13 +232,13 @@ namespace Chartect.IO.Core
 
                             break;
                     case 0xFF:
-                        if (0xFE == buf[1] && 0x00 == buf[2] && 0x00 == buf[3])
+                        if (0xFE == input[1] && 0x00 == input[2] && 0x00 == input[3])
                             {
                                 this.DetectedCharset = Charsets.UTF32LE;
                             }
-                            else if (0xFE == buf[1])
+                            else if (0xFE == input[1])
                             {
-                                this.DetectedCharset = Charsets.UTF16LE;
+                                this.DetectedCharset = Charsets.Utf16LE;
                             }
 
                             break;
@@ -246,10 +252,10 @@ namespace Chartect.IO.Core
                 }
             }
 
-            for (int i = 0; i < len; i++)
+            for (int i = 0; i < length; i++)
             {
                 // other than 0xa0, if every other character is ascii, the page is ascii
-                if ((buf[i] & 0x80) != 0 && buf[i] != 0xA0)
+                if ((input[i] & 0x80) != 0 && input[i] != 0xA0)
                 {
                     // we got a non-ascii byte (high-byte)
                     if (this.InputState != InputState.Highbyte)
@@ -282,13 +288,13 @@ namespace Chartect.IO.Core
                 else
                 {
                     if (this.InputState == InputState.PureASCII &&
-                        (buf[i] == 0x1B || (buf[i] == 0x7B && this.LastChar == 0x7E)))
+                        (input[i] == 0x1B || (input[i] == 0x7B && this.LastChar == 0x7E)))
                         {
                         // found escape character or HZ "~{"
                         this.InputState = InputState.EscASCII;
                     }
 
-                    this.LastChar = buf[i];
+                    this.LastChar = input[i];
                 }
             }
 
@@ -302,7 +308,7 @@ namespace Chartect.IO.Core
                         this.EscCharsetProber = new EscCharsetProber();
                     }
 
-                    st = this.EscCharsetProber.HandleData(buf, offset, len);
+                    st = this.EscCharsetProber.HandleData(input, offset, length);
                     if (st == ProbingState.FoundIt)
                     {
                         this.Done = true;
@@ -315,7 +321,7 @@ namespace Chartect.IO.Core
                     {
                         if (this.CharsetProbers[i] != null)
                         {
-                            st = this.CharsetProbers[i].HandleData(buf, offset, len);
+                            st = this.CharsetProbers[i].HandleData(input, offset, length);
                             #if DEBUG
                             this.CharsetProbers[i].DumpStatus();
                             #endif
@@ -338,7 +344,8 @@ namespace Chartect.IO.Core
         }
 
         /// <summary>
-        /// Notify detector that no further data is available.
+        /// Tell the detector that there is no more data and it must make its
+        /// decision.
         /// </summary>
         public virtual void DataEnd()
         {
@@ -382,7 +389,7 @@ namespace Chartect.IO.Core
             }
             else if (this.InputState == InputState.PureASCII)
             {
-                this.Report(Charsets.ASCII, 1.0f);
+                this.Report(Charsets.Ascii, 1.0f);
             }
         }
 

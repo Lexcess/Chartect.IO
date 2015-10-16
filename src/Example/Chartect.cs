@@ -2,9 +2,8 @@ namespace Chartect
 {
     using System;
     using System.IO;
-    using Chartect.IO;
 
-    public class Udetect
+    public class Chartect
     {
         /// <summary>
         /// Command line example: detects the encoding of the given file.
@@ -14,22 +13,19 @@ namespace Chartect
         {
             if (args.Length == 0)
             {
-                Console.WriteLine("Usage: udetect <filename>");
+                Console.WriteLine("Usage: chartect <filename>");
                 return;
             }
 
             string filename = args[0];
-            using (FileStream fs = File.OpenRead(filename))
+            using (FileStream stream = File.OpenRead(filename))
             {
-                ICharsetDetector cdet = new CharsetDetector();
-                cdet.Feed(fs);
-                cdet.DataEnd();
-                if (cdet.Charset != null)
+                var detector = new CharsetDetector();
+                detector.Read(stream);
+                detector.DataEnd();
+                if (detector.Charset != null)
                 {
-                    Console.WriteLine(
-                        "Charset: {0}, confidence: {1}",
-                         cdet.Charset,
-                         cdet.Confidence);
+                    Console.WriteLine($"Charset: {detector.Charset}, confidence: {detector.Confidence}");
                 }
                 else
                 {

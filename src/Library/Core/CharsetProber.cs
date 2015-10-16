@@ -41,7 +41,7 @@ namespace Chartect.IO.Core
         }
 
         /// <summary>
-        /// Feed data to the prober
+        /// Read data to the prober
         /// </summary>
         /// <param name="buffer">a buffer</param>
         /// <param name="offset">offset into buffer</param>

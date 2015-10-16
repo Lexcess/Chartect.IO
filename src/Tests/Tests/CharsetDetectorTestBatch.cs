@@ -10,7 +10,7 @@ namespace Chartect.IO.Tests
     {
         private const string DataRoot = "../../Data";
 
-        private ICharsetDetector detector;
+        private CharsetDetector detector;
 
         [SetUpAttribute]
         public void SetUp()
@@ -129,7 +129,7 @@ namespace Chartect.IO.Tests
         [Test]
         public void UTF8Test()
         {
-            this.Process(Charsets.UTF8, "utf8");
+            this.Process(Charsets.Utf8, "utf8");
         }
 
         private void Process(string charset, string dirname)
@@ -147,7 +147,7 @@ namespace Chartect.IO.Tests
                 using (FileStream fs = new FileStream(file, FileMode.Open))
                 {
                     Console.WriteLine($"Analysing {file}");
-                    this.detector.Feed(fs);
+                    this.detector.Read(fs);
                     this.detector.DataEnd();
                     Console.WriteLine($"{file} : {this.detector.Charset} {this.detector.Confidence}");
                     Assert.AreEqual(charset, this.detector.Charset);

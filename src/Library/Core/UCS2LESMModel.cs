@@ -59,7 +59,7 @@
               6,
               ModelStateTable.To4BitPackage(),
               CharacterLengthTable,
-              Charsets.UTF16LE)
+              Charsets.Utf16LE)
         {
         }
     }

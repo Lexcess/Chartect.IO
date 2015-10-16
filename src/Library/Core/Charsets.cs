@@ -4,11 +4,11 @@ namespace Chartect
 
     public static class Charsets
     {
-        public const string ASCII = "ASCII";
+        public const string Ascii = "ASCII";
 
-        public const string UTF8 = "UTF-8";
+        public const string Utf8 = "UTF-8";
 
-        public const string UTF16LE = "UTF-16LE";
+        public const string Utf16LE = "UTF-16LE";
 
         public const string UTF16BE = "UTF-16BE";
 

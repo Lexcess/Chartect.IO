@@ -41,7 +41,7 @@ namespace Chartect.IO.Core
             {
                 for (int j = this.activeSM - 1; j >= 0; j--)
                 {
-                    // byte is feed to all active state machine
+                    // byte is fed to all active state machine
                     int codingState = this.codingSM[j].NextState(buf[i]);
                     if (codingState == StateMachineModel.Error)
                     {

@@ -104,7 +104,6 @@
     <Compile Include="Core\Win1255HebrewModel.cs" />
     <Compile Include="DetectionConfidence.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="ICharsetDetector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

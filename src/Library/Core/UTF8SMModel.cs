@@ -78,7 +78,7 @@
               16,
               ModelStateTable.To4BitPackage(),
               CharacterLengthTable,
-              Charsets.UTF8)
+              Charsets.Utf8)
         {
         }
     }

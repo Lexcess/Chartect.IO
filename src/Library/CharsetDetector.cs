@@ -12,7 +12,7 @@
     /// <code>
     /// using (FileStream fs = File.OpenRead(filename)) {
     ///    CharsetDetector cdet = new CharsetDetector();
-    ///    cdet.Feed(fs);
+    ///    cdet.Read(fs);
     ///    cdet.DataEnd();
     ///    Console.WriteLine("{0}, {1}", cdet.Charset, cdet.Confidence);
     /// </code>
@@ -25,13 +25,13 @@
     /// byte[] buff = new byte[1024];
     /// int read;
     /// while ((read = stream.Read(buff, 0, buff.Length)) > 0 && !done)
-    ///     Feed(buff, 0, read);
+    ///     Read(buff, 0, read);
     /// cdet.DataEnd();
     /// Console.WriteLine("{0}, {1}", cdet.Charset, cdet.Confidence);
     /// </code>
     /// </example>
     /// </summary>
-    public class CharsetDetector : UniversalDetector, ICharsetDetector
+    public class CharsetDetector : UniversalDetector
     {
         private string charset;
 
@@ -43,31 +43,48 @@
         {
         }
 
+        /// <summary>
+        /// The detected charset. It can be null.
+        /// </summary>
         public string Charset
         {
             get { return this.charset; }
         }
 
+        /// <summary>
+        /// The confidence of the detected charset, if any
+        /// </summary>
         public float Confidence
         {
             get { return this.confidence; }
         }
 
-        public void Feed(Stream stream)
+        /// <summary>
+        /// Read a bytes stream to the detector.
+        /// </summary>
+        /// <param name="stream">an input stream</param>
+        public void Read(Stream stream)
         {
-            byte[] buff = new byte[1024];
+            byte[] buffer = new byte[1024];
             int read;
-            while ((read = stream.Read(buff, 0, buff.Length)) > 0 && !this.Done)
+            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0 && !this.Done)
             {
-                this.Feed(buff, 0, read);
+                this.Read(buffer, 0, read);
             }
         }
 
+        /// <summary>
+        /// Returns true if the detector has found a result and it is sure about it.
+        /// </summary>
+        /// <returns>true if the detector has detected the encoding</returns>
         public bool IsDone()
         {
             return this.Done;
         }
 
+        /// <summary>
+        /// Resets the state of the detector.
+        /// </summary>
         public override void Reset()
         {
             this.charset = null;

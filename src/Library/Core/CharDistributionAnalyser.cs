@@ -100,7 +100,7 @@ namespace Chartect.IO.Core
             }
         }
 
-        // Feed a block of data and do distribution analysis
+        // Read a block of data and do distribution analysis
         // public abstract void HandleData(byte[] buf, int offset, int len);
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Chartect.IO.Core
         public abstract int GetOrder(byte[] buf, int offset);
 
         /// <summary>
-        /// Feed a character with known length
+        /// Read a character with known length
         /// </summary>
         /// <param name="buf">A <see cref="byte"/></param>
         /// <param name="offset">buf offset</param>

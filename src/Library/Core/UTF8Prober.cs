@@ -19,7 +19,7 @@ namespace Chartect.IO.Core
 
         public override string GetCharsetName()
         {
-            return Charsets.UTF8;
+            return Charsets.Utf8;
         }
 
         public override void Reset()
