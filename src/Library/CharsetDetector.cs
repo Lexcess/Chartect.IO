@@ -1,4 +1,4 @@
-﻿namespace Chartect
+﻿namespace Chartect.IO
 {
     using System;
     using System.IO;
@@ -31,24 +31,16 @@
     /// </code>
     /// </example>
     /// </summary>
-    public class CharsetDetector : UniversalDetector
+    public sealed class CharsetDetector
     {
-        private string charset;
-
-        private float confidence;
-
-        // public event DetectorFinished Finished;
-        public CharsetDetector()
-            : base(FilterAll)
-        {
-        }
+        private readonly UniversalDetector universalDetector = new UniversalDetector(UniversalDetector.FilterAll);
 
         /// <summary>
         /// The detected charset. It can be null.
         /// </summary>
         public string Charset
         {
-            get { return this.charset; }
+            get { return this.universalDetector.Charset; }
         }
 
         /// <summary>
@@ -56,7 +48,7 @@
         /// </summary>
         public float Confidence
         {
-            get { return this.confidence; }
+            get { return this.universalDetector.Confidence; }
         }
 
         /// <summary>
@@ -67,10 +59,18 @@
         {
             byte[] buffer = new byte[1024];
             int read;
-            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0 && !this.Done)
+            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0 && !this.universalDetector.Done)
             {
-                this.Read(buffer, 0, read);
+                this.universalDetector.Read(buffer, 0, read);
             }
+        }
+
+        /// <summary>
+        /// Tells the detector that no more input is coming and it has to make a decision.
+        /// </summary>
+        public void DataEnd()
+        {
+            this.universalDetector.DataEnd();
         }
 
         /// <summary>
@@ -79,28 +79,15 @@
         /// <returns>true if the detector has detected the encoding</returns>
         public bool IsDone()
         {
-            return this.Done;
+            return this.universalDetector.Done;
         }
 
         /// <summary>
         /// Resets the state of the detector.
         /// </summary>
-        public override void Reset()
+        public void Reset()
         {
-            this.charset = null;
-            this.confidence = 0.0f;
-            base.Reset();
-        }
-
-        protected override void Report(string charset, float confidence)
-        {
-            this.charset = charset;
-            this.confidence = confidence;
-
-            // if (Finished != null)
-            // {
-            // Finished(charset, confidence);
-            // }
+            this.universalDetector.Reset();
         }
     }
 

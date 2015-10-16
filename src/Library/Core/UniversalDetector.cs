@@ -9,20 +9,20 @@ namespace Chartect.IO.Core
         Highbyte = 2,
     }
 
-    public abstract class UniversalDetector
+    public sealed class UniversalDetector
     {
-        protected const int FilterChineseSimplified = 1;
-        protected const int FilterChineseTraditional = 2;
-        protected const int FilterJapanese = 4;
-        protected const int FilterKorean = 8;
-        protected const int FilterNonCJK = 16;
-        protected const int FilterAll = 31;
-        protected const int FilterChinese = FilterChineseSimplified | FilterChineseTraditional;
-        protected const int FilterCJK = FilterJapanese | FilterKorean | FilterChineseSimplified | FilterChineseTraditional;
+        public const int FilterChineseSimplified = 1;
+        public const int FilterChineseTraditional = 2;
+        public const int FilterJapanese = 4;
+        public const int FilterKorean = 8;
+        public const int FilterNonCjk = 16;
+        public const int FilterAll = 31;
+        public const int FilterChinese = FilterChineseSimplified | FilterChineseTraditional;
+        public const int FilterCjk = FilterJapanese | FilterKorean | FilterChineseSimplified | FilterChineseTraditional;
 
-        protected const float SHORTCUTTHRESHOLD = 0.95f;
-        protected const float MINIMUMTHRESHOLD = 0.20f;
-        protected const int ProbersNum = 3;
+        private const float SHORTCUTTHRESHOLD = 0.95f;
+        private const float MINIMUMTHRESHOLD = 0.20f;
+        private const int ProbersNum = 3;
 
         private InputState inputState;
         private bool start;
@@ -35,6 +35,9 @@ namespace Chartect.IO.Core
         private CharsetProber escCharsetProber;
         private string detectedCharset;
 
+        private string charset;
+        private float confidence;
+
         public UniversalDetector(int languageFilter)
         {
             this.Start = true;
@@ -44,7 +47,46 @@ namespace Chartect.IO.Core
             this.LanguageFilter = languageFilter;
         }
 
-        internal InputState InputState
+        public bool Done
+        {
+            get
+            {
+                return this.done;
+            }
+
+            private set
+            {
+                this.done = value;
+            }
+        }
+
+        public string Charset
+        {
+            get
+            {
+                return this.charset;
+            }
+
+            private set
+            {
+                this.charset = value;
+            }
+        }
+
+        public float Confidence
+        {
+            get
+            {
+                return this.confidence;
+            }
+
+            private set
+            {
+                this.confidence = value;
+            }
+        }
+
+        private InputState InputState
         {
             get
             {
@@ -57,7 +99,7 @@ namespace Chartect.IO.Core
             }
         }
 
-        protected bool Start
+        private bool Start
         {
             get
             {
@@ -70,7 +112,7 @@ namespace Chartect.IO.Core
             }
         }
 
-        protected bool GotData
+        private bool GotData
         {
             get
             {
@@ -83,20 +125,7 @@ namespace Chartect.IO.Core
             }
         }
 
-        protected bool Done
-        {
-            get
-            {
-                return this.done;
-            }
-
-            set
-            {
-                this.done = value;
-            }
-        }
-
-        protected byte LastChar
+        private byte LastChar
         {
             get
             {
@@ -109,7 +138,7 @@ namespace Chartect.IO.Core
             }
         }
 
-        protected int LanguageFilter
+        private int LanguageFilter
         {
             get
             {
@@ -122,7 +151,7 @@ namespace Chartect.IO.Core
             }
         }
 
-        protected CharsetProber EscCharsetProber
+        private CharsetProber EscCharsetProber
         {
             get
             {
@@ -135,7 +164,7 @@ namespace Chartect.IO.Core
             }
         }
 
-        protected string DetectedCharset
+        private string DetectedCharset
         {
             get
             {
@@ -148,7 +177,7 @@ namespace Chartect.IO.Core
             }
         }
 
-        protected CharsetProber[] CharsetProbers
+        private CharsetProber[] CharsetProbers
         {
             get
             {
@@ -161,7 +190,7 @@ namespace Chartect.IO.Core
             }
         }
 
-        protected int BestGuess
+        private int BestGuess
         {
             get
             {
@@ -180,7 +209,7 @@ namespace Chartect.IO.Core
         /// <param name="input">input buffer</param>
         /// <param name="offset">offset into buffer</param>
         /// <param name="length">number of available bytes</param>
-        public virtual void Read(byte[] input, int offset, int length)
+        public void Read(byte[] input, int offset, int length)
         {
             if (this.Done)
             {
@@ -347,7 +376,7 @@ namespace Chartect.IO.Core
         /// Tell the detector that there is no more data and it must make its
         /// decision.
         /// </summary>
-        public virtual void DataEnd()
+        public void DataEnd()
         {
             if (!this.GotData)
             {
@@ -397,8 +426,10 @@ namespace Chartect.IO.Core
         /// Clear internal state of charset detector.
         /// In the original interface this method is protected.
         /// </summary>
-        public virtual void Reset()
+        public void Reset()
         {
+            this.Charset = null;
+            this.Confidence = 0.0f;
             this.Done = false;
             this.Start = true;
             this.DetectedCharset = null;
@@ -420,6 +451,15 @@ namespace Chartect.IO.Core
             }
         }
 
-        protected abstract void Report(string charset, float confidence);
+        private void Report(string charset, float confidence)
+        {
+            this.Charset = charset;
+            this.Confidence = confidence;
+
+            // if (Finished != null)
+            // {
+            // Finished(charset, confidence);
+            // }
+        }
     }
 }

@@ -1,4 +1,4 @@
-namespace Chartect
+namespace Chartect.IO
 {
     using System;
     using System.IO;
