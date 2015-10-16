@@ -9,7 +9,7 @@ namespace Chartect.IO.Core
         Done = 2,
     }
 
-    internal enum InputState
+    internal enum DetectedCharacters
     {
         PureASCII = 0,
         EscASCII = 1,
@@ -31,7 +31,7 @@ namespace Chartect.IO.Core
         private const float MINIMUMTHRESHOLD = 0.20f;
         private const int ProbersNum = 3;
 
-        private InputState inputState;
+        private DetectedCharacters detectedCharacters;
         private byte lastChar;
         private int bestGuess;
         private int languageFilter;
@@ -45,7 +45,7 @@ namespace Chartect.IO.Core
         public UniversalDetector(int languageFilter)
         {
             this.DetectorState = DetectorState.Start;
-            this.InputState = InputState.PureASCII;
+            this.DetectedCharacters = DetectedCharacters.PureASCII;
             this.LastChar = 0x00;
             this.BestGuess = -1;
             this.LanguageFilter = languageFilter;
@@ -82,17 +82,9 @@ namespace Chartect.IO.Core
             }
         }
 
-        private InputState InputState
+        private DetectedCharacters DetectedCharacters
         {
-            get
-            {
-                return this.inputState;
-            }
-
-            set
-            {
-                this.inputState = value;
-            }
+            get; set;
         }
 
         private byte LastChar
@@ -205,9 +197,9 @@ namespace Chartect.IO.Core
                 if ((input[i] & 0x80) != 0 && input[i] != 0xA0)
                 {
                     // we got a non-ascii byte (high-byte)
-                    if (this.InputState != InputState.Highbyte)
+                    if (this.DetectedCharacters != DetectedCharacters.Highbyte)
                     {
-                        this.InputState = InputState.Highbyte;
+                        this.DetectedCharacters = DetectedCharacters.Highbyte;
 
                         // kill EscCharsetProber if it is active
                         if (this.EscCharsetProber != null)
@@ -234,11 +226,11 @@ namespace Chartect.IO.Core
                 }
                 else
                 {
-                    if (this.InputState == InputState.PureASCII &&
+                    if (this.DetectedCharacters == DetectedCharacters.PureASCII &&
                         (input[i] == 0x1B || (input[i] == 0x7B && this.LastChar == 0x7E)))
                         {
                         // found escape character or HZ "~{"
-                        this.InputState = InputState.EscASCII;
+                        this.DetectedCharacters = DetectedCharacters.EscASCII;
                     }
 
                     this.LastChar = input[i];
@@ -247,9 +239,9 @@ namespace Chartect.IO.Core
 
             ProbingState st = ProbingState.NotMe;
 
-            switch (this.InputState)
+            switch (this.DetectedCharacters)
             {
-                case InputState.EscASCII:
+                case DetectedCharacters.EscASCII:
                     if (this.EscCharsetProber == null)
                     {
                         this.EscCharsetProber = new EscCharsetProber();
@@ -263,7 +255,7 @@ namespace Chartect.IO.Core
                     }
 
                     break;
-                case InputState.Highbyte:
+                case DetectedCharacters.Highbyte:
                     for (int i = 0; i < ProbersNum; i++)
                     {
                         if (this.CharsetProbers[i] != null)
@@ -366,7 +358,7 @@ namespace Chartect.IO.Core
                 return;
             }
 
-            if (this.InputState == InputState.Highbyte)
+            if (this.DetectedCharacters == DetectedCharacters.Highbyte)
             {
                 float proberConfidence = 0.0f;
                 float maxProberConfidence = 0.0f;
@@ -389,7 +381,7 @@ namespace Chartect.IO.Core
                     this.Report(this.CharsetProbers[maxProber].GetCharsetName(), maxProberConfidence);
                 }
             }
-            else if (this.InputState == InputState.PureASCII)
+            else if (this.DetectedCharacters == DetectedCharacters.PureASCII)
             {
                 this.Report(Charsets.Ascii, 1.0f);
             }
@@ -406,7 +398,7 @@ namespace Chartect.IO.Core
             this.DetectorState = DetectorState.Start;
             this.DetectedCharset = null;
             this.BestGuess = -1;
-            this.InputState = InputState.PureASCII;
+            this.DetectedCharacters = DetectedCharacters.PureASCII;
             this.LastChar = 0x00;
             if (this.EscCharsetProber != null)
             {
