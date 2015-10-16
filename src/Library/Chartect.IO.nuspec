@@ -8,7 +8,7 @@
     <owners>Lex Mitchell</owners>
     <licenseUrl>https://www.mozilla.org/en-US/MPL/1.1/</licenseUrl>
     <projectUrl>https://twitter.com/chartectio</projectUrl>
-    <iconUrl></iconUrl>
+    <iconUrl>https://github.com/Lexcess/Chartect.IO/blob/master/src/Library/Chartect.IO.png?raw=true</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>Chartect.IO is a character detection library. Forked from UDE, a port of Mozilla Universal Charset Detector.</description>
     <releaseNotes></releaseNotes>
