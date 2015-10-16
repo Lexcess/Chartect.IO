@@ -33,7 +33,6 @@ namespace Chartect.IO.Core
 
         private InputState inputState;
         private bool start;
-        private bool gotData;
         private byte lastChar;
         private int bestGuess;
         private int languageFilter;
@@ -108,19 +107,6 @@ namespace Chartect.IO.Core
             set
             {
                 this.start = value;
-            }
-        }
-
-        private bool GotData
-        {
-            get
-            {
-                return this.gotData;
-            }
-
-            set
-            {
-                this.gotData = value;
             }
         }
 
@@ -217,7 +203,7 @@ namespace Chartect.IO.Core
 
             if (length > 0)
             {
-                this.GotData = true;
+                this.DetectorState = DetectorState.GotData;
             }
 
             // If the data starts with BOM, we know it is UTF
@@ -377,7 +363,7 @@ namespace Chartect.IO.Core
         /// </summary>
         public void DataEnd()
         {
-            if (!this.GotData)
+            if (this.DetectorState == DetectorState.Start)
             {
                 // we haven't got any data yet, return immediately
                 // caller program sometimes call DataEnd before anything has
@@ -430,7 +416,6 @@ namespace Chartect.IO.Core
             this.Charset = null;
             this.Confidence = 0.0f;
             this.Start = true;
-            this.GotData = false;
             this.DetectorState = DetectorState.Start;
             this.DetectedCharset = null;
             this.BestGuess = -1;
