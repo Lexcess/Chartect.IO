@@ -85,9 +85,9 @@
     <Compile Include="Core\Latin5CyrillicModel.cs" />
     <Compile Include="Core\Latin7GreekModel.cs" />
     <Compile Include="Core\MacCyrillicModel.cs" />
-    <Compile Include="Core\MBCSGroupProber.cs" />
-    <Compile Include="Core\SBCharsetProber.cs" />
-    <Compile Include="Core\SBCSGroupProber.cs" />
+    <Compile Include="Core\MultiByteCharsetGroupProber.cs" />
+    <Compile Include="Core\SingleByteCharsetProber.cs" />
+    <Compile Include="Core\SingleByteCharsetGroupProber.cs" />
     <Compile Include="Core\SequenceModel.cs" />
     <Compile Include="Core\SJISContextAnalyser.cs" />
     <Compile Include="Core\SJISDistributionAnalyser.cs" />

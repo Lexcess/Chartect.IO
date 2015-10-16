@@ -74,20 +74,20 @@ namespace Chartect.IO.Core
         }
 
         // Helper functions used in the Latin1 and Group probers
-        protected static byte[] FilterWithoutEnglishLetters(byte[] buf, int offset, int len)
+        protected static byte[] FilterWithoutEnglishLetters(byte[] input, int offset, int length)
         {
             byte[] result = null;
 
-            using (MemoryStream ms = new MemoryStream(buf.Length))
+            using (MemoryStream stream = new MemoryStream(input.Length))
             {
                 bool meetMSB = false;
-                int max = offset + len;
+                int max = offset + length;
                 int prev = offset;
                 int cur = offset;
 
                 while (cur < max)
                 {
-                    byte b = buf[cur];
+                    byte b = input[cur];
 
                     if ((b & 0x80) != 0)
                     {
@@ -97,8 +97,8 @@ namespace Chartect.IO.Core
                     {
                         if (meetMSB && cur > prev)
                         {
-                            ms.Write(buf, prev, cur - prev);
-                            ms.WriteByte(Space);
+                            stream.Write(input, prev, cur - prev);
+                            stream.WriteByte(Space);
                             meetMSB = false;
                         }
 
@@ -110,11 +110,11 @@ namespace Chartect.IO.Core
 
                 if (meetMSB && cur > prev)
                 {
-                    ms.Write(buf, prev, cur - prev);
+                    stream.Write(input, prev, cur - prev);
                 }
 
-                ms.SetLength(ms.Position);
-                result = ms.ToArray();
+                stream.SetLength(stream.Position);
+                result = stream.ToArray();
             }
 
             return result;
@@ -125,24 +125,24 @@ namespace Chartect.IO.Core
         /// collapse spaces). This filter applies to all scripts which contain
         /// both English characters and upper ASCII characters.
         /// </summary>
-        /// <param name="buffer"> A byte array buffer</param>
+        /// <param name="input"> A byte array buffer</param>
         /// <param name="offset"> The offset to use.</param>
-        /// <param name="len"> The length of bytes to filter.</param>
+        /// <param name="length"> The length of bytes to filter.</param>
         /// <returns> A filtered copy of the input buffer.</returns>
-        protected static byte[] FilterWithEnglishLetters(byte[] buffer, int offset, int len)
+        protected static byte[] FilterWithEnglishLetters(byte[] input, int offset, int length)
         {
             byte[] result = null;
 
-            using (MemoryStream stream = new MemoryStream(buffer.Length))
+            using (MemoryStream stream = new MemoryStream(input.Length))
             {
                 bool inTag = false;
-                int max = offset + len;
+                int max = offset + length;
                 int prev = offset;
                 int cur = offset;
 
                 while (cur < max)
                 {
-                    byte b = buffer[cur];
+                    byte b = input[cur];
 
                     if (b == GreaterThan)
                     {
@@ -158,7 +158,7 @@ namespace Chartect.IO.Core
                     {
                         if (cur > prev && !inTag)
                         {
-                            stream.Write(buffer, prev, cur - prev);
+                            stream.Write(input, prev, cur - prev);
                             stream.WriteByte(Space);
                         }
 
@@ -172,7 +172,7 @@ namespace Chartect.IO.Core
                 // and it is not inside a tag then keep it.
                 if (!inTag && cur > prev)
                 {
-                    stream.Write(buffer, prev, cur - prev);
+                    stream.Write(input, prev, cur - prev);
                 }
 
                 stream.SetLength(stream.Position);

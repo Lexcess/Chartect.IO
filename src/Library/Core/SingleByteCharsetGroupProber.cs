@@ -2,7 +2,7 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    public class SBCSGroupProber : CharsetProber
+    public class SingleByteCharsetGroupProber : CharsetProber
     {
         private const int PROBERSNUM = 13;
         private CharsetProber[] probers = new CharsetProber[PROBERSNUM];
@@ -10,7 +10,7 @@ namespace Chartect.IO.Core
         private int bestGuess;
         private int activeNum;
 
-        public SBCSGroupProber()
+        public SingleByteCharsetGroupProber()
         {
             this.probers[0] = new SingleByteCharSetProber(new Win1251CyrillicModel());
             this.probers[1] = new SingleByteCharSetProber(new Koi8rCyrillicModel());

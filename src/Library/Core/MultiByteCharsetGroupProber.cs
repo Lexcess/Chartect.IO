@@ -5,7 +5,7 @@ namespace Chartect.IO.Core
     /// <summary>
     /// Multi-byte charsets probers
     /// </summary>
-    public class MBCSGroupProber : CharsetProber
+    public class MultiByteCharsetGroupProber : CharsetProber
     {
         private const int PROBERSNUM = 7;
         private static readonly string[] ProberName =
@@ -16,7 +16,7 @@ namespace Chartect.IO.Core
         private int bestGuess;
         private int activeNum;
 
-        public MBCSGroupProber()
+        public MultiByteCharsetGroupProber()
         {
             this.probers[0] = new UTF8Prober();
             this.probers[1] = new SJISProber();

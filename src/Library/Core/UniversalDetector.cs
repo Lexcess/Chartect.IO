@@ -199,12 +199,12 @@ namespace Chartect.IO.Core
                         // start multibyte and singlebyte charset prober
                         if (this.CharsetProbers[0] == null)
                         {
-                            this.CharsetProbers[0] = new MBCSGroupProber();
+                            this.CharsetProbers[0] = new MultiByteCharsetGroupProber();
                         }
 
                         if (this.CharsetProbers[1] == null)
                         {
-                            this.CharsetProbers[1] = new SBCSGroupProber();
+                            this.CharsetProbers[1] = new SingleByteCharsetGroupProber();
                         }
 
                         if (this.CharsetProbers[2] == null)
