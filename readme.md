@@ -23,7 +23,7 @@ Ude can recognize the following charsets:
 * ASCII
 
 ## Platform
-Windows (and hopefully soon DNX).
+.Net Framework 4.5, Windows Phone 8, Universal Windows Apps (and while not explicitly called out should support dotnet core).
 
 ##Usage
 
