@@ -1,6 +1,6 @@
 ##Description
 
-Ude can recognize the following charsets:
+Chartect.IO can recognize the following charsets:
 
 * UTF-8
 * UTF-16 (BE and LE)
@@ -23,32 +23,36 @@ Ude can recognize the following charsets:
 * ASCII
 
 ## Platform
-.Net Framework 4.5, Windows Phone 8, Universal Windows Apps (and while not explicitly called out should support dotnet core).
+Portable .Net Framework 4.0+,
+Windows Phone 8+,
+Windows 8+,
+Universal Windows Apps,
+.Net Core (dotnet, dnx)
 
 ##Usage
 
 Import the library:
 
-using Ude;
+using Chartect.IO;
 
-you can feed a Stream to the detector:
-
+you can feed a Stream to the detector:  
+```c#
 using System.IO;
-using Ude;
+using Chartect.IO;
 
 public class program
 {
 
     public static void Main(String[] args)
     {
-        ICharsetDetector cdet = new CharsetDetector();
-        using (FileStream fs = File.OpenRead(filename)) 
+        var detector = new CharsetDetector();
+        using (FileStream stream = File.OpenRead(filename)) 
         {
-            cdet.Feed(fs);
-            cdet.DataEnd();
-            if (cdet.Charset != null) 
+            detector.Read(stream);
+            detector.DataEnd();
+            if (detector.Charset != null) 
             {
-                Console.WriteLine("Charset: {0}, confidence: {1}", cdet.Charset, cdet.Confidence);
+                Console.WriteLine("Charset: {0}, confidence: {1}", detector.Charset, detector.Confidence);
             }  
             else  
             {  
@@ -57,33 +61,33 @@ public class program
         }
     }
 }
-
+```
 
 or use a byte array to the detector. Call DataEnd to notify the detector that you want back the result:
-         
-        ICharsetDetector cdet = new CharsetDetector();
-        byte[] buff = new byte[1024];
-        int read;
-        while ((read = stream.Read(buff, 0, buff.Length)) > 0 && !done) 
-        {
-            cdet.Feed(buff, 0, read);
-        }
-        cdet.DataEnd();
+```c#         
+    var detector = new CharsetDetector();
+    byte[] buff = new byte[1024];
+    int read;
+    while ((read = stream.Read(buff, 0, buff.Length)) > 0 && !done) 
+    {
+        detector.Read(buff, 0, read);
+    }
+    detector.DataEnd();
 
-        if (cdet.Charset != null) 
-        {
-            Console.WriteLine("Charset: {0}, confidence: {1}", cdet.Charset, cdet.Confidence);
-        }  
-        else  
-        {  
-            Console.WriteLine("Detection failed.");  
-        }  
-
+    if (detector.Charset != null) 
+    {
+        Console.WriteLine("Charset: {0}, confidence: {1}", detector.Charset, detector.Confidence);
+    }  
+    else  
+    {  
+        Console.WriteLine("Detection failed.");  
+    }  
+```
 
 ## History and other ports
 
 
-This version of Ude is a fork of the C# port of Mozilla Universal Charset Detector by Rudi Pettazzi from https://code.google.com/p/ude/.
+Chartect.IO is a fork of the UDE C# port of Mozilla Universal Charset Detector by Rudi Pettazzi from https://code.google.com/p/ude/.
 
 This work was based on the original source code from Mozilla available at: 
 
@@ -98,15 +102,9 @@ Some data-structures used into this port have been adapted from the Java port "j
 http://code.google.com/p/juniversalchardet/
 
 Also there is "chardet" (in Python) available at: 
-        
+       
 http://chardet.feedparser.org/
 
-
-Alternatively,  
-
-    Or you can provide an alternative implementation of the interface - Ude.ICharsetDetector - 
-    that wraps the original nsUniversalDetector API. 
- 
 
 ##License
 
