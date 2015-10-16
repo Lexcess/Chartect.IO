@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Chartect.IO</id>
+    <version>$version$</version>
+    <title>Chartect.IO</title>
+    <authors>Lex Mitchell, Rudi Pettazzi, Shy Shalom</authors>
+    <owners>Lex Mitchell</owners>
+    <licenseUrl>https://www.mozilla.org/en-US/MPL/1.1/</licenseUrl>
+    <projectUrl>https://twitter.com/chartectio</projectUrl>
+    <iconUrl></iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Chartect.IO is a character detection library. Forked from UDE, a port of Mozilla Universal Charset Detector.</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright &#x00A9; 2015.</copyright>
+    <tags>charset detection heuristic fuzzy ascii unicode</tags>
+  </metadata>
+  <files>
+    <file src="library\Chartect.IO\bin\$configuration$\Chartect.IO.dll" target="lib\net45+win+wpa81\" />
+    <file src="library\Chartect.IO\bin\$configuration$\Chartect.IO.dll" target="lib\dotnet\" />
+  </files>
+</package>

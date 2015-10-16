@@ -59,6 +59,9 @@
   <PropertyGroup>
     <AssemblyName>Chartect</AssemblyName>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Chartect.IO.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
@@ -89,5 +92,8 @@
       <Project>{bababc81-a5b8-4ba8-b149-4f4520c53dc1}</Project>
       <Name>Chartect.IO</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Chartect.IO.ico" />
   </ItemGroup>
 </Project>
