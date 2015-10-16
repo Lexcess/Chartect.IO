@@ -16,7 +16,7 @@
     <tags>charset detection heuristic fuzzy ascii unicode</tags>
   </metadata>
   <files>
-    <file src="library\Chartect.IO\bin\$configuration$\Chartect.IO.dll" target="lib\net45+win+wpa81\" />
-    <file src="library\Chartect.IO\bin\$configuration$\Chartect.IO.dll" target="lib\dotnet\" />
+    <file src="bin\$configuration$\Chartect.IO.dll" target="lib\net45+win+wpa81\" />
+    <file src="bin\$configuration$\Chartect.IO.dll" target="lib\dotnet\" />
   </files>
 </package>
