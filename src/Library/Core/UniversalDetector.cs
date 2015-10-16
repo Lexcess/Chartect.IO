@@ -9,6 +9,20 @@ namespace Chartect.IO.Core
         Done = 2,
     }
 
+    internal enum DetectorFilter
+    {
+        FilterChineseSimplified = 1,
+        FilterChineseTraditional = 2,
+        FilterJapanese = 4,
+        FilterKorean = 8,
+        FilterUnicode = 16,
+        FilterAscii = 32,
+        FilterChinese = FilterChineseSimplified | FilterChineseTraditional,
+        FilterCjk = FilterJapanese | FilterKorean | FilterChinese,
+        FilterNonCjk = FilterUnicode | FilterAscii,
+        FilterAll = FilterCjk | FilterNonCjk,
+    }
+
     internal enum DetectedCharacters
     {
         PureASCII = 0,
@@ -18,23 +32,12 @@ namespace Chartect.IO.Core
 
     public sealed class UniversalDetector
     {
-        public const int FilterChineseSimplified = 1;
-        public const int FilterChineseTraditional = 2;
-        public const int FilterJapanese = 4;
-        public const int FilterKorean = 8;
-        public const int FilterNonCjk = 16;
-        public const int FilterAll = 31;
-        public const int FilterChinese = FilterChineseSimplified | FilterChineseTraditional;
-        public const int FilterCjk = FilterJapanese | FilterKorean | FilterChineseSimplified | FilterChineseTraditional;
-
         private const float SHORTCUTTHRESHOLD = 0.95f;
         private const float MINIMUMTHRESHOLD = 0.20f;
         private const int ProbersNum = 3;
 
-        private DetectedCharacters detectedCharacters;
         private byte lastChar;
         private int bestGuess;
-        private int languageFilter;
         private CharsetProber[] charsetProbers = new CharsetProber[ProbersNum];
         private CharsetProber escCharsetProber;
         private string detectedCharset;
@@ -42,13 +45,12 @@ namespace Chartect.IO.Core
         private string charset;
         private float confidence;
 
-        public UniversalDetector(int languageFilter)
+        public UniversalDetector()
         {
             this.DetectorState = DetectorState.Start;
             this.DetectedCharacters = DetectedCharacters.PureASCII;
             this.LastChar = 0x00;
             this.BestGuess = -1;
-            this.LanguageFilter = languageFilter;
         }
 
         public DetectorState DetectorState
@@ -97,19 +99,6 @@ namespace Chartect.IO.Core
             set
             {
                 this.lastChar = value;
-            }
-        }
-
-        private int LanguageFilter
-        {
-            get
-            {
-                return this.languageFilter;
-            }
-
-            set
-            {
-                this.languageFilter = value;
             }
         }
 
@@ -282,61 +271,6 @@ namespace Chartect.IO.Core
             return;
         }
 
-        private string DetectByteOrderMark(byte[] input)
-        {
-            string charset = null;
-            if (input.Length > 3)
-            {
-                switch (input[0])
-                {
-                    case 0xEF:
-                        if (0xBB == input[1] && 0xBF == input[2])
-                        {
-                            charset = Charsets.Utf8;
-                        }
-
-                        break;
-                    case 0xFE:
-                        if (0xFF == input[1] && 0x00 == input[2] && 0x00 == input[3])
-                        {
-                            // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
-                            charset = Charsets.UCS43412;
-                        }
-                        else if (0xFF == input[1])
-                        {
-                            charset = Charsets.UTF16BE;
-                        }
-
-                        break;
-                    case 0x00:
-                        if (0x00 == input[1] && 0xFE == input[2] && 0xFF == input[3])
-                        {
-                            charset = Charsets.UTF32BE;
-                        }
-                        else if (0x00 == input[1] && 0xFF == input[2] && 0xFE == input[3])
-                        {
-                            // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
-                            charset = Charsets.UCS42413;
-                        }
-
-                        break;
-                    case 0xFF:
-                        if (0xFE == input[1] && 0x00 == input[2] && 0x00 == input[3])
-                        {
-                            charset = Charsets.UTF32LE;
-                        }
-                        else if (0xFE == input[1])
-                        {
-                            charset = Charsets.Utf16LE;
-                        }
-
-                        break;
-                } // switch
-            }
-
-            return charset;
-        }
-
         /// <summary>
         /// Tell the detector that there is no more data and it must make its
         /// decision.
@@ -423,6 +357,61 @@ namespace Chartect.IO.Core
             // {
             // Finished(charset, confidence);
             // }
+        }
+
+        private string DetectByteOrderMark(byte[] input)
+        {
+            string charset = null;
+            if (input.Length > 3)
+            {
+                switch (input[0])
+                {
+                    case 0xEF:
+                        if (0xBB == input[1] && 0xBF == input[2])
+                        {
+                            charset = Charsets.Utf8;
+                        }
+
+                        break;
+                    case 0xFE:
+                        if (0xFF == input[1] && 0x00 == input[2] && 0x00 == input[3])
+                        {
+                            // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
+                            charset = Charsets.UCS43412;
+                        }
+                        else if (0xFF == input[1])
+                        {
+                            charset = Charsets.UTF16BE;
+                        }
+
+                        break;
+                    case 0x00:
+                        if (0x00 == input[1] && 0xFE == input[2] && 0xFF == input[3])
+                        {
+                            charset = Charsets.UTF32BE;
+                        }
+                        else if (0x00 == input[1] && 0xFF == input[2] && 0xFE == input[3])
+                        {
+                            // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
+                            charset = Charsets.UCS42413;
+                        }
+
+                        break;
+                    case 0xFF:
+                        if (0xFE == input[1] && 0x00 == input[2] && 0x00 == input[3])
+                        {
+                            charset = Charsets.UTF32LE;
+                        }
+                        else if (0xFE == input[1])
+                        {
+                            charset = Charsets.Utf16LE;
+                        }
+
+                        break;
+                } // switch
+            }
+
+            return charset;
         }
     }
 }

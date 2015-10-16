@@ -15,7 +15,7 @@ namespace Chartect.IO.Tests
         [SetUpAttribute]
         public void SetUp()
         {
-            this.detector = new UniversalDetector(UniversalDetector.FilterAll);
+            this.detector = new UniversalDetector();
         }
 
         [TearDownAttribute]

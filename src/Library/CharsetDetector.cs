@@ -33,7 +33,7 @@
     /// </summary>
     public sealed class CharsetDetector
     {
-        private readonly UniversalDetector universalDetector = new UniversalDetector(UniversalDetector.FilterAll);
+        private readonly UniversalDetector universalDetector = new UniversalDetector();
 
         /// <summary>
         /// The detected charset. It can be null.
