@@ -59,7 +59,7 @@
         {
             byte[] buffer = new byte[1024];
             int read;
-            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0 && !this.universalDetector.Done)
+            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0 && this.universalDetector.DetectorState != DetectorState.Done)
             {
                 this.universalDetector.Read(buffer, 0, read);
             }
@@ -79,7 +79,7 @@
         /// <returns>true if the detector has detected the encoding</returns>
         public bool IsDone()
         {
-            return this.universalDetector.Done;
+            return this.universalDetector.DetectorState == DetectorState.Done;
         }
 
         /// <summary>

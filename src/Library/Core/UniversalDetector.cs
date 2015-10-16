@@ -2,6 +2,13 @@ namespace Chartect.IO.Core
 {
     using System;
 
+    public enum DetectorState
+    {
+        Start = 0,
+        GotData = 1,
+        Done = 2,
+    }
+
     internal enum InputState
     {
         PureASCII = 0,
@@ -27,7 +34,6 @@ namespace Chartect.IO.Core
         private InputState inputState;
         private bool start;
         private bool gotData;
-        private bool done;
         private byte lastChar;
         private int bestGuess;
         private int languageFilter;
@@ -40,6 +46,7 @@ namespace Chartect.IO.Core
 
         public UniversalDetector(int languageFilter)
         {
+            this.DetectorState = DetectorState.Start;
             this.Start = true;
             this.InputState = InputState.PureASCII;
             this.LastChar = 0x00;
@@ -47,17 +54,9 @@ namespace Chartect.IO.Core
             this.LanguageFilter = languageFilter;
         }
 
-        public bool Done
+        public DetectorState DetectorState
         {
-            get
-            {
-                return this.done;
-            }
-
-            private set
-            {
-                this.done = value;
-            }
+            get; private set;
         }
 
         public string Charset
@@ -211,7 +210,7 @@ namespace Chartect.IO.Core
         /// <param name="length">number of available bytes</param>
         public void Read(byte[] input, int offset, int length)
         {
-            if (this.Done)
+            if (this.DetectorState == DetectorState.Done)
             {
                 return;
             }
@@ -276,7 +275,7 @@ namespace Chartect.IO.Core
 
                 if (this.DetectedCharset != null)
                 {
-                    this.Done = true;
+                    this.DetectorState = DetectorState.Done;
                     return;
                 }
             }
@@ -340,7 +339,7 @@ namespace Chartect.IO.Core
                     st = this.EscCharsetProber.HandleData(input, offset, length);
                     if (st == ProbingState.FoundIt)
                     {
-                        this.Done = true;
+                        this.DetectorState = DetectorState.Done;
                         this.DetectedCharset = this.EscCharsetProber.GetCharsetName();
                     }
 
@@ -356,7 +355,7 @@ namespace Chartect.IO.Core
                             #endif
                             if (st == ProbingState.FoundIt)
                             {
-                                this.Done = true;
+                                this.DetectorState = DetectorState.Done;
                                 this.DetectedCharset = this.CharsetProbers[i].GetCharsetName();
                                 return;
                             }
@@ -388,7 +387,7 @@ namespace Chartect.IO.Core
 
             if (this.DetectedCharset != null)
             {
-                this.Done = true;
+                this.DetectorState = DetectorState.Done;
                 this.Report(this.DetectedCharset, 1.0f);
                 return;
             }
@@ -430,10 +429,10 @@ namespace Chartect.IO.Core
         {
             this.Charset = null;
             this.Confidence = 0.0f;
-            this.Done = false;
             this.Start = true;
-            this.DetectedCharset = null;
             this.GotData = false;
+            this.DetectorState = DetectorState.Start;
+            this.DetectedCharset = null;
             this.BestGuess = -1;
             this.InputState = InputState.PureASCII;
             this.LastChar = 0x00;
