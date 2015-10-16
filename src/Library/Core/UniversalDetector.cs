@@ -32,7 +32,6 @@ namespace Chartect.IO.Core
         private const int ProbersNum = 3;
 
         private InputState inputState;
-        private bool start;
         private byte lastChar;
         private int bestGuess;
         private int languageFilter;
@@ -46,7 +45,6 @@ namespace Chartect.IO.Core
         public UniversalDetector(int languageFilter)
         {
             this.DetectorState = DetectorState.Start;
-            this.Start = true;
             this.InputState = InputState.PureASCII;
             this.LastChar = 0x00;
             this.BestGuess = -1;
@@ -94,19 +92,6 @@ namespace Chartect.IO.Core
             set
             {
                 this.inputState = value;
-            }
-        }
-
-        private bool Start
-        {
-            get
-            {
-                return this.start;
-            }
-
-            set
-            {
-                this.start = value;
             }
         }
 
@@ -201,63 +186,11 @@ namespace Chartect.IO.Core
                 return;
             }
 
-            if (length > 0)
+            // If the data starts with BOM, we know it is UTF
+            if (length > 0 && this.DetectorState == DetectorState.Start)
             {
                 this.DetectorState = DetectorState.GotData;
-            }
-
-            // If the data starts with BOM, we know it is UTF
-            if (this.Start)
-            {
-                this.Start = false;
-                if (length > 3)
-                {
-                    switch (input[0])
-                    {
-                    case 0xEF:
-                        if (0xBB == input[1] && 0xBF == input[2])
-                            {
-                                this.DetectedCharset = Charsets.Utf8;
-                            }
-
-                            break;
-                    case 0xFE:
-                        if (0xFF == input[1] && 0x00 == input[2] && 0x00 == input[3])
-                            {
-                                // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
-                                this.DetectedCharset = Charsets.UCS43412;
-                            }
-                            else if (0xFF == input[1])
-                            {
-                                this.DetectedCharset = Charsets.UTF16BE;
-                            }
-
-                            break;
-                    case 0x00:
-                        if (0x00 == input[1] && 0xFE == input[2] && 0xFF == input[3])
-                            {
-                                this.DetectedCharset = Charsets.UTF32BE;
-                            }
-                            else if (0x00 == input[1] && 0xFF == input[2] && 0xFE == input[3])
-                            {
-                                // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
-                                this.DetectedCharset = Charsets.UCS42413;
-                            }
-
-                            break;
-                    case 0xFF:
-                        if (0xFE == input[1] && 0x00 == input[2] && 0x00 == input[3])
-                            {
-                                this.DetectedCharset = Charsets.UTF32LE;
-                            }
-                            else if (0xFE == input[1])
-                            {
-                                this.DetectedCharset = Charsets.Utf16LE;
-                            }
-
-                            break;
-                    } // switch
-                }
+                this.DetectedCharset = this.DetectByteOrderMark(input);
 
                 if (this.DetectedCharset != null)
                 {
@@ -357,6 +290,61 @@ namespace Chartect.IO.Core
             return;
         }
 
+        private string DetectByteOrderMark(byte[] input)
+        {
+            string charset = null;
+            if (input.Length > 3)
+            {
+                switch (input[0])
+                {
+                    case 0xEF:
+                        if (0xBB == input[1] && 0xBF == input[2])
+                        {
+                            charset = Charsets.Utf8;
+                        }
+
+                        break;
+                    case 0xFE:
+                        if (0xFF == input[1] && 0x00 == input[2] && 0x00 == input[3])
+                        {
+                            // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
+                            charset = Charsets.UCS43412;
+                        }
+                        else if (0xFF == input[1])
+                        {
+                            charset = Charsets.UTF16BE;
+                        }
+
+                        break;
+                    case 0x00:
+                        if (0x00 == input[1] && 0xFE == input[2] && 0xFF == input[3])
+                        {
+                            charset = Charsets.UTF32BE;
+                        }
+                        else if (0x00 == input[1] && 0xFF == input[2] && 0xFE == input[3])
+                        {
+                            // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
+                            charset = Charsets.UCS42413;
+                        }
+
+                        break;
+                    case 0xFF:
+                        if (0xFE == input[1] && 0x00 == input[2] && 0x00 == input[3])
+                        {
+                            charset = Charsets.UTF32LE;
+                        }
+                        else if (0xFE == input[1])
+                        {
+                            charset = Charsets.Utf16LE;
+                        }
+
+                        break;
+                } // switch
+            }
+
+            return charset;
+        }
+
         /// <summary>
         /// Tell the detector that there is no more data and it must make its
         /// decision.
@@ -415,7 +403,6 @@ namespace Chartect.IO.Core
         {
             this.Charset = null;
             this.Confidence = 0.0f;
-            this.Start = true;
             this.DetectorState = DetectorState.Start;
             this.DetectedCharset = null;
             this.BestGuess = -1;
