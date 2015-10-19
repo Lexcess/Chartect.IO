@@ -95,7 +95,7 @@
     <Compile Include="Core\SJISDistributionAnalyser.cs" />
     <Compile Include="Core\SJISProber.cs" />
     <Compile Include="Core\SJISSMModel.cs" />
-    <Compile Include="Core\SMModel.cs" />
+    <Compile Include="Core\StateMachineModel.cs" />
     <Compile Include="Core\UCS2BESMModel.cs" />
     <Compile Include="Core\UCS2LESMModel.cs" />
     <Compile Include="Core\UniversalDetector.cs" />

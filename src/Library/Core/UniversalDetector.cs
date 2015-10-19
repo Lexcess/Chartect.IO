@@ -33,7 +33,7 @@ namespace Chartect.IO.Core
     internal sealed class UniversalDetector
     {
         private const float SHORTCUTTHRESHOLD = 0.95f;
-        private const float MINIMUMTHRESHOLD = 0.20f;
+        private const float MinimumThreshold = 0.20f;
         private const int ProbersNum = 3;
 
         private byte lastChar;
@@ -217,7 +217,7 @@ namespace Chartect.IO.Core
                 {
                     if (this.DetectedCharacters == DetectedCharacters.PureASCII &&
                         (input[i] == 0x1B || (input[i] == 0x7B && this.LastChar == 0x7E)))
-                        {
+                    {
                         // found escape character or HZ "~{"
                         this.DetectedCharacters = DetectedCharacters.EscASCII;
                     }
@@ -295,24 +295,24 @@ namespace Chartect.IO.Core
             if (this.DetectedCharacters == DetectedCharacters.Highbyte)
             {
                 float proberConfidence = 0.0f;
-                float maxProberConfidence = 0.0f;
-                int maxProber = 0;
+                float bestProberConfidence = 0.0f;
+                int bestProber = 0;
                 for (int i = 0; i < ProbersNum; i++)
                 {
                     if (this.CharsetProbers[i] != null)
                     {
                         proberConfidence = this.CharsetProbers[i].GetConfidence();
-                        if (proberConfidence > maxProberConfidence)
+                        if (proberConfidence > bestProberConfidence)
                         {
-                            maxProberConfidence = proberConfidence;
-                            maxProber = i;
+                            bestProberConfidence = proberConfidence;
+                            bestProber = i;
                         }
                     }
                 }
 
-                if (maxProberConfidence > MINIMUMTHRESHOLD)
+                if (bestProberConfidence > MinimumThreshold)
                 {
-                    this.Report(this.CharsetProbers[maxProber].GetCharsetName(), maxProberConfidence);
+                    this.Report(this.CharsetProbers[bestProber].GetCharsetName(), bestProberConfidence);
                 }
             }
             else if (this.DetectedCharacters == DetectedCharacters.PureASCII)

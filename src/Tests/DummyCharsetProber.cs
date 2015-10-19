@@ -8,12 +8,12 @@
     {
         public byte[] TestFilterWithEnglishLetter(byte[] buf, int offset, int len)
         {
-            return FilterWithEnglishLetters(buf, offset, len);
+            return buf.FilterWithEnglishLetters(offset, len);
         }
 
         public byte[] TestFilterWithoutEnglishLetter(byte[] buf, int offset, int len)
         {
-            return FilterWithoutEnglishLetters(buf, offset, len);
+            return buf.FilterWithoutEnglishLetters(offset, len);
         }
 
         public override float GetConfidence()

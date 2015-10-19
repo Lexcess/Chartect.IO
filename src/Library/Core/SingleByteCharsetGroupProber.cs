@@ -49,7 +49,7 @@ namespace Chartect.IO.Core
             // this is done without any consideration to KeepEnglishLetters
             // of each prober since as of now, there are no probers here which
             // recognize languages with English characters.
-            byte[] newBuf = FilterWithoutEnglishLetters(buf, offset, len);
+            byte[] newBuf = buf.FilterWithoutEnglishLetters(offset, len);
             if (newBuf.Length == 0)
             {
                 return this.State; // Nothing to see here, move on.
