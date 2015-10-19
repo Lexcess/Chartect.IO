@@ -20,7 +20,7 @@ namespace Chartect.IO
             string filename = args[0];
             using (FileStream stream = File.OpenRead(filename))
             {
-                var detector = new CharsetDetector();
+                var detector = new StreamDetector();
                 detector.Read(stream);
                 detector.DataEnd();
                 if (detector.Charset != null)

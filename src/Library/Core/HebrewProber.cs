@@ -102,7 +102,7 @@ namespace Chartect.IO.Core
     /// This prober doesn't actually recognize a language or a charset.
     /// It is a helper prober for the use of the Hebrew model probers
     /// </summary>
-    public class HebrewProber : CharsetProber
+    internal class HebrewProber : CharsetProber
     {
         public const string VisualHebrewName = "ISO-8859-8";
         public const string LogicalHebrewName = "windows-1255";
@@ -256,9 +256,9 @@ namespace Chartect.IO.Core
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
             // Both model probers say it's not them. No reason to continue.
-            if (this.GetState() == ProbingState.NotMe)
+            if (this.GetState() == ProbingState.NotDetected)
             {
-                return ProbingState.NotMe;
+                return ProbingState.NotDetected;
             }
 
             int max = offset + len;
@@ -352,10 +352,10 @@ namespace Chartect.IO.Core
         public override ProbingState GetState()
         {
             // Remain active as long as any of the model probers are active.
-            if (this.LogicalProber.GetState() == ProbingState.NotMe &&
-                this.VisualProber.GetState() == ProbingState.NotMe)
+            if (this.LogicalProber.GetState() == ProbingState.NotDetected &&
+                this.VisualProber.GetState() == ProbingState.NotDetected)
             {
-                return ProbingState.NotMe;
+                return ProbingState.NotDetected;
             }
 
             return ProbingState.Detecting;

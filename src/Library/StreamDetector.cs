@@ -17,21 +17,8 @@
     ///    Console.WriteLine("{0}, {1}", cdet.Charset, cdet.Confidence);
     /// </code>
     /// </example>
-    ///
-    ///  or by a byte a array:
-    ///
-    /// <example>
-    /// <code>
-    /// byte[] buff = new byte[1024];
-    /// int read;
-    /// while ((read = stream.Read(buff, 0, buff.Length)) > 0 && !done)
-    ///     Read(buff, 0, read);
-    /// cdet.DataEnd();
-    /// Console.WriteLine("{0}, {1}", cdet.Charset, cdet.Confidence);
-    /// </code>
-    /// </example>
     /// </summary>
-    public sealed class CharsetDetector
+    public sealed class StreamDetector
     {
         private readonly UniversalDetector universalDetector = new UniversalDetector();
 

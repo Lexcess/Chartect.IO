@@ -5,7 +5,7 @@ namespace Chartect.IO.Core
     /// <summary>
     /// Multi-byte charsets probers
     /// </summary>
-    public class MultiByteCharsetGroupProber : CharsetProber
+    internal class MultiByteCharsetGroupProber : CharsetProber
     {
         private const int PROBERSNUM = 7;
         private static readonly string[] ProberName =
@@ -91,7 +91,7 @@ namespace Chartect.IO.Core
                 }
             }
 
-            ProbingState st = ProbingState.NotMe;
+            ProbingState st = ProbingState.NotDetected;
 
             for (int i = 0; i < this.probers.Length; i++)
             {
@@ -101,19 +101,19 @@ namespace Chartect.IO.Core
                 }
 
                 st = this.probers[i].HandleData(highbyteBuf, 0, hptr);
-                if (st == ProbingState.FoundIt)
+                if (st == ProbingState.Detected)
                 {
                     this.bestGuess = i;
-                    this.State = ProbingState.FoundIt;
+                    this.State = ProbingState.Detected;
                     break;
                 }
-                else if (st == ProbingState.NotMe)
+                else if (st == ProbingState.NotDetected)
                 {
                     this.isActive[i] = false;
                     this.activeNum--;
                     if (this.activeNum <= 0)
                     {
-                        this.State = ProbingState.NotMe;
+                        this.State = ProbingState.NotDetected;
                         break;
                     }
                 }
@@ -127,11 +127,11 @@ namespace Chartect.IO.Core
             float bestConf = 0.0f;
             float cf = 0.0f;
 
-            if (this.State == ProbingState.FoundIt)
+            if (this.State == ProbingState.Detected)
             {
                 return 0.99f;
             }
-            else if (this.State == ProbingState.NotMe)
+            else if (this.State == ProbingState.NotDetected)
             {
                 return 0.01f;
             }

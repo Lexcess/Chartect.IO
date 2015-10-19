@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class UCS2BESMModel : StateMachineModel
+    internal class UCS2BESMModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {

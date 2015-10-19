@@ -4,7 +4,7 @@ namespace Chartect.IO.Core
     using System.Collections.Generic;
     using System.Text;
 
-    public sealed class SingleByteCharSetProber : CharsetProber
+    internal sealed class SingleByteCharSetProber : CharsetProber
     {
         private const int SAMPLESIZE = 64;
         private const int SBENOUGHRELTHRESHOLD = 1024;
@@ -88,11 +88,11 @@ namespace Chartect.IO.Core
                     float cf = this.GetConfidence();
                     if (cf > POSITIVESHORTCUTTHRESHOLD)
                     {
-                        this.State = ProbingState.FoundIt;
+                        this.State = ProbingState.Detected;
                     }
                     else if (cf < NEGATIVESHORTCUTTHRESHOLD)
                     {
-                        this.State = ProbingState.NotMe;
+                        this.State = ProbingState.NotDetected;
                     }
                 }
             }

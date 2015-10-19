@@ -3,7 +3,7 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    public class Iso2022KrsmEscapedModel : StateMachineModel
+    internal class Iso2022KrsmEscapedModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {

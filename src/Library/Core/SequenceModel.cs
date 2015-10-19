@@ -2,7 +2,7 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    public abstract class SequenceModel
+    internal abstract class SequenceModel
     {
         // [256] table use to find a char's order
         private byte[] charToOrderMap;

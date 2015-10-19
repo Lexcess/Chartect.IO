@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class Latin2HungarianModel : HungarianModel
+    internal class Latin2HungarianModel : HungarianModel
     {
         private static readonly byte[] OrderMap =
         {

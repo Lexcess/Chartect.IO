@@ -35,17 +35,17 @@ Import the library:
 
 using Chartect.IO;
 
-you can feed a Stream to the detector:  
+you can feed a StreamDetector to the detector:  
 ```c#
 using System.IO;
 using Chartect.IO;
 
 public class program
 {
-
     public static void Main(String[] args)
     {
-        var detector = new CharsetDetector();
+        var filename = args[0];
+        var detector = new StreamDetector();
         using (FileStream stream = File.OpenRead(filename)) 
         {
             detector.Read(stream);
@@ -63,16 +63,12 @@ public class program
 }
 ```
 
-or use a byte array to the detector. Call DataEnd to notify the detector that you want back the result:
+or use StringDetector. StringDetector assumes that there is only one string (so you don't have to call DataEnd):
 ```c#         
-    var detector = new CharsetDetector();
-    byte[] buff = new byte[1024];
-    int read;
-    while ((read = stream.Read(buff, 0, buff.Length)) > 0 && !done) 
-    {
-        detector.Read(buff, 0, read);
-    }
-    detector.DataEnd();
+    var detector = new StringDetector();
+    var input = "После окончательного разорения отца семейства";
+
+    detector.Read(input);
 
     if (detector.Charset != null) 
     {
@@ -83,6 +79,7 @@ or use a byte array to the detector. Call DataEnd to notify the detector that yo
         Console.WriteLine("Detection failed.");  
     }  
 ```
+You can also use ArrayDetector to take in an array of bytes.
 
 ## History and other ports
 

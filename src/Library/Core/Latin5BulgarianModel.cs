@@ -2,7 +2,7 @@
 {
     using System;
 
-    public sealed class Latin5BulgarianModel : BulgarianModel
+    internal sealed class Latin5BulgarianModel : BulgarianModel
     {
         // 255: Control characters that usually does not exist in any text
         // 254: Carriage/Return

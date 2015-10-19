@@ -2,7 +2,7 @@
 {
     using System;
 
-    public sealed class Win1251BulgarianModel : BulgarianModel
+    internal sealed class Win1251BulgarianModel : BulgarianModel
     {
         private static readonly byte[] OrderMap =
         {

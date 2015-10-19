@@ -2,7 +2,7 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    public class EUCKRProber : CharsetProber
+    internal class EUCKRProber : CharsetProber
     {
         private CodingStateMachine codingSM;
         private EUCKRDistributionAnalyser distributionAnalyser;
@@ -20,23 +20,23 @@ namespace Chartect.IO.Core
             return "EUC-KR";
         }
 
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
+        public override ProbingState HandleData(byte[] input, int offset, int length)
         {
             int codingState;
-            int max = offset + len;
+            int max = offset + length;
 
             for (int i = offset; i < max; i++)
             {
-                codingState = this.codingSM.NextState(buf[i]);
+                codingState = this.codingSM.NextState(input[i]);
                 if (codingState == StateMachineModel.Error)
                 {
-                    this.State = ProbingState.NotMe;
+                    this.State = ProbingState.NotDetected;
                     break;
                 }
 
                 if (codingState == StateMachineModel.ItsMe)
                 {
-                    this.State = ProbingState.FoundIt;
+                    this.State = ProbingState.Detected;
                     break;
                 }
 
@@ -45,23 +45,23 @@ namespace Chartect.IO.Core
                     int charLen = this.codingSM.CurrentCharLen;
                     if (i == offset)
                     {
-                        this.lastChar[1] = buf[offset];
+                        this.lastChar[1] = input[offset];
                         this.distributionAnalyser.HandleOneChar(this.lastChar, 0, charLen);
                     }
                     else
                     {
-                         this.distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
+                         this.distributionAnalyser.HandleOneChar(input, i - 1, charLen);
                     }
                 }
             }
 
-            this.lastChar[0] = buf[max - 1];
+            this.lastChar[0] = input[max - 1];
 
             if (this.State == ProbingState.Detecting)
             {
                 if (this.distributionAnalyser.GotEnoughData() && this.GetConfidence() > ShortcutThreshold)
                 {
-                    this.State = ProbingState.FoundIt;
+                    this.State = ProbingState.Detected;
                 }
             }
 

@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class MacCyrillicModel : CyrillicModel
+    internal class MacCyrillicModel : CyrillicModel
     {
         private static readonly byte[] OrderMap =
         {

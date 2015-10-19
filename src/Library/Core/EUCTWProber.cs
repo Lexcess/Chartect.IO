@@ -2,7 +2,7 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    public class EUCTWProber : CharsetProber
+    internal class EUCTWProber : CharsetProber
     {
         private CodingStateMachine codingSM;
         private EUCTWDistributionAnalyser distributionAnalyser;
@@ -25,13 +25,13 @@ namespace Chartect.IO.Core
                 codingState = this.codingSM.NextState(buf[i]);
                 if (codingState == StateMachineModel.Error)
                 {
-                    this.State = ProbingState.NotMe;
+                    this.State = ProbingState.NotDetected;
                     break;
                 }
 
                 if (codingState == StateMachineModel.ItsMe)
                 {
-                    this.State = ProbingState.FoundIt;
+                    this.State = ProbingState.Detected;
                     break;
                 }
 
@@ -56,7 +56,7 @@ namespace Chartect.IO.Core
             {
                 if (this.distributionAnalyser.GotEnoughData() && this.GetConfidence() > ShortcutThreshold)
                 {
-                    this.State = ProbingState.FoundIt;
+                    this.State = ProbingState.Detected;
                 }
             }
 

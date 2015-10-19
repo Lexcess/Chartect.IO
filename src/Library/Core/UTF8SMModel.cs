@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class UTF8SMModel : StateMachineModel
+    internal class UTF8SMModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {

@@ -9,6 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chartect.IO.Test", "src\Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chartect.IO", "src\Library\Chartect.IO.csproj", "{BABABC81-A5B8-4BA8-B149-4F4520C53DC1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{21684E0D-4E99-4CEE-860C-4D402D71D6F5}"
+	ProjectSection(SolutionItems) = preProject
+		Authors.md = Authors.md
+		license\MPL-1.1.txt = license\MPL-1.1.txt
+		readme.md = readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

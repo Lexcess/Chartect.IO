@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class Koi8rCyrillicModel : CyrillicModel
+    internal class Koi8rCyrillicModel : CyrillicModel
     {
         private static readonly byte[] OrderMap =
         {

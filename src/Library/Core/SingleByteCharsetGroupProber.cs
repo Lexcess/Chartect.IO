@@ -2,7 +2,7 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    public class SingleByteCharsetGroupProber : CharsetProber
+    internal class SingleByteCharsetGroupProber : CharsetProber
     {
         private const int PROBERSNUM = 13;
         private CharsetProber[] probers = new CharsetProber[PROBERSNUM];
@@ -41,7 +41,7 @@ namespace Chartect.IO.Core
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
-            ProbingState st = ProbingState.NotMe;
+            ProbingState st = ProbingState.NotDetected;
 
             // apply filter to original buffer, and we got new buffer back
             // depend on what script it is, we will feed them the new buffer
@@ -64,19 +64,19 @@ namespace Chartect.IO.Core
 
                 st = this.probers[i].HandleData(newBuf, 0, newBuf.Length);
 
-                if (st == ProbingState.FoundIt)
+                if (st == ProbingState.Detected)
                 {
                     this.bestGuess = i;
-                    this.State = ProbingState.FoundIt;
+                    this.State = ProbingState.Detected;
                     break;
                 }
-                else if (st == ProbingState.NotMe)
+                else if (st == ProbingState.NotDetected)
                 {
                     this.isActive[i] = false;
                     this.activeNum--;
                     if (this.activeNum <= 0)
                     {
-                        this.State = ProbingState.NotMe;
+                        this.State = ProbingState.NotDetected;
                         break;
                     }
                 }
@@ -90,9 +90,9 @@ namespace Chartect.IO.Core
             float bestConf = 0.0f, cf;
             switch (this.State)
             {
-            case ProbingState.FoundIt:
+            case ProbingState.Detected:
                 return 0.99f; // sure yes
-            case ProbingState.NotMe:
+            case ProbingState.NotDetected:
                 return 0.01f;  // sure no
             default:
                 for (int i = 0; i < PROBERSNUM; i++)

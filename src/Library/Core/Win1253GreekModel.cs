@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class Win1253GreekModel : GreekModel
+    internal class Win1253GreekModel : GreekModel
     {
         private static readonly byte[] OrderMap =
         {

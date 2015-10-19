@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class Win1251CyrillicModel : CyrillicModel
+    internal class Win1251CyrillicModel : CyrillicModel
     {
         private static readonly byte[] OrderMap =
         {

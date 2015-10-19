@@ -2,7 +2,7 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    public class BitPackage
+    internal class BitPackage
     {
         public const int IndexShift4Bits = 3;
         public const int IndexShift8Bits = 2;

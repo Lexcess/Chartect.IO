@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class GB18030SMModel : StateMachineModel
+    internal class GB18030SMModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {

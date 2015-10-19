@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class UCS2LESMModel : StateMachineModel
+    internal class UCS2LESMModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {

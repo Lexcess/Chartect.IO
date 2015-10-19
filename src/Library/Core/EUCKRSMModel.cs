@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class EUCKRSMModel : StateMachineModel
+    internal class EUCKRSMModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {

@@ -4,7 +4,7 @@ namespace Chartect.IO.Core
     using System.Collections.Generic;
     using System.Text;
 
-    public class UTF8Prober : CharsetProber
+    internal class UTF8Prober : CharsetProber
     {
         private const float OneCharProb = 0.50f;
         private CodingStateMachine codingSM;
@@ -40,13 +40,13 @@ namespace Chartect.IO.Core
 
                 if (codingState == StateMachineModel.Error)
                 {
-                    this.State = ProbingState.NotMe;
+                    this.State = ProbingState.NotDetected;
                     break;
                 }
 
                 if (codingState == StateMachineModel.ItsMe)
                 {
-                    this.State = ProbingState.FoundIt;
+                    this.State = ProbingState.Detected;
                     break;
                 }
 
@@ -63,7 +63,7 @@ namespace Chartect.IO.Core
             {
                 if (this.GetConfidence() > ShortcutThreshold)
                 {
-                    this.State = ProbingState.FoundIt;
+                    this.State = ProbingState.Detected;
                 }
             }
 

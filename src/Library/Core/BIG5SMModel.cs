@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class Big5SMModel : StateMachineModel
+    internal class Big5SMModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {

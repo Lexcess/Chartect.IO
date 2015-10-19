@@ -4,7 +4,7 @@ namespace Chartect.IO.Core
     using System.Collections.Generic;
     using System.Text;
 
-    public abstract class JapaneseContextAnalyser
+    internal abstract class JapaneseContextAnalyser
     {
         protected const int CATEGORIESNUM = 6;
         protected const int ENOUGHRELTHRESHOLD = 100;

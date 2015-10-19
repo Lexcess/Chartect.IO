@@ -40,7 +40,9 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharsetDetector.cs" />
+    <Compile Include="StringDetector.cs" />
+    <Compile Include="ArrayDetector.cs" />
+    <Compile Include="StreamDetector.cs" />
     <Compile Include="Core\Big5DistributionAnalyser.cs" />
     <Compile Include="Core\Big5Prober.cs" />
     <Compile Include="Core\Big5SMModel.cs" />
@@ -104,7 +106,6 @@
     <Compile Include="Core\Win1251CyrillicModel.cs" />
     <Compile Include="Core\Win1253GreekModel.cs" />
     <Compile Include="Core\Win1255HebrewModel.cs" />
-    <Compile Include="DetectionConfidence.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

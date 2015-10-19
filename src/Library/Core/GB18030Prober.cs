@@ -5,7 +5,7 @@ namespace Chartect.IO.Core
     using System.Text;
 
     // We use gb18030 to replace gb2312, because 18030 is a superset.
-    public class GB18030Prober : CharsetProber
+    internal class GB18030Prober : CharsetProber
     {
         private CodingStateMachine codingSM;
         private GB18030DistributionAnalyser analyser;
@@ -34,13 +34,13 @@ namespace Chartect.IO.Core
                 codingState = this.codingSM.NextState(buf[i]);
                 if (codingState == StateMachineModel.Error)
                 {
-                    this.State = ProbingState.NotMe;
+                    this.State = ProbingState.NotDetected;
                     break;
                 }
 
                 if (codingState == StateMachineModel.ItsMe)
                 {
-                    this.State = ProbingState.FoundIt;
+                    this.State = ProbingState.Detected;
                     break;
                 }
 
@@ -65,7 +65,7 @@ namespace Chartect.IO.Core
             {
                 if (this.analyser.GotEnoughData() && this.GetConfidence() > ShortcutThreshold)
                 {
-                    this.State = ProbingState.FoundIt;
+                    this.State = ProbingState.Detected;
                 }
             }
 

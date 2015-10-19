@@ -8,12 +8,12 @@ namespace Chartect.IO.Tests
     [TestFixture]
     public class CharsetDetectorTest
     {
-        private CharsetDetector detector;
+        private StreamDetector detector;
 
         [SetUpAttribute]
         public void SetUp()
         {
-            this.detector = new CharsetDetector();
+            this.detector = new StreamDetector();
         }
 
         [TearDownAttribute]

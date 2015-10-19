@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
 
-    public class EUCJPContextAnalyser : JapaneseContextAnalyser
+    internal class EUCJPContextAnalyser : JapaneseContextAnalyser
     {
         private const byte HIRAGANAFIRSTBYTE = 0xA4;
 

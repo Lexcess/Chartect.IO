@@ -10,12 +10,12 @@ namespace Chartect.IO.Tests
     {
         private const string DataRoot = "../../Data";
 
-        private CharsetDetector detector;
+        private StreamDetector detector;
 
         [SetUpAttribute]
         public void SetUp()
         {
-            this.detector = new CharsetDetector();
+            this.detector = new StreamDetector();
         }
 
         [TearDownAttribute]

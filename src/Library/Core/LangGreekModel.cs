@@ -2,7 +2,7 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    public abstract class GreekModel : SequenceModel
+    internal abstract class GreekModel : SequenceModel
     {
         // Model Table:
         // total sequences: 100%

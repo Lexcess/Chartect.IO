@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class EUCTWSMModel : StateMachineModel
+    internal class EUCTWSMModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {

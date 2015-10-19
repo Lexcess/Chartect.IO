@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
 
-    public class SJISContextAnalyser : JapaneseContextAnalyser
+    internal class SJISContextAnalyser : JapaneseContextAnalyser
     {
         private const byte HIRAGANAFIRSTBYTE = 0x82;
 

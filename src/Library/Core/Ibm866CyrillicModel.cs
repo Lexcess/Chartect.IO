@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class Ibm866CyrillicModel : CyrillicModel
+    internal class Ibm866CyrillicModel : CyrillicModel
     {
         private static readonly byte[] OrderMap =
         {

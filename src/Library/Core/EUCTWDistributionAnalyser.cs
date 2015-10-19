@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
 
-    public class EUCTWDistributionAnalyser : CharDistributionAnalyser
+    internal class EUCTWDistributionAnalyser : CharDistributionAnalyser
     {
         // EUCTW frequency table
         // Converted from big5 work

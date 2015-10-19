@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class SJISSMModel : StateMachineModel
+    internal class SJISSMModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {

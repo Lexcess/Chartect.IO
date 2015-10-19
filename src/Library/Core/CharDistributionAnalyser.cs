@@ -8,7 +8,7 @@ namespace Chartect.IO.Core
     /// Base class for the Character Distribution Method, used for
     /// the CJK encodings
     /// </summary>
-    public abstract class CharDistributionAnalyser
+    internal abstract class CharDistributionAnalyser
     {
         protected const float SUREYES = 0.99f;
         protected const float SURENO = 0.01f;

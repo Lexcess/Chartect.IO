@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
 
-    public class EUCJPDistributionAnalyser : SJISDistributionAnalyser
+    internal class EUCJPDistributionAnalyser : SJISDistributionAnalyser
     {
         public EUCJPDistributionAnalyser()
             : base()

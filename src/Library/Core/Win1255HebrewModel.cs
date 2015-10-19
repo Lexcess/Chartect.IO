@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class Win1255HebrewModel : HebrewModel
+    internal class Win1255HebrewModel : HebrewModel
     {
         // 255: Control characters that usually does not exist in any text
         // 254: Carriage/Return

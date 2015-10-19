@@ -5,7 +5,7 @@ namespace Chartect.IO.Core
     /// <summary>
     /// Parallel state machine for the Coding Scheme Method
     /// </summary>
-    public class CodingStateMachine
+    internal class CodingStateMachine
     {
         private int currentState;
         private StateMachineModel model;

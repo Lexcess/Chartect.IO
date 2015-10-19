@@ -4,7 +4,7 @@ namespace Chartect.IO.Core
 
     // TODO: Using trigrams the detector should be able to discriminate between
     // latin-1 and iso8859-2
-    public class Latin1Prober : CharsetProber
+    internal class Latin1Prober : CharsetProber
     {
         private const int FREQCATNUM = 4;
 
@@ -107,7 +107,7 @@ namespace Chartect.IO.Core
                 freq = Latin1ClassModel[(this.lastCharClass * CLASSNUM) + charClass];
                 if (freq == 0)
                 {
-                  this.State = ProbingState.NotMe;
+                  this.State = ProbingState.NotDetected;
                   break;
                 }
 
@@ -120,7 +120,7 @@ namespace Chartect.IO.Core
 
         public override float GetConfidence()
         {
-            if (this.State == ProbingState.NotMe)
+            if (this.State == ProbingState.NotDetected)
             {
                 return 0.01f;
             }

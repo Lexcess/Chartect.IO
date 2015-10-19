@@ -2,7 +2,7 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    public class ThaiModel : SequenceModel
+    internal class ThaiModel : SequenceModel
     {
         /****************************************************************
         255: Control characters that usually does not exist in any text

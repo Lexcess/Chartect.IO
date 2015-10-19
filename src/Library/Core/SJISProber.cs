@@ -8,7 +8,7 @@ namespace Chartect.IO.Core
     /// 2, kana character often exist in group
     /// 3, certain combination of kana is never used in japanese language
     /// </summary>
-    public class SJISProber : CharsetProber
+    internal class SJISProber : CharsetProber
     {
         private CodingStateMachine codingSM;
         private SJISContextAnalyser contextAnalyser;
@@ -38,13 +38,13 @@ namespace Chartect.IO.Core
                 codingState = this.codingSM.NextState(buf[i]);
                 if (codingState == StateMachineModel.Error)
                 {
-                    this.State = ProbingState.NotMe;
+                    this.State = ProbingState.NotDetected;
                     break;
                 }
 
                 if (codingState == StateMachineModel.ItsMe)
                 {
-                    this.State = ProbingState.FoundIt;
+                    this.State = ProbingState.Detected;
                     break;
                 }
 
@@ -70,7 +70,7 @@ namespace Chartect.IO.Core
             {
                 if (this.contextAnalyser.GotEnoughData() && this.GetConfidence() > ShortcutThreshold)
                 {
-                    this.State = ProbingState.FoundIt;
+                    this.State = ProbingState.Detected;
                 }
             }
 

@@ -4,7 +4,7 @@
     using Chartect.IO.Core;
     using NUnit.Framework;
 
-    public class DummyCharsetProber : CharsetProber
+    internal class DummyCharsetProber : CharsetProber
     {
         public byte[] TestFilterWithEnglishLetter(byte[] buf, int offset, int len)
         {

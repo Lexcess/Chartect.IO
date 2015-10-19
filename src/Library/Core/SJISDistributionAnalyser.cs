@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
 
-    public class SJISDistributionAnalyser : CharDistributionAnalyser
+    internal class SJISDistributionAnalyser : CharDistributionAnalyser
     {
         // Sampling from about 20M text materials include literature and computer technology
         // Japanese frequency table, applied to both S-JIS and EUC-JP

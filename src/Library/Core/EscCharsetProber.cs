@@ -4,7 +4,7 @@ namespace Chartect.IO.Core
     using System.Collections.Generic;
     using System.Text;
 
-    public class EscCharsetProber : CharsetProber
+    internal class EscCharsetProber : CharsetProber
     {
         private const int CHARSETSNUM = 4;
         private string detectedCharset;
@@ -49,7 +49,7 @@ namespace Chartect.IO.Core
                         this.activeSM--;
                         if (this.activeSM == 0)
                         {
-                            this.State = ProbingState.NotMe;
+                            this.State = ProbingState.NotDetected;
                             return this.State;
                         }
                         else if (j != this.activeSM)
@@ -61,7 +61,7 @@ namespace Chartect.IO.Core
                     }
                     else if (codingState == StateMachineModel.ItsMe)
                     {
-                        this.State = ProbingState.FoundIt;
+                        this.State = ProbingState.Detected;
                         this.detectedCharset = this.codingSM[j].ModelName;
                         return this.State;
                     }

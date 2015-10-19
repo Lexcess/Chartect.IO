@@ -3,7 +3,7 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    public class HzsmEscapedModel : StateMachineModel
+    internal class HzsmEscapedModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {

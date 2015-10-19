@@ -2,7 +2,7 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    public enum DetectorState
+    internal enum DetectorState
     {
         Start = 0,
         GotData = 1,
@@ -30,7 +30,7 @@ namespace Chartect.IO.Core
         Highbyte = 2,
     }
 
-    public sealed class UniversalDetector
+    internal sealed class UniversalDetector
     {
         private const float SHORTCUTTHRESHOLD = 0.95f;
         private const float MINIMUMTHRESHOLD = 0.20f;
@@ -226,7 +226,7 @@ namespace Chartect.IO.Core
                 }
             }
 
-            ProbingState st = ProbingState.NotMe;
+            ProbingState st = ProbingState.NotDetected;
 
             switch (this.DetectedCharacters)
             {
@@ -237,7 +237,7 @@ namespace Chartect.IO.Core
                     }
 
                     st = this.EscCharsetProber.HandleData(input, offset, length);
-                    if (st == ProbingState.FoundIt)
+                    if (st == ProbingState.Detected)
                     {
                         this.DetectorState = DetectorState.Done;
                         this.DetectedCharset = this.EscCharsetProber.GetCharsetName();
@@ -253,7 +253,7 @@ namespace Chartect.IO.Core
                             #if DEBUG
                             this.CharsetProbers[i].DumpStatus();
                             #endif
-                            if (st == ProbingState.FoundIt)
+                            if (st == ProbingState.Detected)
                             {
                                 this.DetectorState = DetectorState.Done;
                                 this.DetectedCharset = this.CharsetProbers[i].GetCharsetName();

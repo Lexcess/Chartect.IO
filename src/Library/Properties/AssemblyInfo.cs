@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Resources;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
@@ -20,3 +21,4 @@ using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
 [assembly: System.CLSCompliant(true)]
+[assembly: InternalsVisibleTo("Chartect.IO.Test")]

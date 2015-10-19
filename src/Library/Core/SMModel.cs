@@ -5,7 +5,7 @@ namespace Chartect.IO.Core
     /// <summary>
     /// State machine model
     /// </summary>
-    public abstract class StateMachineModel
+    internal abstract class StateMachineModel
     {
         public const int Start = 0;
         public const int Error = 1;

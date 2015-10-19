@@ -5,14 +5,14 @@ namespace Chartect.IO.Core
     using System.IO;
     using System.Text;
 
-    public enum ProbingState
+    internal enum ProbingState
     {
-        Detecting = 0, // no sure answer yet, but caller can ask for confidence
-        FoundIt = 1, // positive answer
-        NotMe = 2 // negative answer
+        Detecting = 0,  // no sure answer yet, but caller can ask for confidence
+        Detected = 1,   // positive answer
+        NotDetected = 2 // negative answer
     }
 
-    public abstract class CharsetProber
+    internal abstract class CharsetProber
     {
         protected const float ShortcutThreshold = 0.95F;
 
