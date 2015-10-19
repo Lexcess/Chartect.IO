@@ -226,7 +226,7 @@ namespace Chartect.IO.Core
                 }
             }
 
-            ProbingState st = ProbingState.NotDetected;
+            ProbingState st = ProbingState.NegativeDetection;
 
             switch (this.DetectedCharacters)
             {

@@ -9,7 +9,7 @@ namespace Chartect.IO.Core
     {
         Detecting = 0,  // no sure answer yet, but caller can ask for confidence
         Detected = 1,   // positive answer
-        NotDetected = 2 // negative answer
+        NegativeDetection = 2 // negative answer
     }
 
     internal abstract class CharsetProber

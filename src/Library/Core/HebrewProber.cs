@@ -256,9 +256,9 @@ namespace Chartect.IO.Core
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
             // Both model probers say it's not them. No reason to continue.
-            if (this.GetState() == ProbingState.NotDetected)
+            if (this.GetState() == ProbingState.NegativeDetection)
             {
-                return ProbingState.NotDetected;
+                return ProbingState.NegativeDetection;
             }
 
             int max = offset + len;
@@ -352,10 +352,10 @@ namespace Chartect.IO.Core
         public override ProbingState GetState()
         {
             // Remain active as long as any of the model probers are active.
-            if (this.LogicalProber.GetState() == ProbingState.NotDetected &&
-                this.VisualProber.GetState() == ProbingState.NotDetected)
+            if (this.LogicalProber.GetState() == ProbingState.NegativeDetection &&
+                this.VisualProber.GetState() == ProbingState.NegativeDetection)
             {
-                return ProbingState.NotDetected;
+                return ProbingState.NegativeDetection;
             }
 
             return ProbingState.Detecting;

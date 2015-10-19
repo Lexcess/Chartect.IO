@@ -92,7 +92,7 @@ namespace Chartect.IO.Core
                     }
                     else if (cf < NEGATIVESHORTCUTTHRESHOLD)
                     {
-                        this.State = ProbingState.NotDetected;
+                        this.State = ProbingState.NegativeDetection;
                     }
                 }
             }

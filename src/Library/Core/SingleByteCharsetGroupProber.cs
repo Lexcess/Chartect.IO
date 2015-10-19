@@ -41,7 +41,7 @@ namespace Chartect.IO.Core
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
-            ProbingState st = ProbingState.NotDetected;
+            ProbingState st = ProbingState.NegativeDetection;
 
             // apply filter to original buffer, and we got new buffer back
             // depend on what script it is, we will feed them the new buffer
@@ -70,13 +70,13 @@ namespace Chartect.IO.Core
                     this.State = ProbingState.Detected;
                     break;
                 }
-                else if (st == ProbingState.NotDetected)
+                else if (st == ProbingState.NegativeDetection)
                 {
                     this.isActive[i] = false;
                     this.activeNum--;
                     if (this.activeNum <= 0)
                     {
-                        this.State = ProbingState.NotDetected;
+                        this.State = ProbingState.NegativeDetection;
                         break;
                     }
                 }
@@ -92,7 +92,7 @@ namespace Chartect.IO.Core
             {
             case ProbingState.Detected:
                 return 0.99f; // sure yes
-            case ProbingState.NotDetected:
+            case ProbingState.NegativeDetection:
                 return 0.01f;  // sure no
             default:
                 for (int i = 0; i < PROBERSNUM; i++)

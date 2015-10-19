@@ -30,7 +30,7 @@ namespace Chartect.IO.Core
                 codingState = this.codingSM.NextState(input[i]);
                 if (codingState == StateMachineModel.Error)
                 {
-                    this.State = ProbingState.NotDetected;
+                    this.State = ProbingState.NegativeDetection;
                     break;
                 }
 

@@ -49,7 +49,7 @@ namespace Chartect.IO.Core
                         this.activeSM--;
                         if (this.activeSM == 0)
                         {
-                            this.State = ProbingState.NotDetected;
+                            this.State = ProbingState.NegativeDetection;
                             return this.State;
                         }
                         else if (j != this.activeSM)

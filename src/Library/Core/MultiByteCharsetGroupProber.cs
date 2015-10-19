@@ -91,7 +91,7 @@ namespace Chartect.IO.Core
                 }
             }
 
-            ProbingState st = ProbingState.NotDetected;
+            ProbingState st = ProbingState.NegativeDetection;
 
             for (int i = 0; i < this.probers.Length; i++)
             {
@@ -107,13 +107,13 @@ namespace Chartect.IO.Core
                     this.State = ProbingState.Detected;
                     break;
                 }
-                else if (st == ProbingState.NotDetected)
+                else if (st == ProbingState.NegativeDetection)
                 {
                     this.isActive[i] = false;
                     this.activeNum--;
                     if (this.activeNum <= 0)
                     {
-                        this.State = ProbingState.NotDetected;
+                        this.State = ProbingState.NegativeDetection;
                         break;
                     }
                 }
@@ -131,7 +131,7 @@ namespace Chartect.IO.Core
             {
                 return 0.99f;
             }
-            else if (this.State == ProbingState.NotDetected)
+            else if (this.State == ProbingState.NegativeDetection)
             {
                 return 0.01f;
             }

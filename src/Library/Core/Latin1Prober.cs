@@ -107,7 +107,7 @@ namespace Chartect.IO.Core
                 freq = Latin1ClassModel[(this.lastCharClass * CLASSNUM) + charClass];
                 if (freq == 0)
                 {
-                  this.State = ProbingState.NotDetected;
+                  this.State = ProbingState.NegativeDetection;
                   break;
                 }
 
@@ -120,7 +120,7 @@ namespace Chartect.IO.Core
 
         public override float GetConfidence()
         {
-            if (this.State == ProbingState.NotDetected)
+            if (this.State == ProbingState.NegativeDetection)
             {
                 return 0.01f;
             }
