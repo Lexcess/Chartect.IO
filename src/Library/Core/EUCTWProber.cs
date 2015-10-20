@@ -10,7 +10,7 @@ namespace Chartect.IO.Core
 
         public EUCTWProber()
         {
-            this.codingSM = new CodingStateMachine(new EUCTWSMModel());
+            this.codingSM = new CodingStateMachine(new EucTWModel());
             this.distributionAnalyser = new EUCTWDistributionAnalyser();
             this.Reset();
         }

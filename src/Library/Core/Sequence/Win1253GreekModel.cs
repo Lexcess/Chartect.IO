@@ -25,7 +25,7 @@
         };
 
         public Win1253GreekModel()
-            : base(OrderMap, Charsets.WIN1253)
+            : base(OrderMap, Charsets.Win1253)
         {
         }
     }

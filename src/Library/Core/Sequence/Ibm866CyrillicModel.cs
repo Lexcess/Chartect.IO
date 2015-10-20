@@ -25,7 +25,7 @@
         };
 
         public Ibm866CyrillicModel()
-            : base(OrderMap, Charsets.IBM866)
+            : base(OrderMap, Charsets.Ibm866)
         {
         }
     }

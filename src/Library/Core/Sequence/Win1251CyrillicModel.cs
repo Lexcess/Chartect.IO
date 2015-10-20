@@ -25,7 +25,7 @@
         };
 
         public Win1251CyrillicModel()
-            : base(OrderMap, Charsets.WIN1251)
+            : base(OrderMap, Charsets.Win1251)
         {
         }
     }

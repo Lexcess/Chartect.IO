@@ -25,7 +25,7 @@
         };
 
         public MacCyrillicModel()
-            : base(OrderMap, Charsets.MACCYRILLIC)
+            : base(OrderMap, Charsets.MacCyrillic)
         {
         }
     }

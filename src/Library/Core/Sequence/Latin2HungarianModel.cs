@@ -25,7 +25,7 @@
         };
 
         public Latin2HungarianModel()
-            : base(OrderMap, Charsets.ISO88592)
+            : base(OrderMap, Charsets.Iso88592)
         {
         }
     }

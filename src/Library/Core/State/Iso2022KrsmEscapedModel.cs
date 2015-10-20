@@ -58,7 +58,7 @@ namespace Chartect.IO.Core
               6,
               ModelStateTable.To4BitPackage(),
               CharacterLengthTable,
-              Charsets.ISO2022KR)
+              Charsets.Iso2022KR)
         {
         }
     }

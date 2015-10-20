@@ -2,11 +2,11 @@
 {
     using System;
 
-    internal class SJISSMModel : StateMachineModel
+    internal class SjisModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {
-            // BitPacket.Pack4bits(0,1,1,1,1,1,1,1),  // 00 - 07
+            // BitPacket.Pack4bits(0, 1, 1, 1, 1, 1, 1, 1),  // 00 - 07
             BitPackage.Pack4bits(1, 1, 1, 1, 1, 1, 1, 1),  // 00 - 07
             BitPackage.Pack4bits(1, 1, 1, 1, 1, 1, 0, 0),  // 08 - 0f
             BitPackage.Pack4bits(1, 1, 1, 1, 1, 1, 1, 1),  // 10 - 17
@@ -52,13 +52,13 @@
 
         private static readonly int[] CharacterLengthTable = { 0, 1, 1, 2, 0, 0 };
 
-        public SJISSMModel()
+        public SjisModel()
             : base(
               ModelClassTable.To4BitPackage(),
               6,
               ModelStateTable.To4BitPackage(),
               CharacterLengthTable,
-              Charsets.SHIFTJIS)
+              Charsets.ShiftJis)
         {
         }
     }

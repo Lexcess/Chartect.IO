@@ -31,7 +31,7 @@
         };
 
         public Win1255HebrewModel()
-            : base(OrderMap, Charsets.WIN1255)
+            : base(OrderMap, Charsets.Win1255)
         {
         }
     }

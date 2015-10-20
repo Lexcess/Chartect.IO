@@ -11,7 +11,7 @@ namespace Chartect.IO.Core
 
         public Big5Prober()
         {
-            this.codingSM = new CodingStateMachine(new Big5SMModel());
+            this.codingSM = new CodingStateMachine(new Big5Model());
             this.distributionAnalyser = new Big5DistributionAnalyser();
             this.Reset();
         }
@@ -73,7 +73,7 @@ namespace Chartect.IO.Core
 
         public override string GetCharsetName()
         {
-            return Charsets.BIG5;
+            return Charsets.Big5;
         }
 
         public override float GetConfidence()

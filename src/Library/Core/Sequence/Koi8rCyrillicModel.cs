@@ -25,7 +25,7 @@
         };
 
         public Koi8rCyrillicModel()
-            : base(OrderMap, Charsets.KOI8R)
+            : base(OrderMap, Charsets.Koi8R)
         {
         }
     }

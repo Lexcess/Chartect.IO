@@ -377,30 +377,30 @@ namespace Chartect.IO.Core
                         if (0xFF == input[1] && 0x00 == input[2] && 0x00 == input[3])
                         {
                             // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
-                            charset = Charsets.UCS43412;
+                            charset = Charsets.Ucs43412;
                         }
                         else if (0xFF == input[1])
                         {
-                            charset = Charsets.UTF16BE;
+                            charset = Charsets.Utf16BE;
                         }
 
                         break;
                     case 0x00:
                         if (0x00 == input[1] && 0xFE == input[2] && 0xFF == input[3])
                         {
-                            charset = Charsets.UTF32BE;
+                            charset = Charsets.Utf32BE;
                         }
                         else if (0x00 == input[1] && 0xFF == input[2] && 0xFE == input[3])
                         {
                             // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
-                            charset = Charsets.UCS42413;
+                            charset = Charsets.Ucs42413;
                         }
 
                         break;
                     case 0xFF:
                         if (0xFE == input[1] && 0x00 == input[2] && 0x00 == input[3])
                         {
-                            charset = Charsets.UTF32LE;
+                            charset = Charsets.Utf32LE;
                         }
                         else if (0xFE == input[1])
                         {

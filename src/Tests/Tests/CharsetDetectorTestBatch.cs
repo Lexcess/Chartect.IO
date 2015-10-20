@@ -27,7 +27,7 @@ namespace Chartect.IO.Tests
         [Test]
         public void Latin1Test()
         {
-            this.Process(Charsets.WIN1252, "latin1");
+            this.Process(Charsets.Win1252, "latin1");
         }
 
         [Test]
@@ -39,73 +39,73 @@ namespace Chartect.IO.Tests
         [Test]
         public void Big5CjkTest()
         {
-            this.Process(Charsets.BIG5, "big5");
+            this.Process(Charsets.Big5, "big5");
         }
 
         [Test]
         public void ShiftJisCjkTest()
         {
-            this.Process(Charsets.SHIFTJIS, "shiftjis");
+            this.Process(Charsets.ShiftJis, "shiftjis");
         }
 
         [Test]
         public void EucjpCjkTest()
         {
-            this.Process(Charsets.EUCJP, "eucjp");
+            this.Process(Charsets.EucJP, "eucjp");
         }
 
         [Test]
         public void EuckrCjKTest()
         {
-            this.Process(Charsets.EUCKR, "euckr");
+            this.Process(Charsets.EucKR, "euckr");
         }
 
         [Test]
         public void EuctwCjkTest()
         {
-            this.Process(Charsets.EUCTW, "euctw");
+            this.Process(Charsets.EucTW, "euctw");
         }
 
         [Test]
         public void Iso2022JPCjkTest()
         {
-            this.Process(Charsets.ISO2022JP, "iso2022jp");
+            this.Process(Charsets.Iso2022JP, "iso2022jp");
         }
 
         [Test]
         public void Iso2022KRCjkTest()
         {
-            this.Process(Charsets.ISO2022KR, "iso2022kr");
+            this.Process(Charsets.Iso2022KR, "iso2022kr");
         }
 
         [Test]
         public void HebrewTest()
         {
-            this.Process(Charsets.WIN1255, "windows1255");
+            this.Process(Charsets.Win1255, "windows1255");
         }
 
         [Test]
         public void GreekTest()
         {
-            this.Process(Charsets.ISO88597, "iso88597");
+            this.Process(Charsets.Iso88597, "iso88597");
         }
 
         public void Win1253GreekTest()
         {
             // broken detection
-            this.Process(Charsets.WIN1253, "windows1253");
+            this.Process(Charsets.Win1253, "windows1253");
         }
 
         [Test]
         public void Win1251CyrillicTest()
         {
-            this.Process(Charsets.WIN1251, "windows1251");
+            this.Process(Charsets.Win1251, "windows1251");
         }
 
         [Test]
         public void Koi8rCyrillicTest()
         {
-            this.Process(Charsets.KOI8R, "koi8r");
+            this.Process(Charsets.Koi8R, "koi8r");
         }
 
         [Test]
@@ -117,13 +117,13 @@ namespace Chartect.IO.Tests
         [Test]
         public void Ibm866CyrillicTest()
         {
-            this.Process(Charsets.IBM866, "ibm866");
+            this.Process(Charsets.Ibm866, "ibm866");
         }
 
         [Test]
         public void MacCyrillicTest()
         {
-            this.Process(Charsets.MACCYRILLIC, "maccyrillic");
+            this.Process(Charsets.MacCyrillic, "maccyrillic");
         }
 
         [Test]

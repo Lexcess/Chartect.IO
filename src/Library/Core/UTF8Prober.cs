@@ -13,7 +13,7 @@ namespace Chartect.IO.Core
         public UTF8Prober()
         {
             this.numOfMultiByteChar = 0;
-            this.stateMachine = new CodingStateMachine(new UTF8SMModel());
+            this.stateMachine = new CodingStateMachine(new Utf8Model());
             this.Reset();
         }
 

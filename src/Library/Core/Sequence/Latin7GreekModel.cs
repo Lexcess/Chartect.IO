@@ -30,7 +30,7 @@
         };
 
         public Latin7GreekModel()
-            : base(OrderMap, Charsets.ISO88597)
+            : base(OrderMap, Charsets.Iso88597)
         {
         }
     }

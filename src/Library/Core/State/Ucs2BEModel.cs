@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class UCS2LESMModel : StateMachineModel
+    internal class Ucs2BEModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {
@@ -42,24 +42,24 @@
 
         private static readonly int[] ModelStateTable =
         {
-            BitPackage.Pack4bits(6,          6,     7,     6,     4,     3, Error, Error), // 00-07
-            BitPackage.Pack4bits(Error,  Error, Error, Error, ItsMe, ItsMe, ItsMe, ItsMe), // 08-0f
-            BitPackage.Pack4bits(ItsMe,  ItsMe,     5,     5,     5, Error, ItsMe, Error), // 10-17
-            BitPackage.Pack4bits(5,          5,     5, Error,     5, Error,     6,     6), // 18-1f
-            BitPackage.Pack4bits(7,          6,     8,     8,     5,     5,     5, Error), // 20-27
-            BitPackage.Pack4bits(5,          5,     5, Error, Error, Error,     5,     5), // 28-2f
-            BitPackage.Pack4bits(5,          5,     5, Error,     5, Error, Start, Start), // 30-37
+            BitPackage.Pack4bits(5,         7,     7, Error,     4,     3, Error, Error), // 00-07
+            BitPackage.Pack4bits(Error, Error, Error, Error, ItsMe, ItsMe, ItsMe, ItsMe), // 08-0f
+            BitPackage.Pack4bits(ItsMe, ItsMe,     6,     6,     6,     6, Error, Error), // 10-17
+            BitPackage.Pack4bits(6,         6,     6,     6,     6, ItsMe,     6,     6), // 18-1f
+            BitPackage.Pack4bits(6,         6,     6,     6,     5,     7,     7, Error), // 20-27
+            BitPackage.Pack4bits(5,         8,     6,     6, Error,     6,     6,     6), // 28-2f
+            BitPackage.Pack4bits(6,         6,     6,     6, Error, Error, Start, Start), // 30-37
         };
 
-        private static readonly int[] CharacterLengthTable = { 2, 2, 2, 2, 2, 2 };
+        private static readonly int[] CharacterLengthTable = { 2, 2, 2, 0, 2, 2 };
 
-        public UCS2LESMModel()
+        public Ucs2BEModel()
             : base(
               ModelClassTable.To4BitPackage(),
               6,
               ModelStateTable.To4BitPackage(),
               CharacterLengthTable,
-              Charsets.Utf16LE)
+              Charsets.Utf16BE)
         {
         }
     }

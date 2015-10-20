@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class EUCJPSMModel : StateMachineModel
+    internal class EucJPModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {
@@ -52,13 +52,13 @@
 
         private static readonly int[] CharacterLengthTable = { 2, 2, 2, 3, 1, 0 };
 
-        public EUCJPSMModel()
+        public EucJPModel()
             : base(
               ModelClassTable.To4BitPackage(),
               6,
               ModelStateTable.To4BitPackage(),
               CharacterLengthTable,
-              Charsets.EUCJP)
+              Charsets.EucJP)
         {
         }
     }

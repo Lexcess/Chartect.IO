@@ -14,7 +14,7 @@ namespace Chartect.IO.Core
         public GB18030Prober()
         {
             this.lastChar = new byte[2];
-            this.codingSM = new CodingStateMachine(new GB18030SMModel());
+            this.codingSM = new CodingStateMachine(new GB18030Model());
             this.analyser = new GB18030DistributionAnalyser();
             this.Reset();
         }

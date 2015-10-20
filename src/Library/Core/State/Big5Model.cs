@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class Big5SMModel : StateMachineModel
+    internal class Big5Model : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {
@@ -49,13 +49,13 @@
 
         private static readonly int[] CharacterLengthTable = { 0, 1, 1, 2, 0 };
 
-        public Big5SMModel()
+        public Big5Model()
             : base(
               ModelClassTable.To4BitPackage(),
               5,
               ModelStateTable.To4BitPackage(),
               CharacterLengthTable,
-              Charsets.BIG5)
+              Charsets.Big5)
         {
         }
     }

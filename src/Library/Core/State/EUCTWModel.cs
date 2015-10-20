@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class EUCTWSMModel : StateMachineModel
+    internal class EucTWModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {
@@ -52,13 +52,13 @@
 
         private static readonly int[] CharacterLengthTable = { 0, 0, 1, 2, 2, 2, 3 };
 
-        public EUCTWSMModel()
+        public EucTWModel()
             : base(
               ModelClassTable.To4BitPackage(),
               7,
               ModelStateTable.To4BitPackage(),
               CharacterLengthTable,
-              Charsets.EUCTW)
+              Charsets.EucTW)
         {
         }
     }

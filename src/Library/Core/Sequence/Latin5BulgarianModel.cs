@@ -32,7 +32,7 @@
         };
 
         public Latin5BulgarianModel()
-            : base(OrderMap, Charsets.ISO88595)
+            : base(OrderMap, Charsets.Iso88595)
         {
         }
     }

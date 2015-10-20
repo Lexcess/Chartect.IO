@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class GB18030SMModel : StateMachineModel
+    internal class GB18030Model : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {
@@ -57,7 +57,7 @@
         // 2 here.
         private static readonly int[] CharacterLengthTable = { 0, 1, 1, 1, 1, 1, 2 };
 
-        public GB18030SMModel()
+        public GB18030Model()
             : base(
               ModelClassTable.To4BitPackage(),
               7,

@@ -10,7 +10,7 @@ namespace Chartect.IO.Core
 
         public EUCKRProber()
         {
-            this.codingSM = new CodingStateMachine(new EUCKRSMModel());
+            this.codingSM = new CodingStateMachine(new EucKRModel());
             this.distributionAnalyser = new EUCKRDistributionAnalyser();
             this.Reset();
         }

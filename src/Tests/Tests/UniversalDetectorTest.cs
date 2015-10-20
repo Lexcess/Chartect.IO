@@ -69,7 +69,7 @@ namespace Chartect.IO.Tests
             byte[] input = { 0xFE, 0xFF, 0x00, 0x68, 0x00, 0x65 };
             this.detector.Read(input, 0, input.Length);
             this.detector.DataEnd();
-            Assert.AreEqual(Charsets.UTF16BE, this.detector.Charset);
+            Assert.AreEqual(Charsets.Utf16BE, this.detector.Charset);
             Assert.AreEqual(1.0f, this.detector.Confidence);
         }
 
@@ -89,7 +89,7 @@ namespace Chartect.IO.Tests
             byte[] buf = { 0x00, 0x00, 0xFE, 0xFF, 0x00, 0x00, 0x00, 0x68 };
             this.detector.Read(buf, 0, buf.Length);
             this.detector.DataEnd();
-            Assert.AreEqual(Charsets.UTF32BE, this.detector.Charset);
+            Assert.AreEqual(Charsets.Utf32BE, this.detector.Charset);
             Assert.AreEqual(1.0f, this.detector.Confidence);
         }
 
@@ -99,7 +99,7 @@ namespace Chartect.IO.Tests
             byte[] buf = { 0xFF, 0xFE, 0x00, 0x00, 0x68, 0x00, 0x00, 0x00 };
             this.detector.Read(buf, 0, buf.Length);
             this.detector.DataEnd();
-            Assert.AreEqual(Charsets.UTF32LE, this.detector.Charset);
+            Assert.AreEqual(Charsets.Utf32LE, this.detector.Charset);
             Assert.AreEqual(1.0f, this.detector.Confidence);
         }
 

@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class UTF8SMModel : StateMachineModel
+    internal class Utf8Model : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
         {
@@ -72,7 +72,7 @@
 
         private static readonly int[] CharacterLengthTable = { 0, 1, 0, 0, 0, 0, 2, 3, 3, 3, 4, 4, 5, 5, 6, 6 };
 
-        public UTF8SMModel()
+        public Utf8Model()
             : base(
               ModelClassTable.To4BitPackage(),
               16,

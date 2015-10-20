@@ -17,7 +17,7 @@ namespace Chartect.IO.Core
 
         public SJISProber()
         {
-            this.codingSM = new CodingStateMachine(new SJISSMModel());
+            this.codingSM = new CodingStateMachine(new SjisModel());
             this.distributionAnalyser = new SJISDistributionAnalyser();
             this.contextAnalyser = new SJISContextAnalyser();
             this.Reset();
@@ -25,7 +25,7 @@ namespace Chartect.IO.Core
 
         public override string GetCharsetName()
         {
-            return Charsets.SHIFTJIS;
+            return Charsets.ShiftJis;
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)

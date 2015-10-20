@@ -11,7 +11,7 @@ namespace Chartect.IO.Core
 
         public EUCJPProber()
         {
-            this.codingSM = new CodingStateMachine(new EUCJPSMModel());
+            this.codingSM = new CodingStateMachine(new EucJPModel());
             this.distributionAnalyser = new EUCJPDistributionAnalyser();
             this.contextAnalyser = new EUCJPContextAnalyser();
             this.Reset();
@@ -19,7 +19,7 @@ namespace Chartect.IO.Core
 
         public override string GetCharsetName()
         {
-            return Charsets.EUCJP;
+            return Charsets.EucJP;
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)
