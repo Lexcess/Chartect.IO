@@ -3,7 +3,6 @@
 // Project-level suppressions either have no target or are given
 // a specific target and scoped to a namespace, type, member, etc.
 // Note Internals visible to is here because was overwritten in build.
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Chartect.IO.Test")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1633:File must have header", Justification = "This project will not use file headers.")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Documentation will be applied when appropriate.", Scope = "namespace", Target = "~N:Chartect.IO")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1652:Enable XML documentation output", Justification = "Documentation will be applied when appropriate.", Scope = "namespace", Target = "~N:Chartect.IO.Core")]

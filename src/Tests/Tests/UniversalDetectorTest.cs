@@ -8,14 +8,14 @@ namespace Chartect.IO.Tests
     using NUnit.Framework;
 
     [TestFixture]
-    public class UniversalDetectorTest
+    public class ArrayDetectorTest
     {
-        private CharsetDetector detector;
+        private ArrayDetector detector;
 
         [SetUpAttribute]
         public void SetUp()
         {
-            this.detector = new CharsetDetector();
+            this.detector = new ArrayDetector();
         }
 
         [TearDownAttribute]

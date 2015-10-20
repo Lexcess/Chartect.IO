@@ -5,7 +5,7 @@
     using System.IO;
     using System.Text;
 
-    internal static class CharsetExtensions
+    public static class CharsetExtensions
     {
         // ASCII codes
         private const byte Nul = 0x00;
