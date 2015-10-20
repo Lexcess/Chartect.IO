@@ -21,7 +21,7 @@ namespace Chartect.IO.Core
 
         public override string GetCharsetName()
         {
-            return "gb18030";
+            return Charsets.GB18030;
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)

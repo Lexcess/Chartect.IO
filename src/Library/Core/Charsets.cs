@@ -82,9 +82,9 @@ namespace Chartect
         public const string Iso88597 = "ISO-8859-7";
 
         /// <summary> Visual Hebrew </summary>
-        public const string ISO88598 = "ISO-8859-8";
+        public const string Iso88598 = "ISO-8859-8";
 
         /// <summary> Thai. This recognizer is not enabled yet. </summary>
-        public const string TIS620 = "TIS620";
+        public const string Tis620 = "TIS620";
     }
 }

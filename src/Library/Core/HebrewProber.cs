@@ -104,7 +104,7 @@ namespace Chartect.IO.Core
     /// </summary>
     internal class HebrewProber : CharsetProber
     {
-        public const string VisualHebrewName = Charsets.ISO88598;
+        public const string VisualHebrewName = Charsets.Iso88598;
         public const string LogicalHebrewName = Charsets.Win1255;
 
         // windows-1255 / ISO-8859-8 code points of interest

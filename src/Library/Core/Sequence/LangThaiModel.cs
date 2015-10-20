@@ -170,7 +170,7 @@ namespace Chartect.IO.Core
         };
 
         public ThaiModel(byte[] charToOrderMap, string name)
-            : base(OrderMap, ThaiLanguageModel, 0.926386f, false, Charsets.TIS620)
+            : base(OrderMap, ThaiLanguageModel, 0.926386f, false, Charsets.Tis620)
         {
         }
     }
