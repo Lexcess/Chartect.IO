@@ -8,13 +8,25 @@
     internal static class CharsetExtensions
     {
         // ASCII codes
+        private const byte Nul = 0x00;
         private const byte Space = 0x20;
+        private const byte LessThan = 0x3C;
+        private const byte GreaterThan = 0x3E;
         private const byte UpperA = 0x41;
         private const byte UpperZ = 0x5A;
         private const byte LowerA = 0x61;
         private const byte LowerZ = 0x7A;
-        private const byte LessThan = 0x3C;
-        private const byte GreaterThan = 0x3E;
+
+        private const byte At = 0x40;              // 64
+        private const byte OpenParentheses = 0x7B; // 123
+        private const byte Tilde = 0x7E;           // 126
+        private const byte Del = 0x7F;             // 127
+        private const byte CCedilla = 0x80;
+        private const byte UUmlaut = 0x81;
+        private const byte YDiaeresis = 0x9F;      // Looks like an Umlaut
+        private const byte Nbsp = 0xA0;            // Non Breaking Space
+        private const byte AGrave = 0xE0;
+        private const byte IUmlaut = 0xEF;         // or maybe Diaeresis.. they can't decide
 
         public static BitPackage To4BitPackage(this int[] data)
         {

@@ -8,7 +8,7 @@ namespace Chartect.IO.Core
     /// Base class for the Character Distribution Method, used for
     /// the CJK encodings
     /// </summary>
-    internal abstract class CharDistributionAnalyser
+    internal abstract class CharsetDistributionAnalyser
     {
         protected const float SUREYES = 0.99f;
         protected const float SURENO = 0.01f;
@@ -30,7 +30,7 @@ namespace Chartect.IO.Core
         // This constant value varies from language to language. It is used in calculating confidence.
         private float typicalDistributionRatio;
 
-        public CharDistributionAnalyser()
+        public CharsetDistributionAnalyser()
         {
             this.Reset();
         }

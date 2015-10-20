@@ -7,13 +7,13 @@ namespace Chartect.IO.Core
     internal class UTF8Prober : CharsetProber
     {
         private const float OneCharProb = 0.50f;
-        private CodingStateMachine codingSM;
-        private int numOfMBChar;
+        private CodingStateMachine stateMachine;
+        private int numOfMultiByteChar;
 
         public UTF8Prober()
         {
-            this.numOfMBChar = 0;
-            this.codingSM = new CodingStateMachine(new UTF8SMModel());
+            this.numOfMultiByteChar = 0;
+            this.stateMachine = new CodingStateMachine(new UTF8SMModel());
             this.Reset();
         }
 
@@ -24,8 +24,8 @@ namespace Chartect.IO.Core
 
         public override void Reset()
         {
-            this.codingSM.Reset();
-            this.numOfMBChar = 0;
+            this.stateMachine.Reset();
+            this.numOfMultiByteChar = 0;
             this.State = ProbingState.Detecting;
         }
 
@@ -36,7 +36,7 @@ namespace Chartect.IO.Core
 
             for (int i = offset; i < max; i++)
             {
-                codingState = this.codingSM.NextState(buf[i]);
+                codingState = this.stateMachine.NextState(buf[i]);
 
                 if (codingState == StateMachineModel.Error)
                 {
@@ -52,9 +52,9 @@ namespace Chartect.IO.Core
 
                 if (codingState == StateMachineModel.Start)
                 {
-                    if (this.codingSM.CurrentCharLen >= 2)
+                    if (this.stateMachine.CurrentCharLen >= 2)
                     {
-                        this.numOfMBChar++;
+                        this.numOfMultiByteChar++;
                     }
                 }
             }
@@ -75,9 +75,9 @@ namespace Chartect.IO.Core
             float unlike = 0.99f;
             float confidence = 0.0f;
 
-            if (this.numOfMBChar < 6)
+            if (this.numOfMultiByteChar < 6)
             {
-                for (int i = 0; i < this.numOfMBChar; i++)
+                for (int i = 0; i < this.numOfMultiByteChar; i++)
                 {
                     unlike *= OneCharProb;
                 }

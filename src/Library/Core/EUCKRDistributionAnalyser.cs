@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
 
-    internal class EUCKRDistributionAnalyser : CharDistributionAnalyser
+    internal class EUCKRDistributionAnalyser : CharsetDistributionAnalyser
     {
         // Sampling from about 20M text materials include literature and computer technology
 

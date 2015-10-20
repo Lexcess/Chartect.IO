@@ -4,7 +4,7 @@
 
     public class StringDetector
     {
-        private readonly UniversalDetector universalDetector = new UniversalDetector();
+        private readonly CharsetDetector universalDetector = new CharsetDetector();
 
         /// <summary>
         /// The detected charset. It can be null.

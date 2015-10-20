@@ -30,7 +30,7 @@ namespace Chartect.IO.Core
         Highbyte = 2,
     }
 
-    internal sealed class UniversalDetector
+    internal sealed class CharsetDetector
     {
         private const float SHORTCUTTHRESHOLD = 0.95f;
         private const float MinimumThreshold = 0.20f;
@@ -45,7 +45,7 @@ namespace Chartect.IO.Core
         private string charset;
         private float confidence;
 
-        public UniversalDetector()
+        public CharsetDetector()
         {
             this.DetectorState = DetectorState.Start;
             this.DetectedCharacters = DetectedCharacters.PureASCII;

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
 
-    internal class GB18030DistributionAnalyser : CharDistributionAnalyser
+    internal class GB18030DistributionAnalyser : CharsetDistributionAnalyser
     {
         // GB2312 most frequently used character table
         // Char to FreqOrder table, from hz6763

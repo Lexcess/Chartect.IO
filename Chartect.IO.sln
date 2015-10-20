@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{21684E0D-4E99-4CEE-860C-4D402D71D6F5}"
 	ProjectSection(SolutionItems) = preProject
 		Authors.md = Authors.md
+		src\CodeMap.dgml = src\CodeMap.dgml
 		license\MPL-1.1.txt = license\MPL-1.1.txt
 		readme.md = readme.md
 	EndProjectSection

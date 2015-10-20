@@ -10,12 +10,12 @@ namespace Chartect.IO.Tests
     [TestFixture]
     public class UniversalDetectorTest
     {
-        private UniversalDetector detector;
+        private CharsetDetector detector;
 
         [SetUpAttribute]
         public void SetUp()
         {
-            this.detector = new UniversalDetector();
+            this.detector = new CharsetDetector();
         }
 
         [TearDownAttribute]

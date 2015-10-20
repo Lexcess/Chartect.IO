@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
 
-    internal class Big5DistributionAnalyser : CharDistributionAnalyser
+    internal class Big5DistributionAnalyser : CharsetDistributionAnalyser
     {
         // Big5 frequency table
         // by Taiwan's Mandarin Promotion Council
