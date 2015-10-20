@@ -4,32 +4,32 @@ namespace Chartect.IO.Core
     using System.Collections.Generic;
     using System.Text;
 
-    internal class EscCharsetProber : CharsetProber
+    internal class EscCharsetProbeSet : CharsetProber, IProbeSet
     {
-        private const int CHARSETSNUM = 4;
+        private const int CharsetsNum = 4;
         private string detectedCharset;
-        private CodingStateMachine[] codingSM;
+        private CodingStateMachine[] stateMachines;
         private int activeSM;
 
-        public EscCharsetProber()
+        public EscCharsetProbeSet()
         {
-            this.codingSM = new CodingStateMachine[CHARSETSNUM];
-            this.codingSM[0] = new CodingStateMachine(new HzsmEscapedModel());
-            this.codingSM[1] = new CodingStateMachine(new Iso2022CnsmEscapedModel());
-            this.codingSM[2] = new CodingStateMachine(new Iso2022JpsmEscapedModel());
-            this.codingSM[3] = new CodingStateMachine(new Iso2022KrsmEscapedModel());
+            this.stateMachines = new CodingStateMachine[CharsetsNum];
+            this.stateMachines[0] = new CodingStateMachine(new HzsmEscapedModel());
+            this.stateMachines[1] = new CodingStateMachine(new Iso2022CnsmEscapedModel());
+            this.stateMachines[2] = new CodingStateMachine(new Iso2022JpsmEscapedModel());
+            this.stateMachines[3] = new CodingStateMachine(new Iso2022KrsmEscapedModel());
             this.Reset();
         }
 
         public override void Reset()
         {
             this.State = ProbingState.Detecting;
-            for (int i = 0; i < CHARSETSNUM; i++)
+            for (int i = 0; i < CharsetsNum; i++)
             {
-                this.codingSM[i].Reset();
+                this.stateMachines[i].Reset();
             }
 
-            this.activeSM = CHARSETSNUM;
+            this.activeSM = CharsetsNum;
             this.detectedCharset = null;
         }
 
@@ -42,7 +42,7 @@ namespace Chartect.IO.Core
                 for (int j = this.activeSM - 1; j >= 0; j--)
                 {
                     // byte is fed to all active state machine
-                    int codingState = this.codingSM[j].NextState(buf[i]);
+                    int codingState = this.stateMachines[j].NextState(buf[i]);
                     if (codingState == StateMachineModel.Error)
                     {
                         // got negative answer for this state machine, make it inactive
@@ -54,15 +54,15 @@ namespace Chartect.IO.Core
                         }
                         else if (j != this.activeSM)
                         {
-                            CodingStateMachine t = this.codingSM[this.activeSM];
-                            this.codingSM[this.activeSM] = this.codingSM[j];
-                            this.codingSM[j] = t;
+                            CodingStateMachine t = this.stateMachines[this.activeSM];
+                            this.stateMachines[this.activeSM] = this.stateMachines[j];
+                            this.stateMachines[j] = t;
                         }
                     }
                     else if (codingState == StateMachineModel.ItsMe)
                     {
                         this.State = ProbingState.Detected;
-                        this.detectedCharset = this.codingSM[j].ModelName;
+                        this.detectedCharset = this.stateMachines[j].ModelName;
                         return this.State;
                     }
                 }

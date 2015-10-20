@@ -4,7 +4,7 @@ namespace Chartect.IO.Core
     using System.Collections.Generic;
     using System.Text;
 
-    internal abstract class JapaneseContextAnalyser
+    internal abstract class JapaneseContextAnalyser : IAnalyser
     {
         protected const int CATEGORIESNUM = 6;
         protected const int ENOUGHRELTHRESHOLD = 100;
@@ -236,8 +236,8 @@ namespace Chartect.IO.Core
             return this.totalRel > ENOUGHRELTHRESHOLD;
         }
 
-        protected abstract int GetOrder(byte[] buf, int offset, out int charLen);
+        public abstract int GetOrder(byte[] buf, int offset, out int charLen);
 
-        protected abstract int GetOrder(byte[] buf, int offset);
+        public abstract int GetOrder(byte[] buf, int offset);
     }
 }

@@ -104,28 +104,28 @@ namespace Chartect.IO.Core
     /// </summary>
     internal class HebrewProber : CharsetProber
     {
-        public const string VisualHebrewName = "ISO-8859-8";
-        public const string LogicalHebrewName = "windows-1255";
+        public const string VisualHebrewName = Charsets.ISO88598;
+        public const string LogicalHebrewName = Charsets.Win1255;
 
         // windows-1255 / ISO-8859-8 code points of interest
-        private const byte FINALKAF = 0xEA;
-        private const byte NORMALKAF = 0xEB;
-        private const byte FINALMEM = 0xED;
-        private const byte NORMALMEM = 0xEE;
-        private const byte FINALNUN = 0xEF;
-        private const byte NORMALNUN = 0xF0;
-        private const byte FINALPE = 0xF3;
-        private const byte NORMALPE = 0xF4;
-        private const byte FINALTSADI = 0xF5;
-        private const byte NORMALTSADI = 0xF6;
+        private const byte FinalKaf = 0xEA;
+        private const byte NormalKaf = 0xEB;
+        private const byte FinalMem = 0xED;
+        private const byte NormalMem = 0xEE;
+        private const byte FinalNun = 0xEF;
+        private const byte NormalNun = 0xF0;
+        private const byte FinalPE = 0xF3;
+        private const byte NormalPE = 0xF4;
+        private const byte FinalTsadi = 0xF5;
+        private const byte NormalTsadi = 0xF6;
 
         // Minimum Visual vs Logical final letter score difference.
         // If the difference is below this, don't rely solely on the final letter score distance.
-        private const int MINFINALCHARDISTANCE = 5;
+        private const int MinFinalCharDistance = 5;
 
         // Minimum Visual vs Logical model score difference.
         // If the difference is below this, don't rely at all on the model score distance.
-        private const float MINMODELDISTANCE = 0.01f;
+        private const float MinModelDistance = 0.01f;
 
         // The two last bytes seen in the previous buffer.
         private byte prev;
@@ -309,24 +309,24 @@ namespace Chartect.IO.Core
         {
             // If the final letter score distance is dominant enough, rely on it.
             int finalsub = this.FinalCharLogicalScore - this.FinalCharVisualScore;
-            if (finalsub >= MINFINALCHARDISTANCE)
+            if (finalsub >= MinFinalCharDistance)
             {
                 return LogicalHebrewName;
             }
 
-            if (finalsub <= -MINFINALCHARDISTANCE)
+            if (finalsub <= -MinFinalCharDistance)
             {
                 return VisualHebrewName;
             }
 
             // It's not dominant enough, try to rely on the model scores instead.
             float modelsub = this.LogicalProber.GetConfidence() - this.VisualProber.GetConfidence();
-            if (modelsub > MINMODELDISTANCE)
+            if (modelsub > MinModelDistance)
             {
                 return LogicalHebrewName;
             }
 
-            if (modelsub < -MINMODELDISTANCE)
+            if (modelsub < -MinModelDistance)
             {
                 return VisualHebrewName;
             }
@@ -374,8 +374,8 @@ namespace Chartect.IO.Core
 
         protected static bool IsFinal(byte b)
         {
-            return b == FINALKAF || b == FINALMEM || b == FINALNUN
-                    || b == FINALPE || b == FINALTSADI;
+            return b == FinalKaf || b == FinalMem || b == FinalNun
+                    || b == FinalPE || b == FinalTsadi;
         }
 
         protected static bool IsNonFinal(byte b)
@@ -390,8 +390,8 @@ namespace Chartect.IO.Core
             // example legally end with a Non-Final Pe or Kaf. However, the benefit of
             // these letters as Non-Final letters outweighs the damage since these words
             // are quite rare.
-            return b == NORMALKAF || b == NORMALMEM || b == NORMALNUN
-                    || b == NORMALPE;
+            return b == NormalKaf || b == NormalMem || b == NormalNun
+                    || b == NormalPE;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Chartect.IO.Core
         NegativeDetection = 2 // negative answer
     }
 
-    internal abstract class CharsetProber
+    internal abstract class CharsetProber : IProbe
     {
         protected const float ShortcutThreshold = 0.95F;
 
@@ -31,11 +31,11 @@ namespace Chartect.IO.Core
         /// </summary>
         /// <param name="buffer">a buffer</param>
         /// <param name="offset">offset into buffer</param>
-        /// <param name="len">number of bytes available into buffer</param>
+        /// <param name="length">number of bytes available into buffer</param>
         /// <returns>
         /// A <see cref="ProbingState"/>
         /// </returns>
-        public abstract ProbingState HandleData(byte[] buffer, int offset, int len);
+        public abstract ProbingState HandleData(byte[] buffer, int offset, int length);
 
         /// <summary>
         /// Reset prober state
@@ -49,10 +49,6 @@ namespace Chartect.IO.Core
         public virtual ProbingState GetState()
         {
             return this.State;
-        }
-
-        public virtual void SetOption()
-        {
         }
 
         public virtual void DumpStatus()

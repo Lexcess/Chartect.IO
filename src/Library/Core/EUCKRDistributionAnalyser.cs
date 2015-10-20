@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
 
-    internal class EUCKRDistributionAnalyser : CharsetDistributionAnalyser
+    internal class EucKRDistributionAnalyser : CharsetDistributionAnalyser
     {
         // Sampling from about 20M text materials include literature and computer technology
 
@@ -173,7 +173,7 @@
          670, 1190, 2635, 2636, 2637, 2638,  168, 2639,  652,  873,  542, 1054, 1541, 2640, 2641, 2642,  // 512, 256
          };
 
-        public EUCKRDistributionAnalyser()
+        public EucKRDistributionAnalyser()
         {
             this.CharToFreqOrder = euckrChar2FreqOrder;
             this.TypicalDistributionRatio = EUCKRTYPICALDISTRIBUTIONRATIO;
@@ -192,6 +192,16 @@
             {
                 return -1;
             }
+        }
+
+        public override int GetOrder(byte[] input, int offset, out int characterLength)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override void HandleData(byte[] input, int offset, int length)
+        {
+            throw new NotSupportedException();
         }
     }
 }

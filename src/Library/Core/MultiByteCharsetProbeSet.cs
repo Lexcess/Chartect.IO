@@ -5,7 +5,7 @@ namespace Chartect.IO.Core
     /// <summary>
     /// Multi-byte charsets probers
     /// </summary>
-    internal class MultiByteCharsetGroupProber : CharsetProber
+    internal class MultiByteCharsetProbeSet : CharsetProber, IProbeSet
     {
         private const int PROBERSNUM = 7;
         private static readonly string[] ProberName =
@@ -16,15 +16,15 @@ namespace Chartect.IO.Core
         private int bestGuess;
         private int activeNum;
 
-        public MultiByteCharsetGroupProber()
+        public MultiByteCharsetProbeSet()
         {
-            this.probers[0] = new UTF8Prober();
-            this.probers[1] = new SJISProber();
-            this.probers[2] = new EUCJPProber();
+            this.probers[0] = new Utf8Prober();
+            this.probers[1] = new SjisProber();
+            this.probers[2] = new EucJPProber();
             this.probers[3] = new GB18030Prober();
-            this.probers[4] = new EUCKRProber();
+            this.probers[4] = new EucKRProber();
             this.probers[5] = new Big5Prober();
-            this.probers[6] = new EUCTWProber();
+            this.probers[6] = new EucTWProber();
             this.Reset();
         }
 

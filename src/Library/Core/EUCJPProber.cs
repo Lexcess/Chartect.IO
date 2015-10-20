@@ -2,18 +2,18 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    internal class EUCJPProber : CharsetProber
+    internal class EucJPProber : CharsetProber
     {
         private CodingStateMachine codingSM;
-        private EUCJPContextAnalyser contextAnalyser;
-        private EUCJPDistributionAnalyser distributionAnalyser;
+        private EucJPContextAnalyser contextAnalyser;
+        private EucJPDistributionAnalyser distributionAnalyser;
         private byte[] lastChar = new byte[2];
 
-        public EUCJPProber()
+        public EucJPProber()
         {
             this.codingSM = new CodingStateMachine(new EucJPModel());
-            this.distributionAnalyser = new EUCJPDistributionAnalyser();
-            this.contextAnalyser = new EUCJPContextAnalyser();
+            this.distributionAnalyser = new EucJPDistributionAnalyser();
+            this.contextAnalyser = new EucJPContextAnalyser();
             this.Reset();
         }
 

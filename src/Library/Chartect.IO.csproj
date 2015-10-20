@@ -40,6 +40,9 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\IAnalyser.cs" />
+    <Compile Include="Core\IProbe.cs" />
+    <Compile Include="Core\IProbeSet.cs" />
     <Compile Include="StringDetector.cs" />
     <Compile Include="ArrayDetector.cs" />
     <Compile Include="StreamDetector.cs" />
@@ -52,16 +55,16 @@
     <Compile Include="Core\CharsetProber.cs" />
     <Compile Include="Core\Charsets.cs" />
     <Compile Include="Core\CodingStateMachine.cs" />
-    <Compile Include="Core\EscCharsetProber.cs" />
-    <Compile Include="Core\EUCJPContextAnalyser.cs" />
-    <Compile Include="Core\EUCJPDistributionAnalyser.cs" />
-    <Compile Include="Core\EUCJPProber.cs" />
+    <Compile Include="Core\EscCharsetProbeSet.cs" />
+    <Compile Include="Core\EucJPContextAnalyser.cs" />
+    <Compile Include="Core\EucJPDistributionAnalyser.cs" />
+    <Compile Include="Core\EucJPProber.cs" />
     <Compile Include="Core\State\EucJPModel.cs" />
-    <Compile Include="Core\EUCKRDistributionAnalyser.cs" />
-    <Compile Include="Core\EUCKRProber.cs" />
+    <Compile Include="Core\EucKRDistributionAnalyser.cs" />
+    <Compile Include="Core\EucKRProber.cs" />
     <Compile Include="Core\State\EucKRModel.cs" />
-    <Compile Include="Core\EUCTWDistributionAnalyser.cs" />
-    <Compile Include="Core\EUCTWProber.cs" />
+    <Compile Include="Core\EucTWDistributionAnalyser.cs" />
+    <Compile Include="Core\EucTWProber.cs" />
     <Compile Include="Core\State\EucTWModel.cs" />
     <Compile Include="Core\GB18030DistributionAnalyser.cs" />
     <Compile Include="Core\GB18030Prober.cs" />
@@ -87,9 +90,9 @@
     <Compile Include="Core\Sequence\Latin5CyrillicModel.cs" />
     <Compile Include="Core\Sequence\Latin7GreekModel.cs" />
     <Compile Include="Core\Sequence\MacCyrillicModel.cs" />
-    <Compile Include="Core\MultiByteCharsetGroupProber.cs" />
+    <Compile Include="Core\MultiByteCharsetProbeSet.cs" />
     <Compile Include="Core\SingleByteCharsetProber.cs" />
-    <Compile Include="Core\SingleByteCharsetGroupProber.cs" />
+    <Compile Include="Core\SingleByteCharsetProbeSet.cs" />
     <Compile Include="Core\Sequence\SequenceModel.cs" />
     <Compile Include="Core\SJISContextAnalyser.cs" />
     <Compile Include="Core\SJISDistributionAnalyser.cs" />

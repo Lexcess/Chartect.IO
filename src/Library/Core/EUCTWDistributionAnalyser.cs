@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
 
-    internal class EUCTWDistributionAnalyser : CharsetDistributionAnalyser
+    internal class EucTWDistributionAnalyser : CharsetDistributionAnalyser
     {
         // EUCTW frequency table
         // Converted from big5 work
@@ -365,7 +365,7 @@
         2294,  208, 3499, 4057, 2019,  330, 4294, 3865, 2892, 2492, 3733, 4295, 8115, 8116, 8117, 8118, // 8102
         };
 
-        public EUCTWDistributionAnalyser()
+        public EucTWDistributionAnalyser()
         {
             this.CharToFreqOrder = euctwChar2FreqOrder;
             this.TypicalDistributionRatio = euctwTypicalDistributionRatio;
@@ -384,6 +384,16 @@
             {
                 return -1;
             }
+        }
+
+        public override void HandleData(byte[] input, int offset, int length)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override int GetOrder(byte[] input, int offset, out int characterLength)
+        {
+            throw new NotSupportedException();
         }
     }
 }

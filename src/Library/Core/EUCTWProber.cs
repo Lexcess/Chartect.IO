@@ -2,16 +2,16 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    internal class EUCTWProber : CharsetProber
+    internal class EucTWProber : CharsetProber
     {
         private CodingStateMachine codingSM;
-        private EUCTWDistributionAnalyser distributionAnalyser;
+        private EucTWDistributionAnalyser distributionAnalyser;
         private byte[] lastChar = new byte[2];
 
-        public EUCTWProber()
+        public EucTWProber()
         {
             this.codingSM = new CodingStateMachine(new EucTWModel());
-            this.distributionAnalyser = new EUCTWDistributionAnalyser();
+            this.distributionAnalyser = new EucTWDistributionAnalyser();
             this.Reset();
         }
 
@@ -65,7 +65,7 @@ namespace Chartect.IO.Core
 
         public override string GetCharsetName()
         {
-            return "EUC-TW";
+            return Charsets.EucTW;
         }
 
         public override void Reset()

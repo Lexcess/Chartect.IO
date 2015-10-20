@@ -4,13 +4,13 @@ namespace Chartect.IO.Core
     using System.Collections.Generic;
     using System.Text;
 
-    internal class UTF8Prober : CharsetProber
+    internal class Utf8Prober : CharsetProber
     {
         private const float OneCharProb = 0.50f;
         private CodingStateMachine stateMachine;
         private int numOfMultiByteChar;
 
-        public UTF8Prober()
+        public Utf8Prober()
         {
             this.numOfMultiByteChar = 0;
             this.stateMachine = new CodingStateMachine(new Utf8Model());

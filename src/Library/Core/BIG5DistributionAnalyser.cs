@@ -391,5 +391,15 @@
                 return -1;
             }
         }
+
+        public override void HandleData(byte[] input, int offset, int length)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override int GetOrder(byte[] input, int offset, out int characterLength)
+        {
+            throw new NotSupportedException();
+        }
     }
 }

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
 
-    internal class SJISDistributionAnalyser : CharsetDistributionAnalyser
+    internal class SjisDistributionAnalyser : CharsetDistributionAnalyser
     {
         // Sampling from about 20M text materials include literature and computer technology
         // Japanese frequency table, applied to both S-JIS and EUC-JP
@@ -302,7 +302,7 @@
         2922, 3625,  544,  461, 6189,  566,  209, 2437, 3398, 2098, 1065, 2068, 3331, 3626, 3257, 2137, // 4368  //last 512
         };
 
-        public SJISDistributionAnalyser()
+        public SjisDistributionAnalyser()
         {
             this.CharToFreqOrder = SjisChar2FreqOrder;
             this.TypicalDistributionRatio = SjisTypicalDistributionRatio;
@@ -362,6 +362,16 @@
             }
 
             return order;
+        }
+
+        public override void HandleData(byte[] input, int offset, int length)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override int GetOrder(byte[] input, int offset, out int characterLength)
+        {
+            throw new NotSupportedException();
         }
     }
 }

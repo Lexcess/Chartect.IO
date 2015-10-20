@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using System.Text;
 
-    internal class SJISContextAnalyser : JapaneseContextAnalyser
+    internal class SjisContextAnalyser : JapaneseContextAnalyser
     {
         private const byte HIRAGANAFIRSTBYTE = 0x82;
 
-        protected override int GetOrder(byte[] buf, int offset, out int charLen)
+        public override int GetOrder(byte[] buf, int offset, out int charLen)
         {
             // find out current char's byte length
             if ((buf[offset] >= 0x81 && buf[offset] <= 0x9F)
@@ -34,7 +34,7 @@
             return -1;
         }
 
-        protected override int GetOrder(byte[] buf, int offset)
+        public override int GetOrder(byte[] buf, int offset)
         {
             // We are only interested in Hiragana
             if (buf[offset] == HIRAGANAFIRSTBYTE)

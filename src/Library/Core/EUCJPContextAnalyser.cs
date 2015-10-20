@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using System.Text;
 
-    internal class EUCJPContextAnalyser : JapaneseContextAnalyser
+    internal class EucJPContextAnalyser : JapaneseContextAnalyser
     {
         private const byte HIRAGANAFIRSTBYTE = 0xA4;
 
-        protected override int GetOrder(byte[] buf, int offset, out int charLen)
+        public override int GetOrder(byte[] buf, int offset, out int charLen)
         {
             byte high = buf[offset];
 
@@ -39,7 +39,7 @@
             return -1;
         }
 
-        protected override int GetOrder(byte[] buf, int offset)
+        public override int GetOrder(byte[] buf, int offset)
         {
             // We are only interested in Hiragana
             if (buf[offset] == HIRAGANAFIRSTBYTE)

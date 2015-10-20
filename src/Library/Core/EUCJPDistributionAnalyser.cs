@@ -4,9 +4,9 @@
     using System.Collections.Generic;
     using System.Text;
 
-    internal class EUCJPDistributionAnalyser : SJISDistributionAnalyser
+    internal class EucJPDistributionAnalyser : SjisDistributionAnalyser
     {
-        public EUCJPDistributionAnalyser()
+        public EucJPDistributionAnalyser()
             : base()
         {
         }

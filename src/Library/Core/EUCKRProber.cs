@@ -2,16 +2,16 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    internal class EUCKRProber : CharsetProber
+    internal class EucKRProber : CharsetProber
     {
         private CodingStateMachine codingSM;
-        private EUCKRDistributionAnalyser distributionAnalyser;
+        private EucKRDistributionAnalyser distributionAnalyser;
         private byte[] lastChar = new byte[2];
 
-        public EUCKRProber()
+        public EucKRProber()
         {
             this.codingSM = new CodingStateMachine(new EucKRModel());
-            this.distributionAnalyser = new EUCKRDistributionAnalyser();
+            this.distributionAnalyser = new EucKRDistributionAnalyser();
             this.Reset();
         }
 

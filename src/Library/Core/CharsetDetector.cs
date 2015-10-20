@@ -199,12 +199,12 @@ namespace Chartect.IO.Core
                         // start multibyte and singlebyte charset prober
                         if (this.CharsetProbers[0] == null)
                         {
-                            this.CharsetProbers[0] = new MultiByteCharsetGroupProber();
+                            this.CharsetProbers[0] = new MultiByteCharsetProbeSet();
                         }
 
                         if (this.CharsetProbers[1] == null)
                         {
-                            this.CharsetProbers[1] = new SingleByteCharsetGroupProber();
+                            this.CharsetProbers[1] = new SingleByteCharsetProbeSet();
                         }
 
                         if (this.CharsetProbers[2] == null)
@@ -233,7 +233,7 @@ namespace Chartect.IO.Core
                 case DetectedCharacters.EscASCII:
                     if (this.EscCharsetProber == null)
                     {
-                        this.EscCharsetProber = new EscCharsetProber();
+                        this.EscCharsetProber = new EscCharsetProbeSet();
                     }
 
                     st = this.EscCharsetProber.HandleData(input, offset, length);

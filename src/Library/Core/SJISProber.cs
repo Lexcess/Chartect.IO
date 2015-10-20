@@ -8,18 +8,18 @@ namespace Chartect.IO.Core
     /// 2, kana character often exist in group
     /// 3, certain combination of kana is never used in japanese language
     /// </summary>
-    internal class SJISProber : CharsetProber
+    internal class SjisProber : CharsetProber
     {
         private CodingStateMachine codingSM;
-        private SJISContextAnalyser contextAnalyser;
-        private SJISDistributionAnalyser distributionAnalyser;
+        private SjisContextAnalyser contextAnalyser;
+        private SjisDistributionAnalyser distributionAnalyser;
         private byte[] lastChar = new byte[2];
 
-        public SJISProber()
+        public SjisProber()
         {
             this.codingSM = new CodingStateMachine(new SjisModel());
-            this.distributionAnalyser = new SJISDistributionAnalyser();
-            this.contextAnalyser = new SJISContextAnalyser();
+            this.distributionAnalyser = new SjisDistributionAnalyser();
+            this.contextAnalyser = new SjisContextAnalyser();
             this.Reset();
         }
 
