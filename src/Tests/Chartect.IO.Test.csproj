@@ -7,8 +7,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{53C6763B-CA4B-4F14-9326-A43C29FF0B4E}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Ude.Tests</RootNamespace>
-    <AssemblyName>UdeTests</AssemblyName>
+    <RootNamespace>Chartect.IO.</RootNamespace>
+    <AssemblyName>Chartect.IO.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
