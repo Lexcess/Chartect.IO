@@ -21,3 +21,4 @@ using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
 [assembly: System.CLSCompliant(true)]
+[assembly: InternalsVisibleTo("Chartect.IO.Test")]
