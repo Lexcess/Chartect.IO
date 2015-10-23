@@ -3,88 +3,73 @@ namespace Chartect.IO.Tests
     using System;
     using System.IO;
     using Chartect;
-    using NUnit.Framework;
+    using Xunit;
 
-    [TestFixture]
     public class CharsetDetectorTestBatch
     {
         private const string DataRoot = "../../Data";
 
-        private StreamDetector detector;
-
-        [SetUpAttribute]
-        public void SetUp()
-        {
-            this.detector = new StreamDetector();
-        }
-
-        [TearDownAttribute]
-        public void TearDown()
-        {
-            this.detector = null;
-        }
-
-        [Test]
+        [Fact]
         public void Latin1Test()
         {
             this.Process(Charsets.Win1252, "latin1");
         }
 
-        [Test]
+        [Fact]
         public void GB18030CjkTest()
         {
             this.Process(Charsets.GB18030, "gb18030");
         }
 
-        [Test]
+        [Fact]
         public void Big5CjkTest()
         {
             this.Process(Charsets.Big5, "big5");
         }
 
-        [Test]
+        [Fact]
         public void ShiftJisCjkTest()
         {
             this.Process(Charsets.ShiftJis, "shiftjis");
         }
 
-        [Test]
+        [Fact]
         public void EucjpCjkTest()
         {
             this.Process(Charsets.EucJP, "eucjp");
         }
 
-        [Test]
+        [Fact]
         public void EuckrCjKTest()
         {
             this.Process(Charsets.EucKR, "euckr");
         }
 
-        [Test]
+        [Fact]
         public void EuctwCjkTest()
         {
             this.Process(Charsets.EucTW, "euctw");
         }
 
-        [Test]
+        [Fact]
         public void Iso2022JPCjkTest()
         {
             this.Process(Charsets.Iso2022JP, "iso2022jp");
         }
 
-        [Test]
+        [Fact]
         public void Iso2022KRCjkTest()
         {
             this.Process(Charsets.Iso2022KR, "iso2022kr");
         }
 
-        [Test]
+        [Fact]
         public void HebrewTest()
         {
             this.Process(Charsets.Win1255, "windows1255");
         }
 
-        [Test]
+        [Fact]
         public void GreekTest()
         {
             this.Process(Charsets.Iso88597, "iso88597");
@@ -96,49 +81,48 @@ namespace Chartect.IO.Tests
             this.Process(Charsets.Win1253, "windows1253");
         }
 
-        [Test]
+        [Fact]
         public void Win1251CyrillicTest()
         {
             this.Process(Charsets.Win1251, "windows1251");
         }
 
-        [Test]
+        [Fact]
         public void Koi8rCyrillicTest()
         {
             this.Process(Charsets.Koi8R, "koi8r");
         }
 
-        [Test]
+        [Fact]
         public void Ibm855CyrillicTest()
         {
             this.Process(Charsets.IBM855, "ibm855");
         }
 
-        [Test]
+        [Fact]
         public void Ibm866CyrillicTest()
         {
             this.Process(Charsets.Ibm866, "ibm866");
         }
 
-        [Test]
+        [Fact]
         public void MacCyrillicTest()
         {
             this.Process(Charsets.MacCyrillic, "maccyrillic");
         }
 
-        [Test]
+        [Fact]
         public void UTF8Test()
         {
             this.Process(Charsets.Utf8, "utf8");
         }
 
-        private void Process(string charset, string dirname)
+        private void Process(string expected, string dirname)
         {
-            string path = Path.Combine(DataRoot, dirname);
-            if (!Directory.Exists(path))
-            {
-                Assert.Fail($"File path not found: {path}");
-            }
+            var detector = new StreamDetector();
+            var path = Path.Combine(DataRoot, dirname);
+
+            Assert.True(Directory.Exists(path), $"File path not found: {path}");
 
             string[] files = Directory.GetFiles(path);
 
@@ -147,13 +131,15 @@ namespace Chartect.IO.Tests
                 using (FileStream fs = new FileStream(file, FileMode.Open))
                 {
                     Console.WriteLine($"Analysing {file}");
-                    this.detector.Read(fs);
-                    this.detector.DataEnd();
-                    Console.WriteLine($"{file} : {this.detector.Charset} {this.detector.Confidence}");
-                    Assert.AreEqual(charset, this.detector.Charset);
-                    this.detector.Reset();
+                    detector.Read(fs);
+                    detector.DataEnd();
+                    Console.WriteLine($"{file} : {detector.Charset} {detector.Confidence}");
+                    Assert.Equal(expected, detector.Charset);
+                    detector.Reset();
                 }
             }
+
+            detector = null;
         }
     }
 }

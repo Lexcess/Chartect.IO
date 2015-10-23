@@ -78,12 +78,12 @@
     <Compile Include="Core\State\Iso2022KrsmEscapedModel.cs" />
     <Compile Include="Core\JapaneseContextAnalyser.cs" />
     <Compile Include="Core\Sequence\Koi8rCyrillicModel.cs" />
-    <Compile Include="Core\Sequence\LangBulgarianModel.cs" />
-    <Compile Include="Core\Sequence\LangCyrillicModel.cs" />
-    <Compile Include="Core\Sequence\LangGreekModel.cs" />
-    <Compile Include="Core\Sequence\LangHebrewModel.cs" />
-    <Compile Include="Core\Sequence\LangHungarianModel.cs" />
-    <Compile Include="Core\Sequence\LangThaiModel.cs" />
+    <Compile Include="Core\Sequence\BulgarianModel.cs" />
+    <Compile Include="Core\Sequence\CyrillicModel.cs" />
+    <Compile Include="Core\Sequence\GreekModel.cs" />
+    <Compile Include="Core\Sequence\HebrewModel.cs" />
+    <Compile Include="Core\Sequence\HungarianModel.cs" />
+    <Compile Include="Core\Sequence\ThaiModel.cs" />
     <Compile Include="Core\Latin1Prober.cs" />
     <Compile Include="Core\Sequence\Latin2HungarianModel.cs" />
     <Compile Include="Core\Sequence\Latin5BulgarianModel.cs" />
@@ -116,16 +116,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0-beta013\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
-    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0-beta013\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Chartect.IO.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Chartect.IO.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0-beta014\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0-beta014\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\NuSpec.ReferenceGenerator.1.3.4\build\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\NuSpec.ReferenceGenerator.targets" Condition="Exists('..\..\packages\NuSpec.ReferenceGenerator.1.3.4\build\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\NuSpec.ReferenceGenerator.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -133,7 +132,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\NuSpec.ReferenceGenerator.1.3.4\build\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\NuSpec.ReferenceGenerator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NuSpec.ReferenceGenerator.1.3.4\build\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\NuSpec.ReferenceGenerator.targets'))" />
+    <Error Condition="!Exists('..\..\packages\StyleCop.Analyzers.1.0.0-beta014\build\StyleCop.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\StyleCop.Analyzers.1.0.0-beta014\build\StyleCop.Analyzers.targets'))" />
   </Target>
+  <Import Project="..\..\packages\StyleCop.Analyzers.1.0.0-beta014\build\StyleCop.Analyzers.targets" Condition="Exists('..\..\packages\StyleCop.Analyzers.1.0.0-beta014\build\StyleCop.Analyzers.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

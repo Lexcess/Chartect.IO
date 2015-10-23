@@ -128,7 +128,7 @@ namespace Chartect.IO.Core
                 this.TotalChars++;
                 if (order < this.CharToFreqOrder.Length)
                 { // order is valid
-                    if (512 > this.CharToFreqOrder[order])
+                    if (this.CharToFreqOrder[order] < 512)
                     {
                         this.FreqChars++;
                     }

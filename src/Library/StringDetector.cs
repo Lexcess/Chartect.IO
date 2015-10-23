@@ -1,5 +1,7 @@
 ﻿namespace Chartect.IO
 {
+    using System;
+    using System.Collections.Generic;
     using Chartect.IO.Core;
 
     public class StringDetector
@@ -29,8 +31,13 @@
         public void Read(string input)
         {
             var chars = input.ToCharArray();
-            var array = new byte[input.Length * 2];
-            chars.CopyTo(array, 0);
+            var bytes = new List<byte>(chars.Length * 2);
+            foreach (char c in chars)
+            {
+                bytes.AddRange(BitConverter.GetBytes(c));
+            }
+
+            var array = bytes.ToArray();
 
             this.universalDetector.Read(array, 0, array.Length);
             this.universalDetector.DataEnd();

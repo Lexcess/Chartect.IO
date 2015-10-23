@@ -1,30 +1,29 @@
 namespace Chartect.IO.Tests
 {
     using Chartect.IO.Core;
-    using NUnit.Framework;
+    using Xunit;
 
-    [TestFixture]
     public class BitPackageTest
     {
-        [Test]
-        public void PackTest()
+        [Fact]
+        public void ShouldPackCorrectly()
         {
-            Assert.AreEqual(BitPackage.Pack4bits(0, 0, 0, 0, 0, 0, 0, 0), 0);
-            Assert.AreEqual(BitPackage.Pack4bits(1, 1, 1, 1, 1, 1, 1, 1), 286331153);
-            Assert.AreEqual(BitPackage.Pack4bits(2, 2, 2, 2, 2, 2, 2, 2), 572662306);
-            Assert.AreEqual(BitPackage.Pack4bits(15, 15, 15, 15, 15, 15, 15, 15), -1);
+            Assert.Equal(BitPackage.Pack4bits(0, 0, 0, 0, 0, 0, 0, 0), 0);
+            Assert.Equal(BitPackage.Pack4bits(1, 1, 1, 1, 1, 1, 1, 1), 286331153);
+            Assert.Equal(BitPackage.Pack4bits(2, 2, 2, 2, 2, 2, 2, 2), 572662306);
+            Assert.Equal(BitPackage.Pack4bits(15, 15, 15, 15, 15, 15, 15, 15), -1);
         }
 
-        [Test]
-        public void UnpackTest()
+        [Fact]
+        public void ShouldUnpackCorrectly()
         {
             int[] data = new int[]
             {
-                BitPackage.Pack4bits(0, 1, 2, 3, 4, 5, 6, 7),
+                BitPackage.Pack4bits(0, 1,  2,  3,  4,  5,  6,  7),
                 BitPackage.Pack4bits(8, 9, 10, 11, 12, 13, 14, 15)
             };
 
-            BitPackage pkg = new BitPackage(
+            var package = new BitPackage(
                     BitPackage.IndexShift4Bits,
                     BitPackage.ShiftMask4Bits,
                     BitPackage.BitShift4Bits,
@@ -33,8 +32,8 @@ namespace Chartect.IO.Tests
 
             for (int i = 0; i < 16; i++)
             {
-                int n = pkg.Unpack(i);
-                Assert.AreEqual(n, i);
+                int actual = package.Unpack(i);
+                Assert.Equal(actual, i);
             }
         }
     }

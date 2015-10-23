@@ -367,30 +367,30 @@ namespace Chartect.IO.Core
                 switch (input[0])
                 {
                     case 0xEF:
-                        if (0xBB == input[1] && 0xBF == input[2])
+                        if (input[1] == 0xBB && input[2] == 0xBF)
                         {
                             charset = Charsets.Utf8;
                         }
 
                         break;
                     case 0xFE:
-                        if (0xFF == input[1] && 0x00 == input[2] && 0x00 == input[3])
+                        if (input[1] == 0xFF && input[2] == 0x00 && input[3] == 0x00)
                         {
                             // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
                             charset = Charsets.Ucs43412;
                         }
-                        else if (0xFF == input[1])
+                        else if (input[1] == 0xFF)
                         {
                             charset = Charsets.Utf16BE;
                         }
 
                         break;
                     case 0x00:
-                        if (0x00 == input[1] && 0xFE == input[2] && 0xFF == input[3])
+                        if (input[1] == 0x00 && input[2] == 0xFE && input[3] == 0xFF)
                         {
                             charset = Charsets.Utf32BE;
                         }
-                        else if (0x00 == input[1] && 0xFF == input[2] && 0xFE == input[3])
+                        else if (input[1] == 0x00 && input[2] == 0xFF && input[3] == 0xFE)
                         {
                             // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
                             charset = Charsets.Ucs42413;
@@ -398,11 +398,11 @@ namespace Chartect.IO.Core
 
                         break;
                     case 0xFF:
-                        if (0xFE == input[1] && 0x00 == input[2] && 0x00 == input[3])
+                        if (input[1] == 0xFE && input[2] == 0x00 && input[3] == 0x00)
                         {
                             charset = Charsets.Utf32LE;
                         }
-                        else if (0xFE == input[1])
+                        else if (input[1] == 0xFE)
                         {
                             charset = Charsets.Utf16LE;
                         }
