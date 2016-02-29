@@ -142,7 +142,7 @@ namespace Chartect.IO.Core
             0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         };
 
-        public HungarianModel(byte[] charToOrderMap, string name)
+        protected HungarianModel(byte[] charToOrderMap, string name)
             : base(charToOrderMap, HungarianLangModel, 0.947368f, false, name)
         {
         }

@@ -102,7 +102,7 @@ namespace Chartect.IO.Core
     /// This prober doesn't actually recognize a language or a charset.
     /// It is a helper prober for the use of the Hebrew model probers
     /// </summary>
-    internal class HebrewProber : CharsetProber
+    internal sealed class HebrewProber : CharsetProber
     {
         public const string VisualHebrewName = Charsets.Iso88598;
         public const string LogicalHebrewName = Charsets.Win1255;
@@ -146,7 +146,7 @@ namespace Chartect.IO.Core
             this.Reset();
         }
 
-        protected CharsetProber VisualProber
+        private CharsetProber VisualProber
         {
             get
             {
@@ -159,7 +159,7 @@ namespace Chartect.IO.Core
             }
         }
 
-        protected int FinalCharLogicalScore
+        private int FinalCharLogicalScore
         {
             get
             {
@@ -172,7 +172,7 @@ namespace Chartect.IO.Core
             }
         }
 
-        protected int FinalCharVisualScore
+        private int FinalCharVisualScore
         {
             get
             {
@@ -185,7 +185,7 @@ namespace Chartect.IO.Core
             }
         }
 
-        protected CharsetProber LogicalProber
+        private CharsetProber LogicalProber
         {
             get
             {
@@ -198,7 +198,7 @@ namespace Chartect.IO.Core
             }
         }
 
-        protected byte Prev
+        private byte Prev
         {
             get
             {
@@ -211,7 +211,7 @@ namespace Chartect.IO.Core
             }
         }
 
-        protected byte BeforePrev
+        private byte BeforePrev
         {
             get
             {
@@ -252,8 +252,8 @@ namespace Chartect.IO.Core
         // is not an indication for either Logical or Visual text.
         //
         // The input buffer should not contain any white spaces that are not (' ')
-        // or any low-ascii punctuation marks.
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
+        // or any low-ASCII punctuation marks.
+        public override ProbingState HandleData(byte[] buffer, int offset, int length)
         {
             // Both model probers say it's not them. No reason to continue.
             if (this.GetState() == ProbingState.NegativeDetection)
@@ -261,11 +261,11 @@ namespace Chartect.IO.Core
                 return ProbingState.NegativeDetection;
             }
 
-            int max = offset + len;
+            int max = offset + length;
 
             for (int i = offset; i < max; i++)
             {
-                byte b = buf[i];
+                byte b = buffer[i];
 
                 // a word just ended
                 if (b == 0x20)
@@ -372,13 +372,13 @@ namespace Chartect.IO.Core
             return 0.0f;
         }
 
-        protected static bool IsFinal(byte b)
+        private static bool IsFinal(byte b)
         {
             return b == FinalKaf || b == FinalMem || b == FinalNun
                     || b == FinalPE || b == FinalTsadi;
         }
 
-        protected static bool IsNonFinal(byte b)
+        private static bool IsNonFinal(byte b)
         {
             // The normal Tsadi is not a good Non-Final letter due to words like
             // 'lechotet' (to chat) containing an apostrophe after the tsadi. This

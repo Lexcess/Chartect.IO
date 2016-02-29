@@ -142,7 +142,7 @@ namespace Chartect.IO.Core
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         };
 
-        public GreekModel(byte[] charToOrderMap, string name)
+        protected GreekModel(byte[] charToOrderMap, string name)
             : base(charToOrderMap, GreekLanguageModel, 0.982851f, false, name)
         {
         }

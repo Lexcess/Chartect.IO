@@ -262,7 +262,6 @@
         };
 
         public GB18030DistributionAnalyser()
-            : base()
         {
             this.CharToFreqOrder = gb2312Char2FreqOrder;
             this.TypicalDistributionRatio = gb2312TypicalDistributionRatio;

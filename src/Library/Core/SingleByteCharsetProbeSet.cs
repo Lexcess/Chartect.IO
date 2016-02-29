@@ -5,7 +5,7 @@ namespace Chartect.IO.Core
     internal class SingleByteCharsetProbeSet : CharsetProber, IProbeSet
     {
         private const int PROBERSNUM = 13;
-        private CharsetProber[] probers = new CharsetProber[PROBERSNUM];
+        private readonly CharsetProber[] probers = new CharsetProber[PROBERSNUM];
         private bool[] isActive = new bool[PROBERSNUM];
         private int bestGuess;
         private int activeNum;
@@ -22,7 +22,7 @@ namespace Chartect.IO.Core
             this.probers[7] = new SingleByteCharSetProber(new Win1253GreekModel());
             this.probers[8] = new SingleByteCharSetProber(new Latin5BulgarianModel());
             this.probers[9] = new SingleByteCharSetProber(new Win1251BulgarianModel());
-            HebrewProber hebprober = new HebrewProber();
+            var hebprober = new HebrewProber();
             this.probers[10] = hebprober;
 
             // Logical
@@ -39,7 +39,7 @@ namespace Chartect.IO.Core
             this.Reset();
         }
 
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
+        public override ProbingState HandleData(byte[] buffer, int offset, int length)
         {
             ProbingState st = ProbingState.NegativeDetection;
 
@@ -49,7 +49,7 @@ namespace Chartect.IO.Core
             // this is done without any consideration to KeepEnglishLetters
             // of each prober since as of now, there are no probers here which
             // recognize languages with English characters.
-            byte[] newBuf = buf.FilterWithoutEnglishLetters(offset, len);
+            byte[] newBuf = buffer.FilterWithoutEnglishLetters(offset, length);
             if (newBuf.Length == 0)
             {
                 return this.State; // Nothing to see here, move on.

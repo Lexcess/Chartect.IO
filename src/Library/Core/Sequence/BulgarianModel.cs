@@ -142,7 +142,7 @@ namespace Chartect.IO.Core
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
         };
 
-        public BulgarianModel(byte[] charToOrderMap, string name)
+        protected BulgarianModel(byte[] charToOrderMap, string name)
             : base(charToOrderMap, BulgarianLanguageModel, 0.969392f, false, name)
         {
         }

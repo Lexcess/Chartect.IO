@@ -142,7 +142,7 @@ namespace Chartect.IO.Core
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0,
         };
 
-        public HebrewModel(byte[] charToOrderMap, string name)
+        protected HebrewModel(byte[] charToOrderMap, string name)
             : base(charToOrderMap, HebrewLanguageModel, 0.984004f, false, name)
         {
         }

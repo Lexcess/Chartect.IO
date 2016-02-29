@@ -2,11 +2,11 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    internal class EucJPProber : CharsetProber
+    internal sealed class EucJPProber : CharsetProber
     {
+        private readonly EucJPContextAnalyser contextAnalyser;
+        private readonly EucJPDistributionAnalyser distributionAnalyser;
         private CodingStateMachine codingSM;
-        private EucJPContextAnalyser contextAnalyser;
-        private EucJPDistributionAnalyser distributionAnalyser;
         private byte[] lastChar = new byte[2];
 
         public EucJPProber()
@@ -22,14 +22,14 @@ namespace Chartect.IO.Core
             return Charsets.EucJP;
         }
 
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
+        public override ProbingState HandleData(byte[] buffer, int offset, int length)
         {
             int codingState;
-            int max = offset + len;
+            int max = offset + length;
 
             for (int i = offset; i < max; i++)
             {
-                codingState = this.codingSM.NextState(buf[i]);
+                codingState = this.codingSM.NextState(buffer[i]);
                 if (codingState == StateMachineModel.Error)
                 {
                     this.State = ProbingState.NegativeDetection;
@@ -47,19 +47,19 @@ namespace Chartect.IO.Core
                     int charLen = this.codingSM.CurrentCharLen;
                     if (i == offset)
                     {
-                        this.lastChar[1] = buf[offset];
+                        this.lastChar[1] = buffer[offset];
                         this.contextAnalyser.HandleOneChar(this.lastChar, 0, charLen);
                         this.distributionAnalyser.HandleOneChar(this.lastChar, 0, charLen);
                     }
                     else
                     {
-                        this.contextAnalyser.HandleOneChar(buf, i - 1, charLen);
-                        this.distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
+                        this.contextAnalyser.HandleOneChar(buffer, i - 1, charLen);
+                        this.distributionAnalyser.HandleOneChar(buffer, i - 1, charLen);
                     }
                 }
             }
 
-            this.lastChar[0] = buf[max - 1];
+            this.lastChar[0] = buffer[max - 1];
             if (this.State == ProbingState.Detecting)
             {
                 if (this.contextAnalyser.GotEnoughData() && this.GetConfidence() > ShortcutThreshold)

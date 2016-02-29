@@ -29,14 +29,14 @@ namespace Chartect.IO.Core
             this.State = ProbingState.Detecting;
         }
 
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
+        public override ProbingState HandleData(byte[] buffer, int offset, int length)
         {
             int codingState = StateMachineModel.Start;
-            int max = offset + len;
+            int max = offset + length;
 
             for (int i = offset; i < max; i++)
             {
-                codingState = this.stateMachine.NextState(buf[i]);
+                codingState = this.stateMachine.NextState(buffer[i]);
 
                 if (codingState == StateMachineModel.Error)
                 {

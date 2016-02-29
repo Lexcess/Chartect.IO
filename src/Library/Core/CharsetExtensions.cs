@@ -113,12 +113,12 @@
                     {
                         inTag = false;
                     }
-                    else if (b == LessThan)
+                    else
                     {
-                        inTag = true;
+                        inTag |= b == LessThan;
                     }
 
-                    // it's ascii, but it's not a letter
+                    // it's ASCII, but it's not a letter
                     if ((b & 0x80) == 0 && (b < UpperA || b > LowerZ || (b > UpperZ && b < LowerA)))
                     {
                         if (cur > prev && !inTag)

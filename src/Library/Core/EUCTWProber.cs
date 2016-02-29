@@ -2,10 +2,10 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    internal class EucTWProber : CharsetProber
+    internal sealed class EucTWProber : CharsetProber
     {
+        private readonly EucTWDistributionAnalyser distributionAnalyser;
         private CodingStateMachine codingSM;
-        private EucTWDistributionAnalyser distributionAnalyser;
         private byte[] lastChar = new byte[2];
 
         public EucTWProber()
@@ -15,14 +15,14 @@ namespace Chartect.IO.Core
             this.Reset();
         }
 
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
+        public override ProbingState HandleData(byte[] buffer, int offset, int length)
         {
             int codingState;
-            int max = offset + len;
+            int max = offset + length;
 
             for (int i = 0; i < max; i++)
             {
-                codingState = this.codingSM.NextState(buf[i]);
+                codingState = this.codingSM.NextState(buffer[i]);
                 if (codingState == StateMachineModel.Error)
                 {
                     this.State = ProbingState.NegativeDetection;
@@ -40,17 +40,17 @@ namespace Chartect.IO.Core
                     int charLen = this.codingSM.CurrentCharLen;
                     if (i == offset)
                     {
-                        this.lastChar[1] = buf[offset];
+                        this.lastChar[1] = buffer[offset];
                         this.distributionAnalyser.HandleOneChar(this.lastChar, 0, charLen);
                     }
                     else
                     {
-                        this.distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
+                        this.distributionAnalyser.HandleOneChar(buffer, i - 1, charLen);
                     }
                 }
             }
 
-            this.lastChar[0] = buf[max - 1];
+            this.lastChar[0] = buffer[max - 1];
 
             if (this.State == ProbingState.Detecting)
             {

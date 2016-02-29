@@ -142,7 +142,7 @@ namespace Chartect.IO.Core
             0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
         };
 
-        public CyrillicModel(byte[] charToOrderMap, string name)
+        protected CyrillicModel(byte[] charToOrderMap, string name)
             : base(charToOrderMap, RussianLanguageModel, 0.976601f, false, name)
         {
         }

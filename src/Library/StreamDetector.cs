@@ -23,7 +23,7 @@
         private readonly CharsetDetector universalDetector = new CharsetDetector();
 
         /// <summary>
-        /// The detected charset. It can be null.
+        /// Gets the detected charset. It can be null.
         /// </summary>
         public string Charset
         {
@@ -31,7 +31,7 @@
         }
 
         /// <summary>
-        /// The confidence of the detected charset, if any
+        /// Gets the confidence of the detected charset, if any
         /// </summary>
         public float Confidence
         {

@@ -19,7 +19,7 @@ namespace Chartect.IO.Core
 
         private int classFactor;
 
-        public StateMachineModel(BitPackage classTable, int classFactor, BitPackage stateTable, int[] charLenTable, string name)
+        protected StateMachineModel(BitPackage classTable, int classFactor, BitPackage stateTable, int[] charLenTable, string name)
         {
             this.ClassTable = classTable;
             this.classFactor = classFactor;

@@ -6,11 +6,6 @@
 
     internal class EucJPDistributionAnalyser : SjisDistributionAnalyser
     {
-        public EucJPDistributionAnalyser()
-            : base()
-        {
-        }
-
         // first  byte range: 0xa0 -- 0xfe
         // second byte range: 0xa1 -- 0xfe
         // no validation needed here. State machine has done that

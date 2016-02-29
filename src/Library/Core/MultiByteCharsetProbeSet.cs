@@ -11,8 +11,8 @@ namespace Chartect.IO.Core
         private static readonly string[] ProberName =
             { "UTF8", "SJIS", "EUCJP", "GB18030", "EUCKR", "Big5", "EUCTW" };
 
-        private CharsetProber[] probers = new CharsetProber[PROBERSNUM];
-        private bool[] isActive = new bool[PROBERSNUM];
+        private readonly CharsetProber[] probers = new CharsetProber[PROBERSNUM];
+        private readonly bool[] isActive = new bool[PROBERSNUM];
         private int bestGuess;
         private int activeNum;
 
@@ -63,21 +63,21 @@ namespace Chartect.IO.Core
             this.State = ProbingState.Detecting;
         }
 
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
+        public override ProbingState HandleData(byte[] buffer, int offset, int length)
         {
             // do filtering to reduce load to probers
-            byte[] highbyteBuf = new byte[len];
+            byte[] highbyteBuf = new byte[length];
             int hptr = 0;
 
-            // assume previous is not ascii, it will do no harm except add some noise
+            // assume previous is not ASCII, it will do no harm except add some noise
             bool keepNext = true;
-            int max = offset + len;
+            int max = offset + length;
 
             for (int i = offset; i < max; i++)
             {
-                if ((buf[i] & 0x80) != 0)
+                if ((buffer[i] & 0x80) != 0)
                 {
-                    highbyteBuf[hptr++] = buf[i];
+                    highbyteBuf[hptr++] = buffer[i];
                     keepNext = true;
                 }
                 else
@@ -85,7 +85,7 @@ namespace Chartect.IO.Core
                     // if previous is highbyte, keep this even it is a ASCII
                     if (keepNext)
                     {
-                        highbyteBuf[hptr++] = buf[i];
+                        highbyteBuf[hptr++] = buffer[i];
                         keepNext = false;
                     }
                 }

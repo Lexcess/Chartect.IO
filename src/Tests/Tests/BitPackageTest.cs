@@ -17,7 +17,7 @@ namespace Chartect.IO.Tests
         [Fact]
         public void ShouldUnpackCorrectly()
         {
-            int[] data = new int[]
+            var data = new int[]
             {
                 BitPackage.Pack4bits(0, 1,  2,  3,  4,  5,  6,  7),
                 BitPackage.Pack4bits(8, 9, 10, 11, 12, 13, 14, 15)

@@ -15,7 +15,10 @@ namespace Chartect.IO.Core
         private const int POSITIVECAT = NUMBEROFSEQCAT - 1;
         private const int NEGATIVECAT = 0;
 
-        private SequenceModel model;
+        private readonly SequenceModel model;
+
+        // Optional auxiliary prober for name decision. created and destroyed by the GroupProber
+        private readonly CharsetProber nameProber;
 
         // true if we need to reverse every pair in the model lookup
         private bool reversed;
@@ -30,9 +33,6 @@ namespace Chartect.IO.Core
         // characters that fall in our sampling range
         private int freqChar;
 
-        // Optional auxiliary prober for name decision. created and destroyed by the GroupProber
-        private CharsetProber nameProber;
-
         public SingleByteCharSetProber(SequenceModel model)
             : this(model, false, null)
         {
@@ -46,13 +46,13 @@ namespace Chartect.IO.Core
             this.Reset();
         }
 
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
+        public override ProbingState HandleData(byte[] buffer, int offset, int length)
         {
-            int max = offset + len;
+            int max = offset + length;
 
             for (int i = offset; i < max; i++)
             {
-                byte order = this.model.GetOrder(buf[i]);
+                byte order = this.model.GetOrder(buffer[i]);
 
                 if (order < SYMBOLCATORDER)
                 {

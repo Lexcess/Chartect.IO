@@ -9,6 +9,7 @@ namespace Chartect.IO.Core
         Done = 2,
     }
 
+    [Flags]
     internal enum DetectorFilter
     {
         FilterChineseSimplified = 1,
@@ -182,19 +183,16 @@ namespace Chartect.IO.Core
 
             for (int i = 0; i < length; i++)
             {
-                // other than 0xa0, if every other character is ascii, the page is ascii
+                // other than 0xa0, if every other character is ASCII, the page is ASCII
                 if ((input[i] & 0x80) != 0 && input[i] != 0xA0)
                 {
-                    // we got a non-ascii byte (high-byte)
+                    // we got a non-ASCII byte (high-byte)
                     if (this.DetectedCharacters != DetectedCharacters.Highbyte)
                     {
                         this.DetectedCharacters = DetectedCharacters.Highbyte;
 
                         // kill EscCharsetProber if it is active
-                        if (this.EscCharsetProber != null)
-                        {
-                            this.EscCharsetProber = null;
-                        }
+                        this.EscCharsetProber = null;
 
                         // start multibyte and singlebyte charset prober
                         if (this.CharsetProbers[0] == null)
@@ -262,9 +260,6 @@ namespace Chartect.IO.Core
                         }
                     }
 
-                    break;
-                default:
-                    // pure ascii
                     break;
             }
 

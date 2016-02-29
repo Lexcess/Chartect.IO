@@ -20,11 +20,11 @@ namespace Chartect.IO.Core
         public const int UnitMask8Bits = 0x000000FF;
         public const int UnitMask16Bits = 0x0000FFFF;
 
-        private int indexShift;
-        private int shiftMask;
-        private int bitShift;
-        private int unitMask;
-        private int[] data;
+        private readonly int indexShift;
+        private readonly int shiftMask;
+        private readonly int bitShift;
+        private readonly int unitMask;
+        private readonly int[] data;
 
         public BitPackage(int indexShift, int shiftMask, int bitShift, int unitMask, int[] data)
         {

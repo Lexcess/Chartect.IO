@@ -3,15 +3,15 @@ namespace Chartect.IO.Core
     using System;
 
     // TODO: Using trigrams the detector should be able to discriminate between
-    // latin-1 and iso8859-2
+    // Latin-1 and iso8859-2
     internal class Latin1Prober : CharsetProber
     {
         private const int FreqCatNum = 4;
 
         private const int UDF = 0; // undefined
         private const int OTH = 1; // other
-        private const int ASC = 2; // ascii capital letter
-        private const int ASS = 3; // ascii small letter
+        private const int ASC = 2; // ASCII capital letter
+        private const int ASS = 3; // ASCII small letter
         private const int ACV = 4; // accent capital vowel
         private const int ACO = 5; // accent capital other
         private const int ASV = 6; // accent small vowel
@@ -96,9 +96,9 @@ namespace Chartect.IO.Core
             }
         }
 
-        public override ProbingState HandleData(byte[] input, int offset, int len)
+        public override ProbingState HandleData(byte[] buffer, int offset, int length)
         {
-            byte[] filteredInput = input.FilterWithEnglishLetters(offset, len);
+            byte[] filteredInput = buffer.FilterWithEnglishLetters(offset, length);
             byte charClass;
             byte freq;
 

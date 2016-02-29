@@ -2,10 +2,10 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    internal class EucKRProber : CharsetProber
+    internal sealed class EucKRProber : CharsetProber
     {
-        private CodingStateMachine codingSM;
-        private EucKRDistributionAnalyser distributionAnalyser;
+        private readonly CodingStateMachine codingSM;
+        private readonly EucKRDistributionAnalyser distributionAnalyser;
         private byte[] lastChar = new byte[2];
 
         public EucKRProber()
@@ -20,14 +20,14 @@ namespace Chartect.IO.Core
             return "EUC-KR";
         }
 
-        public override ProbingState HandleData(byte[] input, int offset, int length)
+        public override ProbingState HandleData(byte[] buffer, int offset, int length)
         {
             int codingState;
             int max = offset + length;
 
             for (int i = offset; i < max; i++)
             {
-                codingState = this.codingSM.NextState(input[i]);
+                codingState = this.codingSM.NextState(buffer[i]);
                 if (codingState == StateMachineModel.Error)
                 {
                     this.State = ProbingState.NegativeDetection;
@@ -45,17 +45,17 @@ namespace Chartect.IO.Core
                     int charLen = this.codingSM.CurrentCharLen;
                     if (i == offset)
                     {
-                        this.lastChar[1] = input[offset];
+                        this.lastChar[1] = buffer[offset];
                         this.distributionAnalyser.HandleOneChar(this.lastChar, 0, charLen);
                     }
                     else
                     {
-                         this.distributionAnalyser.HandleOneChar(input, i - 1, charLen);
+                         this.distributionAnalyser.HandleOneChar(buffer, i - 1, charLen);
                     }
                 }
             }
 
-            this.lastChar[0] = input[max - 1];
+            this.lastChar[0] = buffer[max - 1];
 
             if (this.State == ProbingState.Detecting)
             {

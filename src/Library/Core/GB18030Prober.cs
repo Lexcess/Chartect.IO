@@ -5,10 +5,10 @@ namespace Chartect.IO.Core
     using System.Text;
 
     // We use gb18030 to replace gb2312, because 18030 is a superset.
-    internal class GB18030Prober : CharsetProber
+    internal sealed class GB18030Prober : CharsetProber
     {
-        private CodingStateMachine codingSM;
-        private GB18030DistributionAnalyser analyser;
+        private readonly CodingStateMachine codingSM;
+        private readonly GB18030DistributionAnalyser analyser;
         private byte[] lastChar;
 
         public GB18030Prober()
@@ -24,14 +24,14 @@ namespace Chartect.IO.Core
             return Charsets.GB18030;
         }
 
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
+        public override ProbingState HandleData(byte[] buffer, int offset, int length)
         {
             int codingState = StateMachineModel.Start;
-            int max = offset + len;
+            int max = offset + length;
 
             for (int i = offset; i < max; i++)
             {
-                codingState = this.codingSM.NextState(buf[i]);
+                codingState = this.codingSM.NextState(buffer[i]);
                 if (codingState == StateMachineModel.Error)
                 {
                     this.State = ProbingState.NegativeDetection;
@@ -49,17 +49,17 @@ namespace Chartect.IO.Core
                     int charLen = this.codingSM.CurrentCharLen;
                     if (i == offset)
                     {
-                        this.lastChar[1] = buf[offset];
+                        this.lastChar[1] = buffer[offset];
                         this.analyser.HandleOneChar(this.lastChar, 0, charLen);
                     }
                     else
                     {
-                        this.analyser.HandleOneChar(buf, i - 1, charLen);
+                        this.analyser.HandleOneChar(buffer, i - 1, charLen);
                     }
                 }
             }
 
-            this.lastChar[0] = buf[max - 1];
+            this.lastChar[0] = buffer[max - 1];
 
             if (this.State == ProbingState.Detecting)
             {

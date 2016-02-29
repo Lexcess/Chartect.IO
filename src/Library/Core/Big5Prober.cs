@@ -2,11 +2,12 @@ namespace Chartect.IO.Core
 {
     using System;
 
-    internal class Big5Prober : CharsetProber
+    internal sealed class Big5Prober : CharsetProber
     {
+        private readonly Big5DistributionAnalyser distributionAnalyser;
+
         // void GetDistribution(PRUint32 aCharLen, const char* aStr);
         private CodingStateMachine codingSM;
-        private Big5DistributionAnalyser distributionAnalyser;
         private byte[] lastChar = new byte[2];
 
         public Big5Prober()
@@ -16,14 +17,14 @@ namespace Chartect.IO.Core
             this.Reset();
         }
 
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
+        public override ProbingState HandleData(byte[] buffer, int offset, int length)
         {
             int codingState = 0;
-            int max = offset + len;
+            int max = offset + length;
 
             for (int i = offset; i < max; i++)
             {
-                codingState = this.codingSM.NextState(buf[i]);
+                codingState = this.codingSM.NextState(buffer[i]);
                 if (codingState == StateMachineModel.Error)
                 {
                     this.State = ProbingState.NegativeDetection;
@@ -41,17 +42,17 @@ namespace Chartect.IO.Core
                     int charLen = this.codingSM.CurrentCharLen;
                     if (i == offset)
                     {
-                        this.lastChar[1] = buf[offset];
+                        this.lastChar[1] = buffer[offset];
                         this.distributionAnalyser.HandleOneChar(this.lastChar, 0, charLen);
                     }
                     else
                     {
-                        this.distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
+                        this.distributionAnalyser.HandleOneChar(buffer, i - 1, charLen);
                     }
                 }
             }
 
-            this.lastChar[0] = buf[max - 1];
+            this.lastChar[0] = buffer[max - 1];
 
             if (this.State == ProbingState.Detecting)
             {

@@ -30,7 +30,7 @@ namespace Chartect.IO.Core
         // This constant value varies from language to language. It is used in calculating confidence.
         private float typicalDistributionRatio;
 
-        public CharsetDistributionAnalyser()
+        protected CharsetDistributionAnalyser()
         {
             this.Reset();
         }

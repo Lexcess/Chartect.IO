@@ -19,7 +19,7 @@ namespace Chartect.IO.Core
 
         private string charsetName;
 
-        public SequenceModel(
+        protected SequenceModel(
                 byte[] charToOrderMap,
                 byte[] precedenceMatrix,
                 float typicalPositiveRatio,

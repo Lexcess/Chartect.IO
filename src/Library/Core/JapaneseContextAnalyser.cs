@@ -118,7 +118,7 @@ namespace Chartect.IO.Core
         // been made
         private bool done;
 
-        public JapaneseContextAnalyser()
+        protected JapaneseContextAnalyser()
         {
             this.Reset();
         }

@@ -4,7 +4,7 @@ namespace Chartect.IO.Core
     using System.Collections.Generic;
     using System.Text;
 
-    internal class EscCharsetProbeSet : CharsetProber, IProbeSet
+    internal sealed class EscCharsetProbeSet : CharsetProber, IProbeSet
     {
         private const int CharsetsNum = 4;
         private string detectedCharset;
@@ -33,16 +33,16 @@ namespace Chartect.IO.Core
             this.detectedCharset = null;
         }
 
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
+        public override ProbingState HandleData(byte[] buffer, int offset, int length)
         {
-            int max = offset + len;
+            int max = offset + length;
 
             for (int i = offset; i < max && this.State == ProbingState.Detecting; i++)
             {
                 for (int j = this.activeSM - 1; j >= 0; j--)
                 {
                     // byte is fed to all active state machine
-                    int codingState = this.stateMachines[j].NextState(buf[i]);
+                    int codingState = this.stateMachines[j].NextState(buffer[i]);
                     if (codingState == StateMachineModel.Error)
                     {
                         // got negative answer for this state machine, make it inactive

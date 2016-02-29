@@ -8,11 +8,11 @@ namespace Chartect.IO.Core
     /// 2, kana character often exist in group
     /// 3, certain combination of kana is never used in japanese language
     /// </summary>
-    internal class SjisProber : CharsetProber
+    internal sealed class SjisProber : CharsetProber
     {
+        private readonly SjisContextAnalyser contextAnalyser;
+        private readonly SjisDistributionAnalyser distributionAnalyser;
         private CodingStateMachine codingSM;
-        private SjisContextAnalyser contextAnalyser;
-        private SjisDistributionAnalyser distributionAnalyser;
         private byte[] lastChar = new byte[2];
 
         public SjisProber()
@@ -28,14 +28,14 @@ namespace Chartect.IO.Core
             return Charsets.ShiftJis;
         }
 
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
+        public override ProbingState HandleData(byte[] buffer, int offset, int length)
         {
             int codingState;
-            int max = offset + len;
+            int max = offset + length;
 
             for (int i = offset; i < max; i++)
             {
-                codingState = this.codingSM.NextState(buf[i]);
+                codingState = this.codingSM.NextState(buffer[i]);
                 if (codingState == StateMachineModel.Error)
                 {
                     this.State = ProbingState.NegativeDetection;
@@ -53,19 +53,19 @@ namespace Chartect.IO.Core
                     int charLen = this.codingSM.CurrentCharLen;
                     if (i == offset)
                     {
-                        this.lastChar[1] = buf[offset];
+                        this.lastChar[1] = buffer[offset];
                         this.contextAnalyser.HandleOneChar(this.lastChar, 2 - charLen, charLen);
                         this.distributionAnalyser.HandleOneChar(this.lastChar, 0, charLen);
                     }
                     else
                     {
-                        this.contextAnalyser.HandleOneChar(buf, i + 1 - charLen, charLen);
-                        this.distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
+                        this.contextAnalyser.HandleOneChar(buffer, i + 1 - charLen, charLen);
+                        this.distributionAnalyser.HandleOneChar(buffer, i - 1, charLen);
                     }
                 }
             }
 
-            this.lastChar[0] = buf[max - 1];
+            this.lastChar[0] = buffer[max - 1];
             if (this.State == ProbingState.Detecting)
             {
                 if (this.contextAnalyser.GotEnoughData() && this.GetConfidence() > ShortcutThreshold)
