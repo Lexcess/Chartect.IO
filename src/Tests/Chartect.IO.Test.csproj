@@ -78,8 +78,10 @@
     <Compile Include="Tests\ArrayDetectorTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Library\Properties\stylecop.json">
+      <Link>Properties\stylecop.json</Link>
+    </None>
     <None Include="Data\README" />
-    <AdditionalFiles Include="stylecop.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

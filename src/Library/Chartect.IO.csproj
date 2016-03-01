@@ -40,7 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <AdditionalFiles Include="stylecop.json" />
+    <AdditionalFiles Include="Properties\stylecop.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\IAnalyser.cs" />

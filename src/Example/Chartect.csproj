@@ -84,8 +84,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
+    <None Include="..\Library\Properties\stylecop.json">
+      <Link>Properties\stylecop.json</Link>
+    </None>
     <None Include="app.config" />
-    <AdditionalFiles Include="Properties\stylecop.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
