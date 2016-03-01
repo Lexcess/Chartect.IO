@@ -1,7 +1,5 @@
 namespace Chartect.IO.Core
 {
-    using System;
-
     internal abstract class GreekModel : SequenceModel
     {
         // Model Table:

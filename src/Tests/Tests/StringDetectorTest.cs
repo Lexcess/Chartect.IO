@@ -1,8 +1,5 @@
 namespace Chartect.IO.Tests
 {
-    using System.IO;
-    using System.Text;
-    using Chartect;
     using Xunit;
 
     public class StringDetectorTest

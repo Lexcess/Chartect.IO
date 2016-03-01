@@ -1,7 +1,5 @@
 namespace Chartect.IO.Core
 {
-    using System;
-
     internal class ThaiModel : SequenceModel
     {
         /****************************************************************
@@ -10,7 +8,7 @@ namespace Chartect.IO.Core
         253: symbol (punctuation) that does not belong to word
         252: 0 - 9
         *****************************************************************/
-        // The following result for thai was collected from a limited sample (1M)
+        // The following result for Thai was collected from a limited sample (1M)
         private static readonly byte[] OrderMap =
         {
         255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 254, 255, 255, 254, 255, 255,  // 00
@@ -169,7 +167,7 @@ namespace Chartect.IO.Core
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         };
 
-        public ThaiModel(byte[] charToOrderMap, string name)
+        public ThaiModel()
             : base(OrderMap, ThaiLanguageModel, 0.926386f, false, Charsets.Tis620)
         {
         }

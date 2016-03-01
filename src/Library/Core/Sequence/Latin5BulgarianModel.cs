@@ -1,7 +1,5 @@
 ﻿namespace Chartect.IO.Core
 {
-    using System;
-
     internal sealed class Latin5BulgarianModel : BulgarianModel
     {
         // 255: Control characters that usually does not exist in any text

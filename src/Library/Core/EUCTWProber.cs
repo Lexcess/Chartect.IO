@@ -1,7 +1,5 @@
 namespace Chartect.IO.Core
 {
-    using System;
-
     internal sealed class EucTWProber : CharsetProber
     {
         private readonly EucTWDistributionAnalyser distributionAnalyser;

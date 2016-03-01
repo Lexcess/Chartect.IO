@@ -1,8 +1,6 @@
 ﻿// Escaped charsets state machines
 namespace Chartect.IO.Core
 {
-    using System;
-
     internal class Iso2022CnsmEscapedModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =

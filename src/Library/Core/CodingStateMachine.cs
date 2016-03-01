@@ -1,7 +1,5 @@
 namespace Chartect.IO.Core
 {
-    using System;
-
     /// <summary>
     /// Parallel state machine for the Coding Scheme Method
     /// </summary>

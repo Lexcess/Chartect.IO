@@ -1,7 +1,5 @@
 namespace Chartect.IO.Core
 {
-    using System;
-
     /// <summary>
     /// Multi-byte charsets probers
     /// </summary>
@@ -25,7 +23,7 @@ namespace Chartect.IO.Core
             this.probers[4] = new EucKRProber();
             this.probers[5] = new Big5Prober();
             this.probers[6] = new EucTWProber();
-            this.Reset();
+            this.InitialiseProbes();
         }
 
         public override string GetCharsetName()
@@ -44,23 +42,7 @@ namespace Chartect.IO.Core
 
         public override void Reset()
         {
-            this.activeNum = 0;
-            for (int i = 0; i < this.probers.Length; i++)
-            {
-                if (this.probers[i] != null)
-                {
-                   this.probers[i].Reset();
-                   this.isActive[i] = true;
-                   ++this.activeNum;
-                }
-                else
-                {
-                   this.isActive[i] = false;
-                }
-            }
-
-            this.bestGuess = -1;
-            this.State = ProbingState.Detecting;
+            this.InitialiseProbes();
         }
 
         public override ProbingState HandleData(byte[] buffer, int offset, int length)
@@ -172,6 +154,27 @@ namespace Chartect.IO.Core
                     System.Diagnostics.Debug.WriteLine($"  MBCS {cf}: [{ProberName[i]}]");
                 }
             }
+        }
+
+        private void InitialiseProbes()
+        {
+            this.activeNum = 0;
+            for (int i = 0; i < this.probers.Length; i++)
+            {
+                if (this.probers[i] != null)
+                {
+                   this.probers[i].Reset();
+                   this.isActive[i] = true;
+                   ++this.activeNum;
+                }
+                else
+                {
+                   this.isActive[i] = false;
+                }
+            }
+
+            this.bestGuess = -1;
+            this.State = ProbingState.Detecting;
         }
     }
 }

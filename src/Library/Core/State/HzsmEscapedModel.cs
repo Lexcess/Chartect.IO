@@ -1,8 +1,6 @@
 // Escaped charsets state machines
 namespace Chartect.IO.Core
 {
-    using System;
-
     internal class HzsmEscapedModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =
@@ -59,7 +57,7 @@ namespace Chartect.IO.Core
               6,
               ModelStateTable.To4BitPackage(),
               CharacterLengthTable,
-              Charsets.HZGB2312)
+              Charsets.Hzgb2312)
         {
         }
     }

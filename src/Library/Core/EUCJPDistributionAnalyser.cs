@@ -1,9 +1,5 @@
 ﻿namespace Chartect.IO.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     internal class EucJPDistributionAnalyser : SjisDistributionAnalyser
     {
         // first  byte range: 0xa0 -- 0xfe

@@ -1,7 +1,5 @@
 namespace Chartect
 {
-    using System;
-
     public static class Charsets
     {
         public const string Ascii = "ASCII";
@@ -25,7 +23,7 @@ namespace Chartect
         /// <summary> Hungarian </summary>
         public const string Win1250 = "windows-1250";
 
-        /// <summary> Cyrillic (based on bulgarian and russian data) </summary>
+        /// <summary> Cyrillic (based on Bulgarian and Russian data) </summary>
         public const string Win1251 = "windows-1251";
 
         /// <summary> Latin-1, almost identical to ISO-8859-1 </summary>
@@ -34,10 +32,10 @@ namespace Chartect
         /// <summary> Greek </summary>
         public const string Win1253 = "windows-1253";
 
-        /// <summary> Logical hebrew (includes ISO-8859-8-I and most of x-mac-hebrew) </summary>
+        /// <summary> Logical Hebrew (includes ISO-8859-8-I and most of x-mac-Hebrew) </summary>
         public const string Win1255 = "windows-1255";
 
-        /// <summary> Traditional chinese </summary>
+        /// <summary> Traditional Chinese </summary>
         public const string Big5 = "Big-5";
 
         public const string EucKR = "EUC-KR";
@@ -55,8 +53,8 @@ namespace Chartect
 
         public const string Iso2022KR = "ISO-2022-KR";
 
-        /// <summary> Simplified chinese </summary>
-        public const string HZGB2312 = "HZ-GB-2312";
+        /// <summary> Simplified Chinese </summary>
+        public const string Hzgb2312 = "HZ-GB-2312";
 
         public const string ShiftJis = "Shift-JIS";
 
@@ -64,13 +62,13 @@ namespace Chartect
 
         public const string Koi8R = "KOI8-R";
 
-        public const string IBM855 = "IBM855";
+        public const string Ibm855 = "IBM855";
 
         public const string Ibm866 = "IBM866";
 
         /// <summary>
         /// East-Europe. Disabled because too similar to windows-1252
-        /// (latin-1). Should use tri-grams models to discriminate between
+        /// (Latin-1). Should use tri-grams models to discriminate between
         /// these two charsets.
         /// </summary>
         public const string Iso88592 = "ISO-8859-2";

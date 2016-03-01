@@ -1,7 +1,5 @@
 ﻿namespace Chartect.IO.Core
 {
-    using System;
-
     internal sealed class Win1251BulgarianModel : BulgarianModel
     {
         private static readonly byte[] OrderMap =

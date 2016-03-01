@@ -1,19 +1,15 @@
 namespace Chartect.IO.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     /// <summary>
     /// Base class for the Character Distribution Method, used for
     /// the CJK encodings
     /// </summary>
     internal abstract class CharsetDistributionAnalyser : IAnalyser
     {
-        protected const float SUREYES = 0.99f;
-        protected const float SURENO = 0.01f;
-        protected const int MINIMUMDATATHRESHOLD = 4;
-        protected const int ENOUGHDATATHRESHOLD = 1024;
+        protected const float SureYes = 0.99f;
+        protected const float SureNo = 0.01f;
+        protected const int MinimumDataThreshold = 4;
+        protected const int EnoughDataThreshold = 1024;
 
         // If this flag is set to true, detection is done and conclusion has been made
         private bool done;
@@ -21,7 +17,7 @@ namespace Chartect.IO.Core
         // The number of characters whose frequency order is less than 512
         private int freqChars;
 
-        // Total character encounted.
+        // Total characters counted.
         private int totalChars;
 
         // Mapping table to get frequency order from char order (get from GetOrder())
@@ -116,13 +112,13 @@ namespace Chartect.IO.Core
         /// <summary>
         /// Read a character with known length
         /// </summary>
-        /// <param name="buf">A <see cref="byte"/></param>
-        /// <param name="offset">buf offset</param>
-        /// <param name="charLen">The character width.</param>
-        public void HandleOneChar(byte[] buf, int offset, int charLen)
+        /// <param name="buffer">A <see cref="byte"/></param>
+        /// <param name="offset">buffer offset</param>
+        /// <param name="charWidth">The character width.</param>
+        public void HandleOneChar(byte[] buffer, int offset, int charWidth)
         {
             // we only care about 2-bytes character in our distribution analysis
-            int order = (charLen == 2) ? this.GetOrder(buf, offset) : -1;
+            int order = (charWidth == 2) ? this.GetOrder(buffer, offset) : -1;
             if (order >= 0)
             {
                 this.TotalChars++;
@@ -136,7 +132,7 @@ namespace Chartect.IO.Core
             }
         }
 
-        public virtual void Reset()
+        public void Reset()
         {
             this.Done = false;
             this.TotalChars = 0;
@@ -149,29 +145,29 @@ namespace Chartect.IO.Core
             // if we didn't receive any character in our consideration range, or the
             // number of frequent characters is below the minimum threshold, return
             // negative answer
-            if (this.TotalChars <= 0 || this.FreqChars <= MINIMUMDATATHRESHOLD)
+            if (this.TotalChars <= 0 || this.FreqChars <= MinimumDataThreshold)
             {
-                return SURENO;
+                return SureNo;
             }
 
             if (this.TotalChars != this.FreqChars)
             {
                 float r = this.FreqChars / ((this.TotalChars - this.FreqChars) * this.TypicalDistributionRatio);
-                if (r < SUREYES)
+                if (r < SureYes)
                 {
                     return r;
                 }
             }
 
             // normalize confidence, (we don't want to be 100% sure)
-            return SUREYES;
+            return SureYes;
         }
 
         // It is not necessary to receive all data to draw conclusion. For charset detection,
         // certain amount of data is enough
         public bool GotEnoughData()
         {
-            return this.TotalChars > ENOUGHDATATHRESHOLD;
+            return this.TotalChars > EnoughDataThreshold;
         }
 
         public abstract void HandleData(byte[] input, int offset, int length);

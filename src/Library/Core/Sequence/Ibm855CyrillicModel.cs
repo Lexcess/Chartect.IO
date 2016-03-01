@@ -1,7 +1,5 @@
 ﻿namespace Chartect.IO.Core
 {
-    using System;
-
     internal class Ibm855CyrillicModel : CyrillicModel
     {
         private static readonly byte[] OrderMap =
@@ -25,7 +23,7 @@
         };
 
         public Ibm855CyrillicModel()
-            : base(OrderMap, Charsets.IBM855)
+            : base(OrderMap, Charsets.Ibm855)
         {
         }
     }

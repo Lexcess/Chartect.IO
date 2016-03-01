@@ -1,7 +1,5 @@
 namespace Chartect.IO.Core
 {
-    using System;
-
     internal sealed class EucKRProber : CharsetProber
     {
         private readonly CodingStateMachine codingSM;

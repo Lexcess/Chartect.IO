@@ -1,7 +1,5 @@
 namespace Chartect.IO.Core
 {
-    using System;
-
     internal abstract class SequenceModel
     {
         // [256] table use to find a char's order

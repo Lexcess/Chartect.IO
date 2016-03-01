@@ -1,9 +1,5 @@
 namespace Chartect.IO.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     // We use gb18030 to replace gb2312, because 18030 is a superset.
     internal sealed class GB18030Prober : CharsetProber
     {

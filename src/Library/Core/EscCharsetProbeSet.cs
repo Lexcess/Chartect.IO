@@ -1,9 +1,5 @@
 namespace Chartect.IO.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     internal sealed class EscCharsetProbeSet : CharsetProber, IProbeSet
     {
         private const int CharsetsNum = 4;

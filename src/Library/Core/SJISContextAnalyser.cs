@@ -1,9 +1,5 @@
 ﻿namespace Chartect.IO.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     internal class SjisContextAnalyser : JapaneseContextAnalyser
     {
         private const byte HIRAGANAFIRSTBYTE = 0x82;

@@ -38,7 +38,6 @@ namespace Chartect.IO.Core
         private const int ProbersNum = 3;
 
         private byte lastChar;
-        private int bestGuess;
         private CharsetProber[] charsetProbers = new CharsetProber[ProbersNum];
         private CharsetProber escCharsetProber;
         private string detectedCharset;
@@ -51,7 +50,6 @@ namespace Chartect.IO.Core
             this.DetectorState = DetectorState.Start;
             this.DetectedCharacters = DetectedCharacters.PureASCII;
             this.LastChar = 0x00;
-            this.BestGuess = -1;
         }
 
         public DetectorState DetectorState
@@ -135,24 +133,6 @@ namespace Chartect.IO.Core
             {
                 return this.charsetProbers;
             }
-
-            set
-            {
-                this.charsetProbers = value;
-            }
-        }
-
-        private int BestGuess
-        {
-            get
-            {
-                return this.bestGuess;
-            }
-
-            set
-            {
-                this.bestGuess = value;
-            }
         }
 
         /// <summary>
@@ -194,7 +174,7 @@ namespace Chartect.IO.Core
                         // kill EscCharsetProber if it is active
                         this.EscCharsetProber = null;
 
-                        // start multibyte and singlebyte charset prober
+                        // start multi byte and single byte charset prober
                         if (this.CharsetProbers[0] == null)
                         {
                             this.CharsetProbers[0] = new MultiByteCharsetProbeSet();
@@ -326,7 +306,6 @@ namespace Chartect.IO.Core
             this.Confidence = 0.0f;
             this.DetectorState = DetectorState.Start;
             this.DetectedCharset = null;
-            this.BestGuess = -1;
             this.DetectedCharacters = DetectedCharacters.PureASCII;
             this.LastChar = 0x00;
             if (this.EscCharsetProber != null)
@@ -343,10 +322,10 @@ namespace Chartect.IO.Core
             }
         }
 
-        private void Report(string charset, float confidence)
+        private void Report(string newCharset, float newConfidence)
         {
-            this.Charset = charset;
-            this.Confidence = confidence;
+            this.Charset = newCharset;
+            this.Confidence = newConfidence;
 
             // if (Finished != null)
             // {
@@ -356,7 +335,7 @@ namespace Chartect.IO.Core
 
         private string DetectByteOrderMark(byte[] input)
         {
-            string charset = null;
+            string charsetFromBom = null;
             if (input.Length > 3)
             {
                 switch (input[0])
@@ -364,7 +343,7 @@ namespace Chartect.IO.Core
                     case 0xEF:
                         if (input[1] == 0xBB && input[2] == 0xBF)
                         {
-                            charset = Charsets.Utf8;
+                            charsetFromBom = Charsets.Utf8;
                         }
 
                         break;
@@ -372,41 +351,41 @@ namespace Chartect.IO.Core
                         if (input[1] == 0xFF && input[2] == 0x00 && input[3] == 0x00)
                         {
                             // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
-                            charset = Charsets.Ucs43412;
+                            charsetFromBom = Charsets.Ucs43412;
                         }
                         else if (input[1] == 0xFF)
                         {
-                            charset = Charsets.Utf16BE;
+                            charsetFromBom = Charsets.Utf16BE;
                         }
 
                         break;
                     case 0x00:
                         if (input[1] == 0x00 && input[2] == 0xFE && input[3] == 0xFF)
                         {
-                            charset = Charsets.Utf32BE;
+                            charsetFromBom = Charsets.Utf32BE;
                         }
                         else if (input[1] == 0x00 && input[2] == 0xFF && input[3] == 0xFE)
                         {
                             // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
-                            charset = Charsets.Ucs42413;
+                            charsetFromBom = Charsets.Ucs42413;
                         }
 
                         break;
                     case 0xFF:
                         if (input[1] == 0xFE && input[2] == 0x00 && input[3] == 0x00)
                         {
-                            charset = Charsets.Utf32LE;
+                            charsetFromBom = Charsets.Utf32LE;
                         }
                         else if (input[1] == 0xFE)
                         {
-                            charset = Charsets.Utf16LE;
+                            charsetFromBom = Charsets.Utf16LE;
                         }
 
                         break;
-                } // switch
+                }
             }
 
-            return charset;
+            return charsetFromBom;
         }
     }
 }

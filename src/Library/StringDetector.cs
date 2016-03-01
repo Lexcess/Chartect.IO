@@ -30,6 +30,11 @@
         /// <param name="input"> An array of bytes</param>
         public void Read(string input)
         {
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
+
             var chars = input.ToCharArray();
             var bytes = new List<byte>(chars.Length * 2);
             foreach (char c in chars)

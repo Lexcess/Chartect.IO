@@ -1,7 +1,5 @@
 ﻿namespace Chartect.IO.Core
 {
-    using System;
-
     internal class Ucs2LEModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =

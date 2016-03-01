@@ -1,9 +1,5 @@
 namespace Chartect.IO.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     internal abstract class JapaneseContextAnalyser : IAnalyser
     {
         protected const int CATEGORIESNUM = 6;

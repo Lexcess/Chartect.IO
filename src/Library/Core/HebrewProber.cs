@@ -96,8 +96,6 @@
  */
 namespace Chartect.IO.Core
 {
-    using System;
-
     /// <summary>
     /// This prober doesn't actually recognize a language or a charset.
     /// It is a helper prober for the use of the Hebrew model probers

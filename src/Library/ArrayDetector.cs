@@ -1,5 +1,6 @@
 ﻿namespace Chartect.IO
 {
+    using System;
     using Chartect.IO.Core;
 
     public class ArrayDetector
@@ -28,6 +29,11 @@
         /// <param name="input"> An array of bytes</param>
         public void Read(byte[] input)
         {
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
+
             this.Read(input, 0, input.Length);
         }
 
@@ -39,7 +45,7 @@
         /// <param name="length"> The length of bytes to select from the array.</param>
         public void Read(byte[] input, int offset, int length)
         {
-            this.universalDetector.Read(input, 0, length);
+            this.universalDetector.Read(input, offset, length);
         }
 
         /// <summary>

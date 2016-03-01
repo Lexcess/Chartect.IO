@@ -1,7 +1,5 @@
 namespace Chartect.IO.Core
 {
-    using System;
-
     internal sealed class Big5Prober : CharsetProber
     {
         private readonly Big5DistributionAnalyser distributionAnalyser;

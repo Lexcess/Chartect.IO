@@ -1,6 +1,5 @@
 namespace Chartect.IO.Tests
 {
-    using System;
     using Chartect.IO.Core;
     using Xunit;
 

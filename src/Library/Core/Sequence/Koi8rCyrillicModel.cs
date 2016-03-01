@@ -1,7 +1,5 @@
 ﻿namespace Chartect.IO.Core
 {
-    using System;
-
     internal class Koi8rCyrillicModel : CyrillicModel
     {
         private static readonly byte[] OrderMap =

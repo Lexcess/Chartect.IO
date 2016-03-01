@@ -1,7 +1,5 @@
 namespace Chartect.IO.Core
 {
-    using System;
-
     internal sealed class EucJPProber : CharsetProber
     {
         private readonly EucJPContextAnalyser contextAnalyser;

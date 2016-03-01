@@ -1,7 +1,5 @@
 namespace Chartect.IO.Core
 {
-    using System;
-
     // TODO: Using trigrams the detector should be able to discriminate between
     // Latin-1 and iso8859-2
     internal class Latin1Prober : CharsetProber
@@ -73,12 +71,12 @@ namespace Chartect.IO.Core
             /*ASO*/ 0,  3,  1,  3,  1,  1,  3,  3,
         };
 
+        private readonly int[] freqCounter = new int[FreqCatNum];
         private byte lastCharClass;
-        private int[] freqCounter = new int[FreqCatNum];
 
         public Latin1Prober()
         {
-            this.Reset();
+            this.InitialiseProbes();
         }
 
         public override string GetCharsetName()
@@ -88,12 +86,7 @@ namespace Chartect.IO.Core
 
         public override void Reset()
         {
-            this.State = ProbingState.Detecting;
-            this.lastCharClass = OTH;
-            for (int i = 0; i < FreqCatNum; i++)
-            {
-                this.freqCounter[i] = 0;
-            }
+            this.InitialiseProbes();
         }
 
         public override ProbingState HandleData(byte[] buffer, int offset, int length)
@@ -151,6 +144,16 @@ namespace Chartect.IO.Core
         public override void DumpStatus()
         {
             System.Diagnostics.Debug.WriteLine($"Latin1Prober: {this.GetConfidence()} [{this.GetCharsetName()}]");
+        }
+
+        private void InitialiseProbes()
+        {
+            this.State = ProbingState.Detecting;
+            this.lastCharClass = OTH;
+            for (int i = 0; i < FreqCatNum; i++)
+            {
+                this.freqCounter[i] = 0;
+            }
         }
     }
 }

@@ -1,7 +1,5 @@
 namespace Chartect.IO.Core
 {
-    using System;
-
     /// <summary>
     /// for S-JIS encoding, observe characteristic:
     /// 1, kana character (or hankaku?) often have hight frequency of appereance

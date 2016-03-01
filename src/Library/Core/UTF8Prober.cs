@@ -1,20 +1,16 @@
 namespace Chartect.IO.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     internal class Utf8Prober : CharsetProber
     {
         private const float OneCharProb = 0.50f;
-        private CodingStateMachine stateMachine;
+        private readonly CodingStateMachine stateMachine;
         private int numOfMultiByteChar;
 
         public Utf8Prober()
         {
             this.numOfMultiByteChar = 0;
             this.stateMachine = new CodingStateMachine(new Utf8Model());
-            this.Reset();
+            this.InitialiseProbes();
         }
 
         public override string GetCharsetName()
@@ -24,9 +20,7 @@ namespace Chartect.IO.Core
 
         public override void Reset()
         {
-            this.stateMachine.Reset();
-            this.numOfMultiByteChar = 0;
-            this.State = ProbingState.Detecting;
+            this.InitialiseProbes();
         }
 
         public override ProbingState HandleData(byte[] buffer, int offset, int length)
@@ -90,6 +84,13 @@ namespace Chartect.IO.Core
             }
 
             return confidence;
+        }
+
+        private void InitialiseProbes()
+        {
+            this.stateMachine.Reset();
+            this.numOfMultiByteChar = 0;
+            this.State = ProbingState.Detecting;
         }
     }
 }

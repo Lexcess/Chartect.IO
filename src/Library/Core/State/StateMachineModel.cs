@@ -1,7 +1,5 @@
 namespace Chartect.IO.Core
 {
-    using System;
-
     /// <summary>
     /// State machine model
     /// </summary>

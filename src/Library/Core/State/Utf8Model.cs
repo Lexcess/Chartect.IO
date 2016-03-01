@@ -1,7 +1,5 @@
 ﻿namespace Chartect.IO.Core
 {
-    using System;
-
     internal class Utf8Model : StateMachineModel
     {
         private static readonly int[] ModelClassTable =

@@ -1,22 +1,17 @@
 namespace Chartect.IO.Tests
 {
-    using System;
-    using System.IO;
     using System.Text;
-    using Chartect;
-    using Core;
     using Xunit;
 
     internal class ArrayDetectorTest
     {
         [Theory]
-        [InlineData("The Documentation of the libraries is not complete and your contributions would be greatly appreciated " +
-                "the documentation you want to contribute to and click on the [Edit] link to start writing")]
-        public void AsciiShouldBeDetected(string input)
+        public void AsciiShouldBeDetected()
         {
+            var s = "The Documentation of the libraries is not complete and your contributions would be greatly appreciated " +
+                "the documentation you want to contribute to and click on the [Edit] link to start writing";
             var detector = new ArrayDetector();
-
-            byte[] array = Encoding.UTF8.GetBytes(input);
+            byte[] array = Encoding.UTF8.GetBytes(s);
             detector.Read(array, 0, array.Length);
             detector.DataEnd();
             Assert.Equal(Charsets.Ascii, detector.Charset);

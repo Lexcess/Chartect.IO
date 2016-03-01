@@ -1,8 +1,6 @@
 ﻿namespace Chartect.IO.Core
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     internal class Big5DistributionAnalyser : CharsetDistributionAnalyser
     {

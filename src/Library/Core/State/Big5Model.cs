@@ -1,7 +1,5 @@
 ﻿namespace Chartect.IO.Core
 {
-    using System;
-
     internal class Big5Model : StateMachineModel
     {
         private static readonly int[] ModelClassTable =

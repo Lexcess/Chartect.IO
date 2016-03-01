@@ -1,7 +1,5 @@
 ﻿namespace Chartect.IO.Core
 {
-    using System;
-
     internal class Win1255HebrewModel : HebrewModel
     {
         // 255: Control characters that usually does not exist in any text

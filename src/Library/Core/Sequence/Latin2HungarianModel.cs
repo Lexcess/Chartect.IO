@@ -1,7 +1,5 @@
 ﻿namespace Chartect.IO.Core
 {
-    using System;
-
     internal class Latin2HungarianModel : HungarianModel
     {
         private static readonly byte[] OrderMap =

@@ -1,7 +1,5 @@
 ﻿namespace Chartect.IO.Core
 {
-    using System;
-
     internal class EucJPModel : StateMachineModel
     {
         private static readonly int[] ModelClassTable =

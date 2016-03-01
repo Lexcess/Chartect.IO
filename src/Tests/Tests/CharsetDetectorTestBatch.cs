@@ -1,8 +1,7 @@
 namespace Chartect.IO.Tests
 {
-    using System;
+    using System.Diagnostics;
     using System.IO;
-    using Chartect;
     using Xunit;
 
     public class CharsetDetectorTestBatch
@@ -40,7 +39,7 @@ namespace Chartect.IO.Tests
         }
 
         [Fact]
-        public void EuckrCjKTest()
+        public void EuckrCjkTest()
         {
             this.Process(Charsets.EucKR, "euckr");
         }
@@ -88,7 +87,7 @@ namespace Chartect.IO.Tests
         }
 
         [Fact]
-        public void Koi8rCyrillicTest()
+        public void Koi8RCyrillicTest()
         {
             this.Process(Charsets.Koi8R, "koi8r");
         }
@@ -96,7 +95,7 @@ namespace Chartect.IO.Tests
         [Fact]
         public void Ibm855CyrillicTest()
         {
-            this.Process(Charsets.IBM855, "ibm855");
+            this.Process(Charsets.Ibm855, "ibm855");
         }
 
         [Fact]
@@ -112,7 +111,7 @@ namespace Chartect.IO.Tests
         }
 
         [Fact]
-        public void UTF8Test()
+        public void Utf8Test()
         {
             this.Process(Charsets.Utf8, "utf8");
         }
@@ -130,10 +129,10 @@ namespace Chartect.IO.Tests
             {
                 using (FileStream fs = new FileStream(file, FileMode.Open))
                 {
-                    Console.WriteLine($"Analysing {file}");
+                    Debug.WriteLine($"Analyzing {file}");
                     detector.Read(fs);
                     detector.DataEnd();
-                    Console.WriteLine($"{file} : {detector.Charset} {detector.Confidence}");
+                    Debug.WriteLine($"{file} : {detector.Charset} {detector.Confidence}");
                     Assert.Equal(expected, detector.Charset);
                     detector.Reset();
                 }

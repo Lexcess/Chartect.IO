@@ -44,6 +44,11 @@
         /// <param name="stream">an input stream</param>
         public void Read(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
             byte[] buffer = new byte[1024];
             int read;
             while ((read = stream.Read(buffer, 0, buffer.Length)) > 0 && this.universalDetector.DetectorState != DetectorState.Done)

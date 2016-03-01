@@ -1,12 +1,10 @@
 namespace Chartect.IO.Core
 {
-    using System;
-
     internal class SingleByteCharsetProbeSet : CharsetProber, IProbeSet
     {
-        private const int PROBERSNUM = 13;
-        private readonly CharsetProber[] probers = new CharsetProber[PROBERSNUM];
-        private bool[] isActive = new bool[PROBERSNUM];
+        private const int NumberOProbes = 13;
+        private readonly CharsetProber[] probers = new CharsetProber[NumberOProbes];
+        private readonly bool[] isActive = new bool[NumberOProbes];
         private int bestGuess;
         private int activeNum;
 
@@ -36,7 +34,7 @@ namespace Chartect.IO.Core
             // will be detected as latin2 because of their similarity.
             // probers[13] = new SingleByteCharSetProber(new Latin2HungarianModel());
             // probers[14] = new SingleByteCharSetProber(new Win1250HungarianModel());
-            this.Reset();
+            this.InitialiseProbes();
         }
 
         public override ProbingState HandleData(byte[] buffer, int offset, int length)
@@ -55,7 +53,7 @@ namespace Chartect.IO.Core
                 return this.State; // Nothing to see here, move on.
             }
 
-            for (int i = 0; i < PROBERSNUM; i++)
+            for (int i = 0; i < NumberOProbes; i++)
             {
                 if (!this.isActive[i])
                 {
@@ -95,7 +93,7 @@ namespace Chartect.IO.Core
             case ProbingState.NegativeDetection:
                 return 0.01f;  // sure no
             default:
-                for (int i = 0; i < PROBERSNUM; i++)
+                for (int i = 0; i < NumberOProbes; i++)
                 {
                     if (!this.isActive[i])
                         {
@@ -120,7 +118,7 @@ namespace Chartect.IO.Core
         {
             float cf = this.GetConfidence();
             System.Diagnostics.Debug.WriteLine(" SBCS Group Prober --------begin status");
-            for (int i = 0; i < PROBERSNUM; i++)
+            for (int i = 0; i < NumberOProbes; i++)
             {
                 if (!this.isActive[i])
                 {
@@ -139,23 +137,7 @@ namespace Chartect.IO.Core
 
         public override void Reset()
         {
-            this.activeNum = 0;
-            for (int i = 0; i < PROBERSNUM; i++)
-            {
-                if (this.probers[i] != null)
-                {
-                    this.probers[i].Reset();
-                    this.isActive[i] = true;
-                    this.activeNum++;
-                }
-                else
-                {
-                    this.isActive[i] = false;
-                }
-            }
-
-            this.bestGuess = -1;
-            this.State = ProbingState.Detecting;
+            this.InitialiseProbes();
         }
 
         public override string GetCharsetName()
@@ -173,6 +155,27 @@ namespace Chartect.IO.Core
             }
 
             return this.probers[this.bestGuess].GetCharsetName();
+        }
+
+        private void InitialiseProbes()
+        {
+            this.activeNum = 0;
+            for (int i = 0; i < NumberOProbes; i++)
+            {
+                if (this.probers[i] != null)
+                {
+                    this.probers[i].Reset();
+                    this.isActive[i] = true;
+                    this.activeNum++;
+                }
+                else
+                {
+                    this.isActive[i] = false;
+                }
+            }
+
+            this.bestGuess = -1;
+            this.State = ProbingState.Detecting;
         }
     }
 }
