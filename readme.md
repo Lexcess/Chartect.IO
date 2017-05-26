@@ -107,6 +107,6 @@ Also there is "chardet" (in Python) available at:
 http://chardet.feedparser.org/
 
 
-##License
+## License
 
     This library is subject to the Mozilla Public License Version 1.1 (the "License"). An initial check of this work is available under the LGPL but subsequent versions use MPL as a sole alternative as allowed under the original terms.
