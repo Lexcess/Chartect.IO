@@ -1,4 +1,4 @@
-##Description
+## Description
 
 Chartect.IO can recognize the following charsets:
 
@@ -22,6 +22,10 @@ Chartect.IO can recognize the following charsets:
 * X-ISO-10646-UCS-4-3412 and X-ISO-10646-UCS-4-2413 (unusual BOM)
 * ASCII
 
+## Build Status
+
+![Build Status](https://lexm.visualstudio.com/_apis/public/build/definitions/e6a58d77-f73b-4b58-b2d3-e1a08fc5b23d/4/badge)
+
 ## Platform
 Portable .Net Framework 4.0+,
 Windows Phone 8+,
@@ -29,7 +33,7 @@ Windows 8+,
 Universal Windows Apps,
 .Net Core (dotnet, dnx)
 
-##Usage
+## Usage
 
 Import the library:
 
@@ -66,7 +70,7 @@ public class program
 or use StringDetector. StringDetector assumes that there is only one string (so you don't have to call DataEnd):
 ```c#         
     var detector = new StringDetector();
-    var input = "После окончательного разорения отца семейства";
+    var input = "ц╟ц▐ц⌠ц▄ц┘ ц▐ц▀ц▐ц▌ц·ц│ц■ц┘ц▄ц≤ц▌ц▐ц┤ц▐ ц▓ц│ц ц▐ц▓ц┘ц▌ц┴ц▒ ц▐ц■ц┐ц│ ц⌠ц┘ц█ц┘ц┼ц⌠ц■ц≈ц│";
 
     detector.Read(input);
 
