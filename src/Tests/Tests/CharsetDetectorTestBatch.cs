@@ -11,7 +11,7 @@ namespace Chartect.IO.Tests
         [Fact]
         public void Latin1Test()
         {
-            this.Process(Charsets.Win1251, "latin1");
+            this.Process(Charsets.Win1252, "latin1");
         }
 
         [Fact]
