@@ -17,8 +17,6 @@
     <dependencies>
       <group targetFramework="dotnet">
         <dependency id="System.Collections" version="4.0.0" />
-        <dependency id="System.Diagnostics.Debug" version="4.0.0" />
-        <dependency id="System.Diagnostics.Tools" version="4.0.0" />
         <dependency id="System.IO" version="4.0.0" />
         <dependency id="System.Resources.ResourceManager" version="4.0.0" />
         <dependency id="System.Runtime" version="4.0.0" />
