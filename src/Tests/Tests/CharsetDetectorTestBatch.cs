@@ -1,5 +1,4 @@
 namespace Chartect.IO.Tests
-namespace Chartect.IO.Tests
 {
     using System.Diagnostics;
     using System.IO;
